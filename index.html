@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un Camí - Eina de Diagnòstic i Metodologies</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --cep-red: #D8262E;
+            --cep-orange: #F98D29;
+            --cep-violet: #6A478D;
+            --cep-green: #648B1A;
+            --cep-green-soft: #f0fdf4;
+            --cep-green-border: #bbf7d0;
+            --cep-blue: #009ABE;
+            --cep-blue-hover: #007a96;
+            --cep-black: #000000;
+            --cep-grey: #575756;
+            --bg-light: #f4f7f9;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --flower: #d4a017;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--cep-grey);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .cep-header {
+            background: white;
+            padding: 10px 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cep-stripes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            height: 5px;
+        }
+
+        .stripe { flex: 1; height: 100%; }
+        .s-red { background: var(--cep-red); }
+        .s-orange { background: var(--cep-orange); }
+        .s-violet { background: var(--cep-violet); }
+        .s-green { background: var(--cep-green); }
+        .s-blue { background: var(--cep-blue); }
+
+        .logo-text {
+            font-family: 'Varela Round', sans-serif;
+            cursor: pointer;
+        }
+
+        .logo-text span {
+            font-weight: bold;
+            display: block;
+            line-height: 1.1;
+            font-size: 1rem;
+        }
+
+        .nav-container {
+            background: white;
+            border-bottom: 1px solid #eee;
+            padding: 5px 15px;
+            overflow-x: auto;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: 'Varela Round';
+            cursor: pointer;
+            font-size: 0.75rem;
+            color: #777;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn.active {
+            background: #f0f0f0;
+            color: var(--cep-black);
+            font-weight: bold;
+        }
+
+        .nav-btn.primary {
+            color: var(--cep-red);
+            border: 1px solid transparent;
+        }
+
+        .nav-btn.primary.active {
+            background: var(--cep-red);
+            color: white;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: #ddd;
+            margin: 0 10px;
+            flex-shrink: 0;
+        }
+
+        main {
+            max-width: 1250px;
+            margin: 15px auto;
+            padding: 0 15px;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        h2 {
+            font-family: 'Varela Round';
+            color: var(--cep-black);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+
+        h3 {
+            font-family: 'Varela Round';
+            color: var(--cep-black);
+            margin-top: 0;
+        }
+
+        /* HOME */
+        .home-hero {
+            display: grid;
+            gap: 20px;
+        }
+
+       .home-intro {
+    padding: 10px 6px 6px 6px;
+}
+
+.home-intro h1 {
+    font-family: 'Varela Round';
+    color: var(--cep-black);
+    margin: 0 0 18px 0;
+    font-size: 2.35rem;
+    line-height: 1.08;
+    letter-spacing: 0.2px;
+}
+
+.home-intro p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 820px;
+}
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+ .pillar-card {
+    border-radius: 24px;
+    padding: 26px 22px 22px 22px;
+    color: white;
+    box-shadow: var(--shadow);
+    min-height: 290px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+        .pillar-para {
+            background: linear-gradient(135deg, #D8262E 0%, #a91d23 100%);
+        }
+
+        .pillar-parla {
+            background: linear-gradient(135deg, #6A478D 0%, #4e3368 100%);
+        }
+
+        .pillar-pacta {
+            background: linear-gradient(135deg, #009ABE 0%, #00738d 100%);
+        }
+
+.pillar-top small {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    font-weight: 700;
+    opacity: 0.92;
+    margin-bottom: 12px;
+    color: rgba(255,255,255,0.9);
+}
+        .pillar-title {
+            font-family: 'Varela Round';
+            font-size: 2.15rem;
+            margin: 0 0 14px 0;
+            line-height: 1;
+            color: white;
+            letter-spacing: 0.3px;
+        }
+
+.pillar-desc {
+    margin: 0;
+    line-height: 1.65;
+    font-size: 0.98rem;
+    color: rgba(255,255,255,0.96);
+    max-width: 34ch;
+}
+        .pillar-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+      .pillar-link {
+    border: 1px solid rgba(255,255,255,0.30);
+    background: rgba(255,255,255,0.10);
+    color: white;
+    border-radius: 999px;
+    padding: 9px 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s, transform 0.15s, border-color 0.15s;
+}
+
+.pillar-link:hover {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.45);
+    transform: translateY(-1px);
+}
+
+        .home-footer-note {
+            background: #fff;
+            border: 1px solid #e7edf3;
+            border-radius: 18px;
+            padding: 16px 18px;
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        /* SITUACIONS */
+        .diag-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .diag-item {
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: white;
+        }
+
+        .diag-item:hover {
+            border-color: var(--cep-orange);
+            transform: translateY(-3px);
+        }
+
+        .diag-item strong {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--cep-black);
+            margin-bottom: 2px;
+        }
+
+        .diag-item p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: #777;
+            line-height: 1.2;
+        }
+
+        .diag-icon {
+            font-size: 1.2rem;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .ic-red { background: #fff1f1; color: var(--cep-red); }
+        .ic-orange { background: #fff7ed; color: var(--cep-orange); }
+        .ic-violet { background: #f5f3ff; color: var(--cep-violet); }
+        .ic-green { background: #f0fdf4; color: var(--cep-green); }
+        .ic-blue { background: #f0f9ff; color: var(--cep-blue); }
+        .ic-grey { background: #f1f5f9; color: #64748b; }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f1f5f9;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* ACCORDION */
+        .accordion-item {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+        }
+
+        .accordion-header:hover {
+            background: #f8f9fa;
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 15px;
+            background: #fafbfc;
+            border-top: 1px solid #eee;
+        }
+
+        .accordion-item.open .accordion-content {
+            display: block;
+        }
+
+        .accordion-item.open .accordion-header {
+            background: #f0f9ff;
+        }
+
+        /* FRASE */
+        .frase-invers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .frase-card {
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #eee;
+            background: #fff;
+        }
+
+        .linked-tag {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 6px 10px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            display: block;
+        }
+
+        .linked-tag:hover {
+            border-color: var(--cep-blue);
+            color: var(--cep-blue);
+        }
+
+        /* DETALLE DE ETAPAS */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .details-main,
+        .details-side {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .info-card.soft-green {
+            background: #f6fbf7;
+            border-color: #d7f0dd;
+        }
+
+        .info-card.soft-blue {
+            background: #f4f9fc;
+            border-color: #d9edf5;
+        }
+
+        .info-card.soft-violet {
+            background: #f7f5fb;
+            border-color: #e7def3;
+        }
+
+        .info-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Varela Round';
+            font-size: 0.78rem;
+            color: var(--cep-black);
+            margin-bottom: 10px;
+        }
+
+        .info-title i {
+            width: 18px;
+            text-align: center;
+            color: var(--cep-blue);
+        }
+
+        .meta-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.82rem;
+            line-height: 1.35;
+        }
+
+        .meta-row strong {
+            color: var(--cep-black);
+            min-width: 95px;
+        }
+
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .mini-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            color: var(--cep-grey);
+        }
+
+        .mini-badge i {
+            font-size: 0.78rem;
+        }
+
+        .badge-cnv {
+            background: #fff8f1;
+            border-color: #fde7c7;
+            color: #b86b00;
+        }
+
+        .badge-grow {
+            background: #f2f8ff;
+            border-color: #d8e9ff;
+            color: #0b6aa8;
+        }
+
+        .badge-servei {
+            background: #f5fbf6;
+            border-color: #d8efdb;
+            color: #4e7e10;
+        }
+
+        .badge-frase {
+            background: #f7f3ff;
+            border-color: #e5dafb;
+            color: #6A478D;
+        }
+
+        .support-chips {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .support-chip {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e8edf2;
+            font-size: 0.8rem;
+            line-height: 1.35;
+        }
+
+        .support-chip i {
+            color: var(--cep-green);
+            margin-top: 2px;
+        }
+
+        .error-box {
+            background: #fff5f5;
+            color: #c53030;
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            border: 1px solid #fed7d7;
+            margin-top: 0;
+        }
+
+        .main-question-card {
+            background: linear-gradient(180deg, #f5fbf6 0%, #eef8f1 100%);
+            border: 2px solid #cfead6;
+            padding: 18px;
+            border-radius: 18px;
+            margin: 10px 0 0 0;
+            text-align: center;
+        }
+
+        .main-question-text {
+            font-size: 1rem;
+            color: var(--cep-green);
+            font-family: 'Varela Round';
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        /* ORGANITZADOR */
+        .organizer-layout {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 16px;
+            min-height: 720px;
+        }
+
+        .organizer-bank {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 12px;
+            overflow-y: auto;
+            max-height: calc(100vh - 230px);
+        }
+
+        .bank-accordion-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            background: white;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .bank-accordion-header {
+            width: 100%;
+            border: none;
+            background: #fff;
+            padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: 'Varela Round';
+            font-size: 0.84rem;
+            color: var(--cep-black);
+        }
+
+        .bank-accordion-header:hover {
+            background: #f8fafc;
+        }
+
+        .bank-accordion-header .left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bank-accordion-header .right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bank-accordion-content {
+            display: none;
+            padding: 0 12px 12px 12px;
+            background: #fff;
+        }
+
+        .bank-accordion-item.open .bank-accordion-content {
+            display: block;
+        }
+
+        .mini-action-btn {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .mini-action-btn.primary-btn {
+            background: var(--cep-blue);
+            border-color: var(--cep-blue);
+            color: white;
+        }
+
+        .organizer-board {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 14px;
+            min-height: 720px;
+        }
+
+        .quadrant {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px dashed #cbd5e1;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 300px;
+        }
+
+        .quadrant-header {
+            padding: 10px 14px;
+            font-family: 'Varela Round';
+            font-size: 0.82rem;
+            color: var(--cep-black);
+            border-bottom: 1px solid #e5e7eb;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .quadrant-area {
+            position: relative;
+            flex-grow: 1;
+            min-height: 240px;
+            background-image: radial-gradient(#dbe5ef 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .quadrant-situacions { background: #fff7f7; }
+        .quadrant-emocions { background: #fffdfd; }
+        .quadrant-necessitats { background: #f8fcff; }
+        .quadrant-accions { background: #fffaf5; }
+
+        .organizer-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            border: 1px solid #dbe3ec;
+            border-left: 4px solid var(--tag-accent, #dbe3ec);
+            padding: 5px 10px;
+            border-radius: 14px;
+            font-size: 0.75rem;
+            cursor: grab;
+            user-select: none;
+            margin-bottom: 5px;
+            margin-right: 4px;
+            transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+        }
+
+        .organizer-tag:hover {
+            border-color: var(--cep-blue);
+            transform: translateY(-1px);
+        }
+
+        .organizer-tag.on-board {
+            position: absolute;
+            z-index: 5;
+            cursor: move;
+            margin: 0;
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: none;
+            will-change: left, top;
+            max-width: 240px;
+        }
+
+        .organizer-tag .remove-btn {
+            margin-left: 6px;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .organizer-tag .remove-btn:hover {
+            color: var(--cep-red);
+        }
+
+        .bank-subtitle {
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: white;
+            margin: 10px 0 6px 0;
+            padding: 3px 8px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .bank-empty {
+            font-size: 0.75rem;
+            color: #64748b;
+            padding: 6px 2px;
+        }
+
+        .drop-note {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            margin-left: 6px;
+        }
+
+        @media (max-width: 1100px) {
+            .organizer-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .organizer-bank {
+                max-height: none;
+            }
+
+            .organizer-board {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .pillars-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="cep-header">
+        <div class="cep-stripes">
+            <div class="stripe s-red"></div>
+            <div class="stripe s-orange"></div>
+            <div class="stripe s-violet"></div>
+            <div class="stripe s-green"></div>
+            <div class="stripe s-blue"></div>
+        </div>
+        <div class="logo-text" onclick="showView('home')">
+            <span>Centre d'Estudis</span>
+            <span style="color: var(--cep-red);">Politècnics</span>
+        </div>
+    </header>
+
+    <nav class="nav-container">
+        <button class="nav-btn primary active" id="btn-home" onclick="showView('home')">
+            <i class="fa-solid fa-house"></i> Home
+        </button>
+        <button class="nav-btn primary" id="btn-organitzador" onclick="showView('organitzador')">
+            <i class="fa-solid fa-table-cells-large"></i> Organitzador
+        </button>
+        <button class="nav-btn primary" id="btn-situacions" onclick="showView('situacions')">
+            <i class="fa-solid fa-camera"></i> Situacions
+        </button>
+
+        <div class="nav-divider"></div>
+
+        <button class="nav-btn" id="btn-cnv" onclick="showView('cnv')">CNV</button>
+        <button class="nav-btn" id="btn-grow" onclick="showView('grow')">GROW</button>
+        <button class="nav-btn" id="btn-servei" onclick="showView('servei')">Servei</button>
+
+        <div class="nav-divider"></div>
+
+        <button class="nav-btn primary" id="btn-frase" onclick="showView('frase')">FRASE</button>
+        <button class="nav-btn primary" id="btn-model" onclick="showView('model')">
+            <i class="fa-solid fa-list-ol"></i> 13 Etapes
+        </button>
+    </nav>
+
+    <main id="main-content">
+        <div id="view-home">
+            <div class="home-hero">
+                <!--<div class="card home-intro">
+                    <h1>PARA, PARLA, PACTA</h1>
+                    <p>
+                        Una porta d’entrada pedagògica per observar què està passant, conversar amb criteri i convertir la conversa en acords viables. Tota l’aplicació es pot llegir des d’aquestes tres paraules clau.
+                    </p>
+                </div>-->
+
+                <div class="pillars-grid">
+                    <div class="pillar-card pillar-para">
+                        <div class="pillar-top">
+                            <small>Observar i situar</small>
+                            <h3 class="pillar-title">PARA</h3>
+                            <p class="pillar-desc">
+                                Atura el moviment, mira la situació i identifica què està passant abans d’actuar. És el punt d’entrada per donar nom al context.
+                            </p>
+                        </div>
+                        <div class="pillar-links">
+                            <button class="pillar-link" onclick="showView('situacions')">Situacions</button>
+                            <button class="pillar-link" onclick="showView('organitzador')">Organitzador</button>
+                        </div>
+                    </div>
+
+                    <div class="pillar-card pillar-parla">
+                        <div class="pillar-top">
+                            <small>Conversar i comprendre</small>
+                            <h3 class="pillar-title">PARLA</h3>
+                            <p class="pillar-desc">
+                                Dona forma a la conversa: emocions, necessitats, objectius, opcions i acompanyament. Aquí entren els marcs per parlar millor.
+                            </p>
+                        </div>
+                        <div class="pillar-links">
+                            <button class="pillar-link" onclick="showView('cnv')">CNV</button>
+                            <button class="pillar-link" onclick="showView('grow')">GROW</button>
+                            <button class="pillar-link" onclick="showView('servei')">Servei</button>
+                            <button class="pillar-link" onclick="showView('organitzador')">Organitzador</button>
+                        </div>
+                    </div>
+
+                    <div class="pillar-card pillar-pacta">
+                        <div class="pillar-top">
+                            <small>Acordar i sostenir</small>
+                            <h3 class="pillar-title">PACTA</h3>
+                            <p class="pillar-desc">
+                                Tradueix la conversa en una seqüència clara d’etapes, compromisos i seguiments. Dona estructura al que s’ha acordat.
+                            </p>
+                        </div>
+                        <div class="pillar-links">
+                            <button class="pillar-link" onclick="showView('organitzador')">Organitzador</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="home-footer-note">
+                    <strong style="color:var(--cep-black);">Lectura ràpida de l’eina:</strong>
+                    <br>
+                    <strong>PARA</strong> ajuda a veure la situació. <strong>PARLA</strong> ajuda a conduir la conversa. <strong>PACTA</strong> ajuda a aterrar-la en compromisos i seguiment.
+                </div>-->
+            </div>
+        </div>
+
+        <div id="view-situacions" style="display:none;">
+            <div class="card">
+                <h2>Situacions</h2>
+                <p style="margin-top:-4px; margin-bottom:18px;">Identifica quin tipus de situació tens al davant per decidir des d’on començar.</p>
+                <div class="diag-grid" id="diag-grid-container"></div>
+            </div>
+        </div>
+
+        <div id="view-organitzador" style="display:none;">
+            <div class="card">
+                <h2><i class="fa-solid fa-table-cells-large"></i> Organitzador gràfic interactiu</h2>
+
+                <div class="organizer-layout">
+                    <div class="organizer-bank">
+                        <div class="bank-accordion-item" id="acc-situacions">
+                            <button class="bank-accordion-header" onclick="toggleBankAccordion('acc-situacions')">
+                                <span class="left"><i class="fa-solid fa-camera"></i> Situacions</span>
+                                <span class="right">
+                                    <span class="mini-action-btn" onclick="event.stopPropagation(); openItemModal('situacio')">+ Afegir</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </span>
+                            </button>
+                            <div class="bank-accordion-content" id="situacions-bank"></div>
+                        </div>
+
+                        <div class="bank-accordion-item" id="acc-emocions">
+                            <button class="bank-accordion-header" onclick="toggleBankAccordion('acc-emocions')">
+                                <span class="left"><i class="fa-solid fa-heart"></i> Emocions</span>
+                                <span class="right"><i class="fa-solid fa-chevron-down"></i></span>
+                            </button>
+                            <div class="bank-accordion-content" id="organizer-emotions-bank"></div>
+                        </div>
+
+                        <div class="bank-accordion-item" id="acc-necessitats">
+                            <button class="bank-accordion-header" onclick="toggleBankAccordion('acc-necessitats')">
+                                <span class="left"><i class="fa-solid fa-gem"></i> Necessitats</span>
+                                <span class="right"><i class="fa-solid fa-chevron-down"></i></span>
+                            </button>
+                            <div class="bank-accordion-content" id="necessitats-bank"></div>
+                        </div>
+
+                        <div class="bank-accordion-item" id="acc-accions">
+                            <button class="bank-accordion-header" onclick="toggleBankAccordion('acc-accions')">
+                                <span class="left">🌼 Accions</span>
+                                <span class="right">
+                                    <span class="mini-action-btn" onclick="event.stopPropagation(); openItemModal('accio')">+ Afegir</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </span>
+                            </button>
+                            <div class="bank-accordion-content" id="accions-bank"></div>
+                        </div>
+                    </div>
+
+                    <div class="organizer-board">
+                        <div class="quadrant quadrant-situacions" ondragover="event.preventDefault()" ondrop="dropOrganizerItem(event, 'situacions-area', 'situacio')">
+                            <div class="quadrant-header">
+                                <i class="fa-solid fa-camera"></i> Situacions
+                                <span class="drop-note">Només situacions</span>
+                            </div>
+                            <div class="quadrant-area" id="situacions-area"></div>
+                        </div>
+
+                        <div class="quadrant quadrant-emocions" ondragover="event.preventDefault()" ondrop="dropOrganizerItem(event, 'emocions-area-organizer', 'emocio')">
+                            <div class="quadrant-header">
+                                <i class="fa-solid fa-heart"></i> Emocions
+                                <span class="drop-note">Només emocions</span>
+                            </div>
+                            <div class="quadrant-area" id="emocions-area-organizer"></div>
+                        </div>
+
+                        <div class="quadrant quadrant-necessitats" ondragover="event.preventDefault()" ondrop="dropOrganizerItem(event, 'necessitats-area', 'necessitat')">
+                            <div class="quadrant-header">
+                                <i class="fa-solid fa-gem"></i> Necessitats
+                                <span class="drop-note">Només necessitats</span>
+                            </div>
+                            <div class="quadrant-area" id="necessitats-area"></div>
+                        </div>
+
+                        <div class="quadrant quadrant-accions" ondragover="event.preventDefault()" ondrop="dropOrganizerItem(event, 'accions-area', 'accio')">
+                            <div class="quadrant-header">
+                                🌼 Accions
+                                <span class="drop-note">Només accions</span>
+                            </div>
+                            <div class="quadrant-area" id="accions-area"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-model" style="display:none;">
+            <div class="card">
+                <h2>El camí de les 13 Etapes</h2>
+                <div id="stages-accordion"></div>
+            </div>
+        </div>
+
+        <div id="view-cnv" style="display:none;">
+            <div class="card">
+                <h2>Metodologia CNV</h2>
+                <div id="cnv-accordion"></div>
+            </div>
+        </div>
+
+        <div id="view-grow" style="display:none;">
+            <div class="card">
+                <h2>Metodologia GROW</h2>
+                <div id="grow-accordion"></div>
+            </div>
+        </div>
+
+        <div id="view-servei" style="display:none;">
+            <div class="card">
+                <h2>Lideratge al Servei</h2>
+                <div id="servei-accordion"></div>
+            </div>
+        </div>
+
+        <div id="view-frase" style="display:none;">
+            <div class="card">
+                <h2>Model FRASE</h2>
+                <div class="frase-invers-grid" id="frase-invers-list"></div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="modal-container" onclick="closeModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="item-modal-container" onclick="closeItemModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeItemModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div id="item-modal-content">
+                <h3 id="item-modal-title">Afegir element</h3>
+                <div style="margin-top: 16px;">
+                    <label for="item-text" style="display:block; font-weight:700; margin-bottom:8px; color:var(--cep-black);">
+                        Escriu el contingut
+                    </label>
+                    <textarea id="item-text" rows="5" style="width:100%; border:1px solid #ddd; border-radius:12px; padding:12px; font-family:inherit; font-size:0.95rem; resize:vertical;" placeholder=""></textarea>
+                </div>
+                <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:10px;">
+                    <button class="mini-action-btn" onclick="closeItemModal()">Cancel·lar</button>
+                    <button class="mini-action-btn primary-btn" onclick="saveItemFromModal()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const stages = [
+            { n: 1, f: "Obrir", m: ["CNV"], e: "Observació", c: ["S"], ic: "fa-shield-halved", color: "red", t: "Resistència/Excuses", p: "Es defensa davant un feedback.", q: "He observat que [fet concret]... Com ho veus tu?", a: "Fes que se senti escoltat sense ser jutjat.", err: "Jutjar → Activa la resistència", sup: ["T'havies adonat d'això?", "És la primera vegada?"] },
+            { n: 2, f: "Connectar", m: ["CNV"], e: "Sentiment", c: ["S", "F"], ic: "fa-face-meh", color: "violet", t: "Distància emocional", p: "Està tancat/da o incòmode.", q: "Com estàs amb això que està passant?", a: "Valida la seva emoció abans de seguir.", err: "Ignorar emoció → Bloqueig", sup: ["Què és el que més t'està pesant?", "Necessites un moment?"] },
+            { n: 3, f: "Entendre", m: ["CNV"], e: "Necessitat", c: ["F", "E"], ic: "fa-circle-question", color: "orange", t: "Malestar confús", p: "No sap què necessita realment.", q: "Què hi ha darrere d'això? Què necessites realment?", a: "Ajuda'l a posar nom al que li manca.", err: "Anar directe a la solució", sup: ["Què és important aquí?", "Quina necessitat no s'està cobrint?"] },
+            { n: 4, f: "Enfocar", m: ["GROW"], e: "G - Goal", c: ["A"], ic: "fa-bullseye", color: "blue", t: "Desenfocament", p: "Molta feina, poc objectiu.", q: "Què vols aconseguir exactament?", a: "Defineix un objectiu SMART.", err: "Objectiu vague", sup: ["Com sabrem que ho hem assolit?"] },
+            { n: 5, f: "Aterrar", m: ["GROW"], e: "R - Reality", c: ["A"], ic: "fa-map-location-dot", color: "grey", t: "Desconnexió real", p: "Ignora on es troba el projecte.", q: "On estàs ara mateix respecte a l'objectiu?", a: "Busca fets i dades.", err: "Acceptar excuses", sup: ["Què has intentat fins ara?"] },
+            { n: 6, f: "Confrontar", m: ["GROW"], e: "Reality profunda", c: ["R", "A"], ic: "fa-handshake-slash", color: "red", t: "Falta de propietat", p: "No se sent part del problema.", q: "Què depèn de tu?", a: "Retorna-li la responsabilitat.", err: "Ser dur → Defensa", sup: ["Quina part de responsabilitat tens?"] },
+            { n: 7, f: "Activar", m: ["GROW"], e: "O - Options", c: ["A", "F"], ic: "fa-lightbulb", color: "orange", t: "Bloqueig creatiu", p: "No veu alternatives de solució.", q: "Quines opcions veus?", a: "Fes pluja d'idees.", err: "Donar solucions", sup: ["Quina altra alternativa veus?"] },
+            { n: 8, f: "Decidir", m: ["CNV", "GROW"], e: "W - Will", c: ["R"], ic: "fa-check-double", color: "violet", t: "Indecisió", p: "Té opcions però no tria.", q: "Què faràs primer?", a: "Tria i concreta un primer pas.", err: "Acceptar vaguesa", sup: ["Quan ho faràs?"] },
+            { n: 9, f: "Pont", m: ["CNV", "GROW", "Servei"], e: "Viabilitat", c: ["R", "A"], ic: "fa-bridge-circle-check", color: "green", t: "Promeses buides", p: "Diu 'sí', però és inviable.", q: "Què necessites per poder-ho fer?", a: "Verifica el compromís.", err: "Preguntar abans de l'opció", sup: ["Del 1 al 10, com de probable és?"] },
+            { n: 10, f: "Executar", m: ["Servei"], e: "Autonomia", c: ["A"], ic: "fa-play", color: "blue", t: "Paràlisi", p: "L'acció no arrenca.", q: "Com vols començar?", a: "Dona espai perquè faci.", err: "Microgestió", sup: ["Quina ajuda esperes de mi?"] },
+            { n: 11, f: "Sostenir", m: ["Servei"], e: "Recolzament", c: ["S", "A"], ic: "fa-life-ring", color: "red", t: "Falta de recursos", p: "Ho vol fer però té traves.", q: "En què et puc ajudar jo per facilitar-te la feina?", a: "Elimina les traves que ell/a no pot treure.", err: "Fer-ho tu mateix", sup: ["Quina barrera puc treure?", "Necessites més temps o recursos?"] },
+            { n: 12, f: "Desenvolupar", m: ["Servei"], e: "Creixement", c: ["E", "A"], ic: "fa-arrow-up-right-dots", color: "orange", t: "Repetició d'errors", p: "No n'aprèn de les pífies.", q: "Què t'ajudaria a fer-ho mejor la propera vegada?", a: "Transforma l'error en lliçó de futur.", err: "No reflexionar", sup: ["Què has aprendre?", "Com t'ha fet créixer aquest repte?"] },
+            { n: 13, f: "Mantenir", m: ["Servei"], e: "Seguiment", c: ["R"], ic: "fa-flag-checkered", color: "green", t: "Dissolució del pla", p: "L'acció es perd en el temps.", q: "Quin és el següent pas a partir d'aquí?", a: "Agenda una nova fita de control.", err: "No tancar el compromís", sup: ["Quan ens tornem a veure?", "Com ho celebrarem?"] }
+        ];
+
+        const emotionsWithIcons = {
+            "Afecte": [
+                {t: "Afectuosa", i: "🥰"}, {t: "Amorosa", i: "❤️"}, {t: "Carinyosa", i: "😊"},
+                {t: "Compassiva", i: "🤝"}, {t: "Comprensiva", i: "😌"}, {t: "Simpàtica", i: "✨"}, {t: "Tendra", i: "🧸"}
+            ],
+            "Inspiració": [
+                {t: "Impressionada", i: "😲"}, {t: "Inspirada", i: "💡"}, {t: "Meravellada", i: "🤩"}, {t: "Aturada", i: "⏸️"}
+            ],
+            "Pau": [
+                {t: "Harmonia", i: "🧘"}, {t: "Bellesa", i: "🌸"}, {t: "Comunió", i: "🤲"},
+                {t: "Equilibri", i: "⚖️"}, {t: "Espiritualitat", i: "✨"}, {t: "Igualtat", i: "🤝"},
+                {t: "Ordre", i: "📋"}, {t: "Quietud", i: "🤫"}, {t: "Serenitat", i: "🌊"},
+                {t: "Solitud", i: "🏔️"}, {t: "Tranquil·litat", i: "🍃"}, {t: "Alleujada", i: "🌬️"},
+                {t: "Serena", i: "💎"}, {t: "Calmosa", i: "⚓"}, {t: "Assossegada", i: "☁️"},
+                {t: "Propera", i: "🏘️"}, {t: "Còmoda", i: "🛋️"}, {t: "Contenta", i: "🙂"},
+                {t: "Relaxada", i: "🛀"}, {t: "Despreocupada", i: "🎈"}, {t: "Lliurada", i: "🎁"},
+                {t: "Plàcida", i: "🌅"}, {t: "Realitzada", i: "🏆"}, {t: "Satisfeta", i: "✅"}
+            ],
+            "Confiança": [
+                {t: "Capaç", i: "🦾"}, {t: "Confiada", i: "🛡️"}, {t: "Forta", i: "💪"},
+                {t: "Il·lusionada", i: "🌈"}, {t: "Orgullosa", i: "🦁"}, {t: "Receptiva", i: "📥"}, {t: "Segura", i: "🔒"}
+            ],
+            "Gratitud": [
+                {t: "Agraïda", i: "🙏"}, {t: "Conmovida", i: "🥺"}, {t: "Emocionada", i: "💓"},
+                {t: "Reconeixent", i: "🥇"}, {t: "Plena", i: "🌕"}
+            ],
+            "Esperança": [
+                {t: "Encoratjada", i: "🔥"}, {t: "Esperançada", i: "🌱"}, {t: "Expectant", i: "👀"}, {t: "Optimista", i: "☀️"}
+            ],
+            "Eufòria": [
+                {t: "Eufòrica", i: "🎊"}, {t: "Exultant", i: "🎆"}, {t: "Exuberant", i: "🌿"}
+            ],
+            "Entusiasme": [
+                {t: "Animada", i: "💃"}, {t: "Apassionada", i: "❤️‍🔥"}, {t: "Encisada", i: "🪄"},
+                {t: "Estimulada", i: "⚡"}, {t: "Excitada", i: "🌀"}, {t: "Fascinada", i: "🧿"},
+                {t: "Il·lusionada", i: "🌠"}, {t: "Juguetona", i: "🎲"}, {t: "Sorprendida", i: "🎁"}
+            ],
+            "Interès": [
+                {t: "Oberta", i: "📖"}, {t: "Atenta", i: "👂"}, {t: "Atraïda", i: "🧲"},
+                {t: "Compromesa", i: "💍"}, {t: "Curiosa", i: "🔍"}, {t: "Decidida", i: "🎯"},
+                {t: "Disposada", i: "🙋"}, {t: "Inspirada", i: "🎨"}, {t: "Interessada", i: "📌"},
+                {t: "Intrigada", i: "🕵️"}, {t: "Implicada", i: "🧩"}, {t: "Motivada", i: "🚀"}
+            ],
+            "Felicitat": [
+                {t: "Alegre", i: "😄"}, {t: "Complaguda", i: "😊"}, {t: "Feliç", i: "🥳"},
+                {t: "Il·lusionada", i: "✨"}, {t: "Plena", i: "💎"}
+            ],
+            "Descans": [
+                {t: "Descansada", i: "🛌"}, {t: "Refrescada", i: "🥤"}, {t: "Renovada", i: "♻️"},
+                {t: "Reposada", i: "💤"}, {t: "Restaurada", i: "🛠️"}
+            ]
+        };
+
+        const catColors = {
+            "Afecte": "#D8262E",
+            "Inspiració": "#F98D29",
+            "Pau": "#6A478D",
+            "Confiança": "#009ABE",
+            "Gratitud": "#648B1A",
+            "Esperança": "#575756",
+            "Eufòria": "#D8262E",
+            "Entusiasme": "#F98D29",
+            "Interès": "#6A478D",
+            "Felicitat": "#648B1A",
+            "Descans": "#009ABE"
+        };
+
+        const needsWithIcons = {
+            "Connexió": [
+                { t: "Afecte", i: "💎" }, { t: "Amor", i: "💎" }, { t: "Pertinença", i: "💎" },
+                { t: "Proximitat", i: "💎" }, { t: "Complicitat", i: "💎" }, { t: "Intimitat", i: "💎" },
+                { t: "Comprensió", i: "💎" }, { t: "Empatia", i: "💎" }
+            ],
+            "Benestar": [
+                { t: "Descans", i: "💎" }, { t: "Calma", i: "💎" }, { t: "Seguretat", i: "💎" },
+                { t: "Protecció", i: "💎" }, { t: "Salut", i: "💎" }, { t: "Espai", i: "💎" }
+            ],
+            "Autonomia": [
+                { t: "Llibertat", i: "💎" }, { t: "Elecció", i: "💎" }, { t: "Autonomia", i: "💎" },
+                { t: "Capacitat d'incidir", i: "💎" }, { t: "Claredat", i: "💎" }
+            ],
+            "Sentit": [
+                { t: "Propòsit", i: "💎" }, { t: "Aprenentatge", i: "💎" }, { t: "Creixement", i: "💎" },
+                { t: "Contribució", i: "💎" }, { t: "Coherència", i: "💎" }
+            ],
+            "Reconeixement": [
+                { t: "Respecte", i: "💎" }, { t: "Valoració", i: "💎" }, { t: "Escolta", i: "💎" },
+                { t: "Consideració", i: "💎" }, { t: "Reciprocitat", i: "💎" }
+            ],
+            "Ordre": [
+                { t: "Estructura", i: "💎" }, { t: "Ordre", i: "💎" }, { t: "Previsibilitat", i: "💎" },
+                { t: "Acord", i: "💎" }, { t: "Organització", i: "💎" }
+            ]
+        };
+
+        const organizerCategoryColors = {
+            "Connexió": "#D8262E",
+            "Benestar": "#648B1A",
+            "Autonomia": "#009ABE",
+            "Sentit": "#6A478D",
+            "Reconeixement": "#F98D29",
+            "Ordre": "#575756"
+        };
+
+        let openAccordionN = null;
+        let currentItemType = null;
+        let customSituations = [];
+        let customActions = [];
+
+        function showView(view) {
+            ['home', 'situacions', 'cnv', 'grow', 'servei', 'frase', 'model', 'organitzador'].forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if (el) el.style.display = v === view ? 'block' : 'none';
+            });
+
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-${view}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            if (view === 'situacions') renderSituations();
+            if (view === 'model') renderAccordion('stages-accordion', stages, 'model');
+            if (view === 'cnv') renderAccordion('cnv-accordion', stages.filter(s => s.m.includes('CNV')), 'cnv');
+            if (view === 'grow') renderAccordion('grow-accordion', stages.filter(s => s.m.includes('GROW')), 'grow');
+            if (view === 'servei') renderAccordion('servei-accordion', stages.filter(s => s.m.includes('Servei')), 'servei');
+            if (view === 'frase') renderFrase();
+            if (view === 'organitzador') renderOrganizerBanks();
+        }
+
+        function renderSituations() {
+            document.getElementById('diag-grid-container').innerHTML = stages.map(s => `
+                <div class="diag-item" onclick="openModal(${s.n})">
+                    <div class="diag-icon ic-${s.color}">
+                        <i class="fa-solid ${s.ic}"></i>
+                    </div>
+                    <div>
+                        <strong>${s.n}. ${s.t}</strong>
+                        <p>${s.p}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function makeMoveable(el) {
+            let startX = 0, startY = 0;
+            let initialX = 0, initialY = 0;
+
+            el.onmousedown = startDrag;
+            el.ontouchstart = startDrag;
+
+            function startDrag(e) {
+                if (e.target.classList.contains('remove-btn')) return;
+
+                const evt = e.touches ? e.touches[0] : e;
+                startX = evt.clientX;
+                startY = evt.clientY;
+                initialX = el.offsetLeft;
+                initialY = el.offsetTop;
+
+                document.onmousemove = drag;
+                document.onmouseup = stopDrag;
+                document.ontouchmove = drag;
+                document.ontouchend = stopDrag;
+            }
+
+            function drag(e) {
+                const evt = e.touches ? e.touches[0] : e;
+                const dx = evt.clientX - startX;
+                const dy = evt.clientY - startY;
+
+                el.style.left = (initialX + dx) + "px";
+                el.style.top = (initialY + dy) + "px";
+            }
+
+            function stopDrag() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+                document.ontouchmove = null;
+                document.ontouchend = null;
+            }
+        }
+
+        function renderAccordion(id, list, sourceView) {
+            document.getElementById(id).innerHTML = list.map(s => `
+                <div class="accordion-item ${openAccordionN === s.n ? 'open' : ''}">
+                    <div class="accordion-header" onclick="toggleAcc(${s.n}, '${sourceView}')">
+                        <strong>${s.n}. ${s.f}</strong>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">${renderDetails(s)}</div>
+                </div>
+            `).join('');
+        }
+
+        function toggleAcc(n, sourceView) {
+            openAccordionN = (openAccordionN === n) ? null : n;
+            showView(sourceView);
+        }
+
+        function renderDetails(s) {
+            const metodologiaBadges = s.m.map(method => {
+                let cls = 'badge-grow';
+                let icon = 'fa-seedling';
+
+                if (method === 'CNV') {
+                    cls = 'badge-cnv';
+                    icon = 'fa-heart';
+                }
+                if (method === 'Servei') {
+                    cls = 'badge-servei';
+                    icon = 'fa-hand-holding-heart';
+                }
+
+                return `<span class="mini-badge ${cls}"><i class="fa-solid ${icon}"></i>${method}</span>`;
+            }).join('');
+
+            const fraseBadges = s.c.map(code => `
+                <span class="mini-badge badge-frase">
+                    <i class="fa-solid fa-tag"></i>${code}
+                </span>
+            `).join('');
+
+            const supportItems = s.sup.map(item => `
+                <div class="support-chip">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <span>${item}</span>
+                </div>
+            `).join('');
+
+            return `
+                <div class="main-question-card">
+                    <div class="main-question-text">${s.q}</div>
+                </div>
+
+                <div class="details-grid">
+                    <div class="details-main">
+                        <div class="info-card soft-green">
+                            <div class="info-title">
+                                <i class="fa-solid fa-compass"></i>
+                                <span>Lectura de la fase</span>
+                            </div>
+                            <div class="meta-list">
+                                <div class="meta-row"><strong>Etapa</strong><span>${s.e}</span></div>
+                                <div class="meta-row"><strong>Acció</strong><span>${s.a}</span></div>
+                            </div>
+                        </div>
+
+                        <div class="info-card soft-blue">
+                            <div class="info-title">
+                                <i class="fa-solid fa-comments"></i>
+                                <span>Preguntes de suport</span>
+                            </div>
+                            <div class="support-chips">${supportItems}</div>
+                        </div>
+                    </div>
+
+                    <div class="details-side">
+                        <div class="info-card soft-violet">
+                            <div class="info-title">
+                                <i class="fa-solid fa-layer-group"></i>
+                                <span>Marcs relacionats</span>
+                            </div>
+
+                            <div style="margin-bottom:10px;">
+                                <div style="font-size:0.72rem; font-weight:700; margin-bottom:6px; color:var(--cep-black);">
+                                    Metodologia
+                                </div>
+                                <div class="badge-group">${metodologiaBadges}</div>
+                            </div>
+
+                            <div>
+                                <div style="font-size:0.72rem; font-weight:700; margin-bottom:6px; color:var(--cep-black);">
+                                    Codi FRASE
+                                </div>
+                                <div class="badge-group">${fraseBadges}</div>
+                            </div>
+                        </div>
+
+                        <div class="error-box">
+                            <strong><i class="fa-solid fa-triangle-exclamation"></i> Error a evitar:</strong>
+                            ${s.err}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openModal(n) {
+            const s = stages.find(x => x.n === n);
+            document.getElementById('modal-content').innerHTML = `
+                <h3>${s.n}. ${s.f}</h3>
+                <p style="margin-top:-6px; color:#64748b; font-size:0.9rem;">
+                    <strong>${s.t}</strong> · ${s.p}
+                </p>
+                ${renderDetails(s)}
+            `;
+            document.getElementById('modal-container').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal-container').style.display = 'none';
+        }
+
+        function renderFrase() {
+            const fraseData = [
+                { l: 'F', n: 'Flexibilitat', c: 'red' },
+                { l: 'R', n: 'Responsabilitat', c: 'orange' },
+                { l: 'A', n: 'Autonomia', c: 'violet' },
+                { l: 'S', n: 'Sociabilitat', c: 'green' },
+                { l: 'E', n: 'Evolució', c: 'blue' }
+            ];
+
+            document.getElementById('frase-invers-list').innerHTML = fraseData.map(f => `
+                <div class="frase-card" style="border-top: 3px solid var(--cep-${f.c})">
+                    <strong style="color:var(--cep-${f.c})">${f.l} - ${f.n}</strong>
+                    <div style="margin-top:10px;">
+                        ${stages
+                            .filter(s => s.c.includes(f.l))
+                            .map(ls => `<div class="linked-tag" onclick="openModal(${ls.n})">${ls.n}. ${ls.f}</div>`)
+                            .join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleBankAccordion(id) {
+            document.querySelectorAll('.bank-accordion-item').forEach(item => {
+                if (item.id === id) {
+                    item.classList.toggle('open');
+                } else {
+                    item.classList.remove('open');
+                }
+            });
+        }
+
+        function renderOrganizerBanks() {
+            renderSituacionsBank();
+            renderOrganizerEmotionsBank();
+            renderNecessitatsBank();
+            renderAccionsBank();
+        }
+
+        function renderSituacionsBank() {
+            const container = document.getElementById('situacions-bank');
+            container.innerHTML = customSituations.length
+                ? customSituations.map(item => `
+                    <div class="organizer-tag"
+                         draggable="true"
+                         style="--tag-accent:#111111"
+                         ondragstart="startOrganizerDrag(event, 'situacio', '${escapeForAttr('📷 ' + item)}', '#111111')">
+                        <i class="fa-solid fa-camera"></i> ${escapeHtml(item)}
+                    </div>
+                `).join('')
+                : `<div class="bank-empty">Encara no hi ha situacions. Fes clic a “+ Afegir”.</div>`;
+        }
+
+        function renderOrganizerEmotionsBank() {
+            const bank = document.getElementById('organizer-emotions-bank');
+            let html = "";
+
+            for (const cat in emotionsWithIcons) {
+                html += `<div><div class="bank-subtitle" style="background:${catColors[cat]}">${cat}</div></div>`;
+                emotionsWithIcons[cat].forEach(emo => {
+                    html += `
+                        <div class="organizer-tag"
+                             draggable="true"
+                             style="--tag-accent:${catColors[cat]}"
+                             ondragstart="startOrganizerDrag(event, 'emocio', '${escapeForAttr(emo.i + ' ' + emo.t)}', '${catColors[cat]}')">
+                            ${emo.i} ${emo.t}
+                        </div>
+                    `;
+                });
+            }
+
+            bank.innerHTML = html;
+        }
+
+        function renderNecessitatsBank() {
+            const bank = document.getElementById('necessitats-bank');
+            let html = "";
+
+            for (const cat in needsWithIcons) {
+                html += `<div><div class="bank-subtitle" style="background:${organizerCategoryColors[cat]}">${cat}</div></div>`;
+                needsWithIcons[cat].forEach(item => {
+                    html += `
+                        <div class="organizer-tag"
+                             draggable="true"
+                             style="--tag-accent:${organizerCategoryColors[cat]}"
+                             ondragstart="startOrganizerDrag(event, 'necessitat', '${escapeForAttr(item.i + ' ' + item.t)}', '${organizerCategoryColors[cat]}')">
+                            ${item.i} ${item.t}
+                        </div>
+                    `;
+                });
+            }
+
+            bank.innerHTML = html;
+        }
+
+        function renderAccionsBank() {
+            const container = document.getElementById('accions-bank');
+            container.innerHTML = customActions.length
+                ? customActions.map(item => `
+                    <div class="organizer-tag"
+                         draggable="true"
+                         style="--tag-accent:var(--flower)"
+                         ondragstart="startOrganizerDrag(event, 'accio', '${escapeForAttr('🌼 ' + item)}', '#d4a017')">
+                        🌼 ${escapeHtml(item)}
+                    </div>
+                `).join('')
+                : `<div class="bank-empty">Encara no hi ha accions. Fes clic a “+ Afegir”.</div>`;
+        }
+
+        function startOrganizerDrag(e, type, text, accent) {
+            e.dataTransfer.setData("organizerType", type);
+            e.dataTransfer.setData("organizerText", text);
+            e.dataTransfer.setData("organizerAccent", accent || "#cbd5e1");
+        }
+
+        function dropOrganizerItem(e, targetId, allowedType) {
+            e.preventDefault();
+
+            const type = e.dataTransfer.getData("organizerType");
+            const text = e.dataTransfer.getData("organizerText");
+            const accent = e.dataTransfer.getData("organizerAccent") || "#cbd5e1";
+
+            if (!type || !text) return;
+            if (type !== allowedType) return;
+
+            const area = document.getElementById(targetId);
+            const rect = area.getBoundingClientRect();
+
+            const x = Math.max(10, e.clientX - rect.left - 45);
+            const y = Math.max(10, e.clientY - rect.top - 18);
+
+            const tag = document.createElement('div');
+            tag.className = 'organizer-tag on-board';
+            tag.style.left = `${x}px`;
+            tag.style.top = `${y}px`;
+            tag.style.setProperty('--tag-accent', accent);
+            tag.innerHTML = `${text} <i class="fa-solid fa-xmark remove-btn" onclick="this.parentElement.remove()"></i>`;
+
+            makeMoveable(tag);
+            area.appendChild(tag);
+        }
+
+        function openItemModal(type) {
+            currentItemType = type;
+
+            const title = document.getElementById('item-modal-title');
+            const textarea = document.getElementById('item-text');
+
+            if (type === 'situacio') {
+                title.textContent = 'Afegir situació';
+                textarea.placeholder = 'Escriu la situació, esdeveniment o què passa...';
+            } else {
+                title.textContent = 'Afegir acció';
+                textarea.placeholder = 'Escriu una acció possible per satisfer les necessitats...';
+            }
+
+            textarea.value = '';
+            document.getElementById('item-modal-container').style.display = 'flex';
+            setTimeout(() => textarea.focus(), 50);
+        }
+
+        function closeItemModal() {
+            document.getElementById('item-modal-container').style.display = 'none';
+            currentItemType = null;
+        }
+
+        function saveItemFromModal() {
+            const textarea = document.getElementById('item-text');
+            const value = textarea.value.trim();
+            if (!value) return;
+
+            if (currentItemType === 'situacio') {
+                customSituations.unshift(value);
+                renderSituacionsBank();
+            }
+
+            if (currentItemType === 'accio') {
+                customActions.unshift(value);
+                renderAccionsBank();
+            }
+
+            closeItemModal();
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+
+        function escapeForAttr(text) {
+            return text
+                .replaceAll('&', '&amp;')
+                .replaceAll("'", '&#039;')
+                .replaceAll('"', '&quot;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;');
+        }
+
+        window.onload = () => showView('home');
+    </script>
+</body>
+</html>
