@@ -1123,10 +1123,10 @@
                 <div class="pillars-grid">
                     <div class="pillar-card pillar-para">
                         <div class="pillar-top">
-                            <small>Observar i situar</small>
-                            <h3 class="pillar-title">PARA</h3>
+                            <small>👀 Observar i regular</small>
+                            <h3 class="pillar-title">📷 PARA</h3>
                             <p class="pillar-desc">
-                                Atura el moviment, mira la situació i identifica què està passant abans d’actuar. Agafa aire.
+                                Ens aturem per regular-nos i actuar millor. Mirem la situació amb la voluntat de prendre persepectiva i reconèixer el que està passant.
                             </p>
                         </div>
                         <div class="pillar-links">
@@ -1137,10 +1137,10 @@
 
                     <div class="pillar-card pillar-parla">
                         <div class="pillar-top">
-                            <small>Conversar i comprendre</small>
-                            <h3 class="pillar-title">PARLA</h3>
+                            <small>🔠 Comprendre</small>
+                            <h3 class="pillar-title">💬 PARLA</h3>
                             <p class="pillar-desc">
-                                Dona forma a la conversa: emocions, necessitats, objectius, opcions i acompanyament. Aquí entren els marcs per parlar millor.
+                                Parlem per connectar. Ens fem responsables de la situació i de les nostres reaccions. Empatitzem amb nosaltres i les persones que ens envolten.
                             </p>
                         </div>
                         <div class="pillar-links">
@@ -1153,10 +1153,10 @@
 
                     <div class="pillar-card pillar-pacta">
                         <div class="pillar-top">
-                            <small>Acordar i sostenir</small>
-                            <h3 class="pillar-title">PACTA</h3>
+                            <small>♻️ Sostenir i Actuar</small>
+                            <h3 class="pillar-title">🤝 PACTA</h3>
                             <p class="pillar-desc">
-                                Tradueix la conversa en una seqüència clara d’etapes, compromisos i seguiments. Dona estructura al que s’ha acordat.
+                                Decidim i ens comprometem amb nosaltres i amb les persones que ens envolten. Podem reparar les relacions i entenem la importància de no reincidir.
                             </p>
                         </div>
                         <div class="pillar-links">
@@ -1477,19 +1477,19 @@
 
     <script>
         const stages = [
-            { n: 1, f: "Obrir", m: ["CNV"], e: "Observació", c: ["S"], ic: "fa-shield-halved", color: "red", t: "Resistència/Excuses", p: "Es defensa davant un feedback.", q: "He observat que [fet concret]... Com ho veus tu?", a: "Fes que se senti escoltat sense ser jutjat.", err: "Jutjar → Activa la resistència", sup: ["T'havies adonat d'això?", "És la primera vegada?"] },
-            { n: 2, f: "Connectar", m: ["CNV"], e: "Sentiment", c: ["S", "F"], ic: "fa-face-meh", color: "violet", t: "Distància emocional", p: "Està tancat/da o incòmode.", q: "Com estàs amb això que està passant?", a: "Valida la seva emoció abans de seguir.", err: "Ignorar emoció → Bloqueig", sup: ["Què és el que més t'està pesant?", "Necessites un moment?"] },
-            { n: 3, f: "Entendre", m: ["CNV"], e: "Necessitat", c: ["F", "E"], ic: "fa-circle-question", color: "orange", t: "Malestar confús", p: "No sap què necessita realment.", q: "Què hi ha darrere d'això? Què necessites realment?", a: "Ajuda'l a posar nom al que li manca.", err: "Anar directe a la solució", sup: ["Què és important aquí?", "Quina necessitat no s'està cobrint?"] },
-            { n: 4, f: "Enfocar", m: ["GROW"], e: "G - Goal", c: ["A"], ic: "fa-bullseye", color: "blue", t: "Desenfocament", p: "Molta feina, poc objectiu.", q: "Què vols aconseguir exactament?", a: "Defineix un objectiu SMART.", err: "Objectiu vague", sup: ["Com sabrem que ho hem assolit?"] },
-            { n: 5, f: "Aterrar", m: ["GROW"], e: "R - Reality", c: ["A"], ic: "fa-map-location-dot", color: "grey", t: "Desconnexió real", p: "Ignora on es troba el projecte.", q: "On estàs ara mateix respecte a l'objectiu?", a: "Busca fets i dades.", err: "Acceptar excuses", sup: ["Què has intentat fins ara?"] },
-            { n: 6, f: "Confrontar", m: ["GROW"], e: "Reality profunda", c: ["R", "A"], ic: "fa-handshake-slash", color: "red", t: "Falta de propietat", p: "No se sent part del problema.", q: "Què depèn de tu?", a: "Retorna-li la responsabilitat.", err: "Ser dur → Defensa", sup: ["Quina part de responsabilitat tens?"] },
-            { n: 7, f: "Activar", m: ["GROW"], e: "O - Options", c: ["A", "F"], ic: "fa-lightbulb", color: "orange", t: "Bloqueig creatiu", p: "No veu alternatives de solució.", q: "Quines opcions veus?", a: "Fes pluja d'idees.", err: "Donar solucions", sup: ["Quina altra alternativa veus?"] },
-            { n: 8, f: "Decidir", m: ["CNV", "GROW"], e: "W - Will", c: ["R"], ic: "fa-check-double", color: "violet", t: "Indecisió", p: "Té opcions però no tria.", q: "Què faràs primer?", a: "Tria i concreta un primer pas.", err: "Acceptar vaguesa", sup: ["Quan ho faràs?"] },
-            { n: 9, f: "Pont", m: ["CNV", "GROW", "Servei"], e: "Viabilitat", c: ["R", "A"], ic: "fa-bridge-circle-check", color: "green", t: "Promeses buides", p: "Diu 'sí', però és inviable.", q: "Què necessites per poder-ho fer?", a: "Verifica el compromís.", err: "Preguntar abans de l'opció", sup: ["Del 1 al 10, com de probable és?"] },
-            { n: 10, f: "Executar", m: ["Servei"], e: "Autonomia", c: ["A"], ic: "fa-play", color: "blue", t: "Paràlisi", p: "L'acció no arrenca.", q: "Com vols començar?", a: "Dona espai perquè faci.", err: "Microgestió", sup: ["Quina ajuda esperes de mi?"] },
-            { n: 11, f: "Sostenir", m: ["Servei"], e: "Recolzament", c: ["S", "A"], ic: "fa-life-ring", color: "red", t: "Falta de recursos", p: "Ho vol fer però té traves.", q: "En què et puc ajudar jo per facilitar-te la feina?", a: "Elimina les traves que ell/a no pot treure.", err: "Fer-ho tu mateix", sup: ["Quina barrera puc treure?", "Necessites més temps o recursos?"] },
-            { n: 12, f: "Desenvolupar", m: ["Servei"], e: "Creixement", c: ["E", "A"], ic: "fa-arrow-up-right-dots", color: "orange", t: "Repetició d'errors", p: "No n'aprèn de les pífies.", q: "Què t'ajudaria a fer-ho mejor la propera vegada?", a: "Transforma l'error en lliçó de futur.", err: "No reflexionar", sup: ["Què has aprendre?", "Com t'ha fet créixer aquest repte?"] },
-            { n: 13, f: "Mantenir", m: ["Servei"], e: "Seguiment", c: ["R"], ic: "fa-flag-checkered", color: "green", t: "Dissolució del pla", p: "L'acció es perd en el temps.", q: "Quin és el següent pas a partir d'aquí?", a: "Agenda una nova fita de control.", err: "No tancar el compromís", sup: ["Quan ens tornem a veure?", "Com ho celebrarem?"] }
+            { n: 1, f: "Obrir", m: ["CNV"], e: "Observació", c: ["S"], ic: "fa-shield-halved", color: "red", t: "Resistència/Excuses", p: "🖤 Es defensa davant un feedback · ❤️ Hi ha una obertura mínima per mirar què passa", q: "He observat que [fet concret]... Com ho veus tu?", a: "Fes que se senti escoltat sense ser jutjat.", err: "Jutjar → Activa la resistència", sup: ["T'havies adonat d'això?", "És la primera vegada?"] },
+            { n: 2, f: "Connectar", m: ["CNV"], e: "Sentiment", c: ["S", "F"], ic: "fa-face-meh", color: "violet", t: "Distància emocional", p: "🖤 Està tancat/da o incòmode · ❤️ La persona pot expressar com està o connectar amb el que sent", q: "Com estàs amb això que està passant?", a: "Valida la seva emoció abans de seguir.", err: "Ignorar emoció → Bloqueig", sup: ["Què és el que més t'està pesant?", "Necessites un moment?"] },
+            { n: 3, f: "Entendre", m: ["CNV"], e: "Necessitat", c: ["F", "E"], ic: "fa-circle-question", color: "orange", t: "Malestar confús", p: "🖤 No sap què necessita realment · ❤️ Ja es pot començar a posar nom al que falta o importa", q: "Què hi ha darrere d'això? Què necessites realment?", a: "Ajuda'l a posar nom al que li manca.", err: "Anar directe a la solució", sup: ["Què és important aquí?", "Quina necessitat no s'està cobrint?"] },
+            { n: 4, f: "Enfocar", m: ["GROW"], e: "G - Goal", c: ["A"], ic: "fa-bullseye", color: "blue", t: "Desenfocament", p: "🖤 Molta feina, poc objectiu · ❤️ Comença a aparèixer una direcció clara o una meta útil", q: "Què vols aconseguir exactament?", a: "Defineix un objectiu SMART.", err: "Objectiu vague", sup: ["Com sabrem que ho hem assolit?"] },
+            { n: 5, f: "Aterrar", m: ["GROW"], e: "R - Reality", c: ["A"], ic: "fa-map-location-dot", color: "grey", t: "Desconnexió real", p: "🖤 Ignora on es troba el projecte · ❤️ Es pot mirar la situació amb una mica de realitat i concreció", q: "On estàs ara mateix respecte a l'objectiu?", a: "Busca fets i dades.", err: "Acceptar excuses", sup: ["Què has intentat fins ara?"] },
+            { n: 6, f: "Confrontar", m: ["GROW"], e: "Reality profunda", c: ["R", "A"], ic: "fa-handshake-slash", color: "red", t: "Falta de propietat", p: "🖤 No se sent part del problema · ❤️ La persona reconeix alguna part pròpia de marge d’acció", q: "Què depèn de tu?", a: "Retorna-li la responsabilitat.", err: "Ser dur → Defensa", sup: ["Quina part de responsabilitat tens?"] },
+            { n: 7, f: "Activar", m: ["GROW"], e: "O - Options", c: ["A", "F"], ic: "fa-lightbulb", color: "orange", t: "Bloqueig creatiu", p: "🖤 No veu alternatives de solució · ❤️ Apareixen opcions, idees o maneres diferents d’avançar", q: "Quines opcions veus?", a: "Fes pluja d'idees.", err: "Donar solucions", sup: ["Quina altra alternativa veus?"] },
+            { n: 8, f: "Decidir", m: ["CNV", "GROW"], e: "W - Will", c: ["R"], ic: "fa-check-double", color: "violet", t: "Indecisió", p: "🖤 Té opcions però no tria · ❤️ Hi ha prou claredat per començar a triar un primer pas", q: "Què faràs primer?", a: "Tria i concreta un primer pas.", err: "Acceptar vaguesa", sup: ["Quan ho faràs?"] },
+            { n: 9, f: "Pont", m: ["CNV", "GROW", "Servei"], e: "Viabilitat", c: ["R", "A"], ic: "fa-bridge-circle-check", color: "green", t: "Promeses buides", p: "🖤 Diu 'sí', però és inviable · ❤️ Es pot convertir la conversa en un acord realista", q: "Què necessites per poder-ho fer?", a: "Verifica el compromís.", err: "Preguntar abans de l'opció", sup: ["Del 1 al 10, com de probable és?"] },
+            { n: 10, f: "Executar", m: ["Servei"], e: "Autonomia", c: ["A"], ic: "fa-play", color: "blue", t: "Paràlisi", p: "🖤 L'acció no arrenca · ❤️ L’acció pot començar sense quedar encallada", q: "Com vols començar?", a: "Dona espai perquè faci.", err: "Microgestió", sup: ["Quina ajuda esperes de mi?"] },
+            { n: 11, f: "Sostenir", m: ["Servei"], e: "Recolzament", c: ["S", "A"], ic: "fa-life-ring", color: "red", t: "Falta de recursos", p: "🖤 Ho vol fer però té traves · ❤️ Hi ha ajuda, recursos o acompanyament que sostenen el pas", q: "En què et puc ajudar jo per facilitar-te la feina?", a: "Elimina les traves que ell/a no pot treure.", err: "Fer-ho tu mateix", sup: ["Quina barrera puc treure?", "Necessites més temps o recursos?"] },
+            { n: 12, f: "Desenvolupar", m: ["Servei"], e: "Creixement", c: ["E", "A"], ic: "fa-arrow-up-right-dots", color: "orange", t: "Repetició d'errors", p: "🖤 No n'aprèn de les pífies  · ❤️ La situació es pot aprofitar per créixer i ajustar", q: "Què t'ajudaria a fer-ho mejor la propera vegada?", a: "Transforma l'error en lliçó de futur.", err: "No reflexionar", sup: ["Què has aprendre?", "Com t'ha fet créixer aquest repte?"] },
+            { n: 13, f: "Mantenir", m: ["Servei"], e: "Seguiment", c: ["R"], ic: "fa-flag-checkered", color: "green", t: "Dissolució del pla", p: "🖤 L'acció es perd en el temps · ❤️ Es pot donar seguiment i mantenir el que funciona", q: "Quin és el següent pas a partir d'aquí?", a: "Agenda una nova fita de control.", err: "No tancar el compromís", sup: ["Quan ens tornem a veure?", "Com ho celebrarem?"] }
         ];
 const facilitatingSituations = [
     {
@@ -1835,6 +1835,12 @@ function applyTemplate(type) {
             emocions: "Situa les emocions percebudes a la mateixa alçada de cada situació.",
             necessitats: "Indica quines necessitats vols cobrir.",
             accions: "Situa accions que et poden apropar a cobrir les necessitats; a dalt, les accions de major retorn de l'esforç."
+        },
+        empatia: {
+            situacions: "Crea una línea de temps amb les situacions.",
+            emocions: "Crea un núvol d'emocions de les persones afectades.",
+            necessitats: "Agrupa les necessitats de les persones afectades",
+            accions: "Situa accions que et poden apropar a cobrir les necessitats; a dalt, les accions més fàcils de dur a terme."
         }
     };
 
@@ -2189,18 +2195,24 @@ function getCurrentSituationsData() {
         }
 
        function openModal(n) {
-    const source = getCurrentSituationsData();
-    const s = source.find(x => x.n === n) || stages.find(x => x.n === n);
+            const source = getCurrentSituationsData();
+            const s = source.find(x => x.n === n) || stages.find(x => x.n === n);
 
-    document.getElementById('modal-content').innerHTML = `
-        <h3>${s.n}. ${s.f || ''}</h3>
-        <p style="margin-top:-6px; color:#64748b; font-size:0.9rem;">
-            <strong>${s.t}</strong> · ${s.p}
-        </p>
-        ${renderDetails(stages.find(x => x.n === n))}
-    `;
-    document.getElementById('modal-container').style.display = 'flex';
-}
+            document.getElementById('modal-content').innerHTML = `
+                <h3>${s.n}. ${s.f || ''}</h3>
+
+                <p style="margin-top:-4px; font-weight:600; color:var(--cep-black); font-size:0.95rem;">
+                    ${s.t}
+                </p>
+
+                <p style="margin-top:4px; color:#64748b; font-size:0.85rem;">
+                    ${s.p}
+                </p>
+
+                ${renderDetails(stages.find(x => x.n === n))}
+            `;
+            document.getElementById('modal-container').style.display = 'flex';
+        }
 
         function closeModal() {
             document.getElementById('modal-container').style.display = 'none';
