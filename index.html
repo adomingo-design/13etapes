@@ -217,6 +217,64 @@
             color: white;
             letter-spacing: 0.3px;
         }
+        
+        .pillar-bottom {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.pillar-questions-group {
+    background: rgba(255,255,255,0.24);
+    border: 1px solid rgba(255,255,255,0.24);
+    border-radius: 14px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 1em;
+}
+
+.pillar-question {
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.pillar-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0px;
+    margin-top: 8px;
+}
+
+.pillar-link {
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.24);
+    color: rgba(255,255,255,0.92);
+    border-radius: 14px;
+    padding: 6px 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    margin-right: 0.5em;
+}
+
+.pillar-link:hover {
+    background: rgba(255,255,255,0.4);
+    border-color: rgba(255,255,255,0.6);
+    transform: translateY(-1px);
+}
+        
+        
+        
+        
+        
+
 
         .pillar-desc {
             margin: 0;
@@ -226,32 +284,9 @@
             max-width: 34ch;
         }
 
-        .pillar-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 18px;
-        }
+        
 
-        .pillar-link {
-            border: 1px solid rgba(255,255,255,0.30);
-            background: rgba(255,255,255,0.10);
-            color: white;
-            border-radius: 999px;
-            padding: 9px 14px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-            transition: background 0.15s, transform 0.15s, border-color 0.15s;
-        }
-
-        .pillar-link:hover {
-            background: rgba(255,255,255,0.18);
-            border-color: rgba(255,255,255,0.45);
-            transform: translateY(-1px);
-        }
-
+    
         /* TARGETES VISUALS */
         .diag-grid {
             display: grid;
@@ -350,7 +385,7 @@
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            padding: 30px;
+            padding: 40px 30px 30px 30px; /* más aire arriba */
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
@@ -730,6 +765,7 @@
             min-height: 300px;
         }
 
+
 /*.quadrant-header {
     align-items: flex-start;
 }*/
@@ -784,17 +820,17 @@
 .quadrant-template-btn {
     grid-column: 2;
     grid-row: 1;
-
     justify-self: end;
 
-    border: 2px solid var(--cep-blue);
     background: white;
-    color: #64748b;
-    border-radius: 999px;
-    padding: 6px 14px;
-    font-size: 0.72rem;
-    font-weight: 700;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 6px 10px;
     cursor: pointer;
+    font-size: 0.72rem;
+    font-weight: normal;
+    color: var(--cep-black);
+    white-space: nowrap;
 }
 
 .quadrant-header-left {
@@ -1072,6 +1108,158 @@
     border-color: var(--cep-red);
     color: white;
 }
+.modal-header-block {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    margin-top: 14px;
+}
+
+.modal-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.modal-stage {
+    font-family: 'Varela Round';
+    font-size: 1.1rem;
+    color: var(--cep-black);
+}
+
+.modal-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #64748b;
+    text-align: right;
+}
+
+.modal-header-desc {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+.stage-line {
+    display: block;
+    line-height: 1.3;
+    margin-left: 0.8em; /* 👈 sangría */
+    /*margin-top: 0.5em;*/
+}
+.situation-preview {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.25;
+    margin-top: 0.5em;
+}
+
+.situation-line {
+    display: block;
+    margin-left: 0.8em;
+    margin-top: 0.5em;
+}
+
+.situation-line-blocking,
+.situation-line-facilitating {
+    color: #575756;
+    font-weight: normal;
+}
+
+.hearts-block{
+    padding-top: 0.25em;
+    /*border: 1px solid #eee;*/
+}
+.organizer-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.organizer-title-row h2 {
+    margin-bottom: 0;
+}
+
+.organizer-clear-btn {
+    color: var(--cep-red);
+    border-color: #fecaca;
+    background: #fff5f5;
+}
+
+.organizer-clear-btn:hover {
+    background: #ffeaea;
+}
+.count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+
+    background: transparent;
+    border: 1px solid #d1d5db;
+    color: #64748b;
+
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1;
+    margin-left: 2px;
+
+    
+}
+.count-badge.has-items {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: var(--cep-black);
+}
+.bank-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid transparent;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.15s ease;
+}
+
+.bank-indicator.has-items {
+    background: #94a3b8;
+    border-color: #94a3b8;
+    opacity: 1;
+    transform: scale(1);
+}
+.bank-indicator.has-items {
+    background: #64748b;
+    border-color: #64748b;
+    opacity: 1;
+    transform: scale(1);
+}
+.quadrant-template-btn.active {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+    color: var(--cep-black);
+}
+.template-caret {
+    font-size: 0.65rem;
+    margin-left: 6px;
+    opacity: 0.7;
+}
+.template-dropdown.open .template-caret {
+    transform: rotate(180deg);
+}
+.template-caret {
+    transition: transform 0.2s ease;
+}
+
 
 
     </style>
@@ -1120,50 +1308,89 @@
     <main id="main-content">
         <div id="view-home">
             <div class="home-hero">
-                <div class="pillars-grid">
-                    <div class="pillar-card pillar-para">
-                        <div class="pillar-top">
-                            <small>👀 Observar i regular</small>
-                            <h3 class="pillar-title">📷 PARA</h3>
-                            <p class="pillar-desc">
-                                Ens aturem per regular-nos i actuar millor. Mirem la situació amb la voluntat de prendre persepectiva i reconèixer el que està passant.
-                            </p>
-                        </div>
-                        <div class="pillar-links">
-                            <button class="pillar-link" onclick="showView('situacions')">Situacions</button>
-                            <button class="pillar-link" onclick="showView('organitzador')">Organitzador</button>
-                        </div>
-                    </div>
+  <div class="pillars-grid">
+    <div class="pillar-card pillar-para">
+        <div class="pillar-top">
+            <h3 class="pillar-title">📷 PARA</h3>
+            <small>Aturar l'impuls</small>
 
-                    <div class="pillar-card pillar-parla">
-                        <div class="pillar-top">
-                            <small>🔠 Comprendre</small>
-                            <h3 class="pillar-title">💬 PARLA</h3>
-                            <p class="pillar-desc">
-                                Parlem per connectar. Ens fem responsables de la situació i de les nostres reaccions. Empatitzem amb nosaltres i les persones que ens envolten.
-                            </p>
-                        </div>
-                        <div class="pillar-links">
-                            <button class="pillar-link" onclick="showView('cnv')">CNV</button>
-                            <button class="pillar-link" onclick="showView('grow')">GROW</button>
-                            <button class="pillar-link" onclick="showView('servei')">Servei</button>
-                            <button class="pillar-link" onclick="showView('organitzador')">Organitzador</button>
-                        </div>
-                    </div>
+            <p class="pillar-desc">
+                Intervenir en calent ens porta a la reacció impulsiva. Parar és regular-nos per poder actuar millor.
+            </p>
 
-                    <div class="pillar-card pillar-pacta">
-                        <div class="pillar-top">
-                            <small>♻️ Sostenir i Actuar</small>
-                            <h3 class="pillar-title">🤝 PACTA</h3>
-                            <p class="pillar-desc">
-                                Decidim i ens comprometem amb nosaltres i amb les persones que ens envolten. Podem reparar les relacions i entenem la importància de no reincidir.
-                            </p>
-                        </div>
-                        <div class="pillar-links">
-                            <button class="pillar-link" onclick="showView('organitzador')">Organitzador</button>
-                        </div>
-                    </div>
-                </div>
+            <p class="pillar-desc">
+                <strong>Parar no és no intervenir; és intervenir millor.</strong> És agafar l’aire necessari per no entrar en el càstig o la reacció automàtica.
+            </p>
+        </div>
+
+        <div class="pillar-bottom">
+            <div class="pillar-questions-group">
+                <div class="pillar-question">“Ara mateix parem aquí… ho reprenem en un moment?”</div>
+            </div>
+
+            <div class="pillar-links">
+                <button class="pillar-link" onclick="showView('situacions')">Situacions</button>
+                <button class="pillar-link" onclick="showView('organitzador')">Organitzador</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="pillar-card pillar-parla">
+        <div class="pillar-top">
+            <h3 class="pillar-title">💬 PARLA</h3>
+            <small>Donar veu real</small>
+
+            <p class="pillar-desc">
+                No és només deixar parlar, és escoltar de veritat. Aquí passem de jutjar a entendre.
+            </p>
+
+            <p class="pillar-desc">
+                Ens fem responsables del que passa i de com ens afecta. És vital escoltar les veus que habitualment callen.
+            </p>
+        </div>
+
+        <div class="pillar-bottom">
+            <div class="pillar-questions-group">
+                <div class="pillar-question">Què ha passat segons tu?</div>
+                <div class="pillar-question">Com t’ha afectat?</div>
+                <div class="pillar-question">Què necessites ara?</div>
+            </div>
+
+            <div class="pillar-links">
+                <button class="pillar-link" onclick="showView('cnv')">CNV</button>
+                <button class="pillar-link" onclick="showView('grow')">GROW</button>
+                <button class="pillar-link" onclick="showView('servei')">Servei</button>
+                <button class="pillar-link" onclick="showView('organitzador')">Organitzador</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="pillar-card pillar-pacta">
+        <div class="pillar-top">
+            <h3 class="pillar-title">🤝 PACTA</h3>
+            <small>Responsabilitat i compromís</small>
+
+            <p class="pillar-desc">
+                No busquem el càstig, busquem la reparació construïda. Responsabilitat no és culpa: és capacitat d’actuar.
+            </p>
+
+            <p class="pillar-desc">
+                Busquem compromisos reals. La reparació genera aprenentatge; el càstig sovint només genera ressentiment.
+            </p>
+        </div>
+
+        <div class="pillar-bottom">
+            <div class="pillar-questions-group">
+                <div class="pillar-question">Què pots fer per reparar el dany?</div>
+                <div class="pillar-question">Què necessites per ser reparat?</div>
+            </div>
+
+            <div class="pillar-links">
+                <button class="pillar-link" onclick="showView('organitzador')">Organitzador</button>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
         </div>
 
@@ -1189,13 +1416,24 @@
   
 <div id="view-organitzador" style="display:none;">
     <div class="card">
-        <h2><i class="fa-solid fa-table-cells-large"></i> Organitzador gràfic interactiu</h2>
+        <div class="organizer-title-row">
+            <h2><i class="fa-solid fa-table-cells-large"></i> Organitzador gràfic interactiu</h2>
+            <button class="mini-action-btn organizer-clear-btn" onclick="handleClearOrganizer()">
+             🗑️ Esborrar mapa
+            </button>
+        </div>
 
         <div class="organizer-layout">
             <div class="organizer-bank">
                 <div class="bank-accordion-item open" id="acc-situacions">
                     <button class="bank-accordion-header" onclick="toggleBankAccordion('acc-situacions')">
-                        <span class="left"><i class="fa-solid fa-camera"></i> Situacions</span>
+                        <span class="left">
+                            <i class="fa-solid fa-camera"></i>
+                            <span>Situacions</span>
+                            <span class="bank-indicator" id="bank-situacions" title="Hi ha elements al banc"></span>
+                            <span class="count-badge" id="count-situacions">0</span>
+                             
+                        </span>
                         <span class="right">
                             <span class="mini-action-btn" onclick="event.stopPropagation(); openItemModal('situacio')">+ Afegir</span>
                             <i class="fa-solid fa-chevron-down"></i>
@@ -1206,7 +1444,11 @@
 
                 <div class="bank-accordion-item" id="acc-emocions">
                     <button class="bank-accordion-header" onclick="toggleBankAccordion('acc-emocions')">
-                        <span class="left"><i class="fa-solid fa-heart"></i> Emocions</span>
+                        <span class="left">
+                            <i class="fa-solid fa-heart"></i>
+                            <span>Emocions</span>
+                            <span class="count-badge" id="count-emocions">0</span>
+                        </span>
                         <span class="right"><i class="fa-solid fa-chevron-down"></i></span>
                     </button>
 
@@ -1253,7 +1495,11 @@
 
                 <div class="bank-accordion-item" id="acc-necessitats">
                     <button class="bank-accordion-header" onclick="toggleBankAccordion('acc-necessitats')">
-                        <span class="left"><i class="fa-solid fa-gem"></i> Necessitats</span>
+                        <span class="left">
+                            <i class="fa-solid fa-gem"></i>
+                            <span>Necessitats</span>
+                            <span class="count-badge" id="count-necessitats">0</span>
+                        </span>
                         <span class="right"><i class="fa-solid fa-chevron-down"></i></span>
                     </button>
 
@@ -1288,7 +1534,12 @@
 
                 <div class="bank-accordion-item open" id="acc-accions">
                     <button class="bank-accordion-header" onclick="toggleBankAccordion('acc-accions')">
-                        <span class="left">🌼 Accions</span>
+                        <span class="left">
+                            <span>🌼</span>
+                            <span>Estratègies / Accions</span>
+                            <span class="bank-indicator" id="bank-accions" title="Hi ha elements al banc"></span>
+                            <span class="count-badge" id="count-accions">0</span>
+                        </span>
                         <span class="right">
                             <span class="mini-action-btn" onclick="event.stopPropagation(); openItemModal('accio')">+ Afegir</span>
                             <i class="fa-solid fa-chevron-down"></i>
@@ -1310,18 +1561,13 @@
                         </div>
 
                         <div class="template-dropdown">
-                            <button class="quadrant-template-btn" onclick="toggleTemplateMenu(event)">
-                                Plantilla
+                            <button id="template-button" class="quadrant-template-btn" onclick="toggleTemplateMenu(event)">
+                                <span id="template-button-label">Carregar plantilla</span>
+                                <i class="fa-solid fa-chevron-down template-caret"></i>
                             </button>
 
-                            <div class="template-menu" id="template-menu">
-                                <div class="template-option" onclick="applyTemplate('blank')">
-                                    En blanc
-                                </div>
-                                <div class="template-option" onclick="applyTemplate('roi')">
-                                    Retorn de la inversió
-                                </div>
-                            </div>
+                            <div class="template-menu" id="template-menu"></div>
+
                         </div>
 
                         <div class="drop-note" id="hint-situacions">
@@ -1379,7 +1625,7 @@
                     <div class="quadrant-header">
                         <div class="quadrant-title">
                             <span>🌼</span>
-                            <span>Accions</span>
+                            <span>Estratègies / Accions</span>
                         </div>
 
                         <span class="quadrant-template-btn" style="visibility:hidden;">Plantilla</span>
@@ -1491,327 +1737,349 @@
             { n: 12, f: "Desenvolupar", m: ["Servei"], e: "Creixement", c: ["E", "A"], ic: "fa-arrow-up-right-dots", color: "orange", t: "Repetició d'errors", p: "🖤 No n'aprèn de les pífies  · ❤️ La situació es pot aprofitar per créixer i ajustar", q: "Què t'ajudaria a fer-ho mejor la propera vegada?", a: "Transforma l'error en lliçó de futur.", err: "No reflexionar", sup: ["Què has aprendre?", "Com t'ha fet créixer aquest repte?"] },
             { n: 13, f: "Mantenir", m: ["Servei"], e: "Seguiment", c: ["R"], ic: "fa-flag-checkered", color: "green", t: "Dissolució del pla", p: "🖤 L'acció es perd en el temps · ❤️ Es pot donar seguiment i mantenir el que funciona", q: "Quin és el següent pas a partir d'aquí?", a: "Agenda una nova fita de control.", err: "No tancar el compromís", sup: ["Quan ens tornem a veure?", "Com ho celebrarem?"] }
         ];
-const facilitatingSituations = [
-    {
-        n: 1,
-        t: "Disponibilitat inicial",
-        p: "Hi ha una obertura mínima per mirar què passa."
-    },
-    {
-        n: 2,
-        t: "Connexió emocional possible",
-        p: "La persona pot expressar com està o connectar amb el que sent."
-    },
-    {
-        n: 3,
-        t: "Necessitat identificable",
-        p: "Ja es pot començar a posar nom al que falta o importa."
-    },
-    {
-        n: 4,
-        t: "Objectiu emergent",
-        p: "Comença a aparèixer una direcció clara o una meta útil."
-    },
-    {
-        n: 5,
-        t: "Lectura realista",
-        p: "Es pot mirar la situació amb una mica de realitat i concreció."
-    },
-    {
-        n: 6,
-        t: "Assumpció de responsabilitat",
-        p: "La persona reconeix alguna part pròpia de marge d’acció."
-    },
-    {
-        n: 7,
-        t: "Generació d’alternatives",
-        p: "Apareixen opcions, idees o maneres diferents d’avançar."
-    },
-    {
-        n: 8,
-        t: "Disposició a decidir",
-        p: "Hi ha prou claredat per començar a triar un primer pas."
-    },
-    {
-        n: 9,
-        t: "Compromís viable",
-        p: "Es pot convertir la conversa en un acord realista."
-    },
-    {
-        n: 10,
-        t: "Posada en marxa",
-        p: "L’acció pot començar sense quedar encallada."
-    },
-    {
-        n: 11,
-        t: "Suport disponible",
-        p: "Hi ha ajuda, recursos o acompanyament que sostenen el pas."
-    },
-    {
-        n: 12,
-        t: "Aprenentatge en marxa",
-        p: "La situació es pot aprofitar per créixer i ajustar."
-    },
-    {
-        n: 13,
-        t: "Continuïtat possible",
-        p: "Es pot donar seguiment i mantenir el que funciona."
-    }
-];
+        const facilitatingSituations = [
+            {
+                n: 1,
+                t: "Disponibilitat inicial",
+                p: "Hi ha una obertura mínima per mirar què passa."
+            },
+            {
+                n: 2,
+                t: "Connexió emocional possible",
+                p: "La persona pot expressar com està o connectar amb el que sent."
+            },
+            {
+                n: 3,
+                t: "Necessitat identificable",
+                p: "Ja es pot començar a posar nom al que falta o importa."
+            },
+            {
+                n: 4,
+                t: "Objectiu emergent",
+                p: "Comença a aparèixer una direcció clara o una meta útil."
+            },
+            {
+                n: 5,
+                t: "Lectura realista",
+                p: "Es pot mirar la situació amb una mica de realitat i concreció."
+            },
+            {
+                n: 6,
+                t: "Assumpció de responsabilitat",
+                p: "La persona reconeix alguna part pròpia de marge d’acció."
+            },
+            {
+                n: 7,
+                t: "Generació d’alternatives",
+                p: "Apareixen opcions, idees o maneres diferents d’avançar."
+            },
+            {
+                n: 8,
+                t: "Disposició a decidir",
+                p: "Hi ha prou claredat per començar a triar un primer pas."
+            },
+            {
+                n: 9,
+                t: "Compromís viable",
+                p: "Es pot convertir la conversa en un acord realista."
+            },
+            {
+                n: 10,
+                t: "Posada en marxa",
+                p: "L’acció pot començar sense quedar encallada."
+            },
+            {
+                n: 11,
+                t: "Suport disponible",
+                p: "Hi ha ajuda, recursos o acompanyament que sostenen el pas."
+            },
+            {
+                n: 12,
+                t: "Aprenentatge en marxa",
+                p: "La situació es pot aprofitar per créixer i ajustar."
+            },
+            {
+                n: 13,
+                t: "Continuïtat possible",
+                p: "Es pot donar seguiment i mantenir el que funciona."
+            }
+        ];
 
 
 
-        const emotionsWithIcons = {
-            "Afecte": [
-                {t: "Afectuosa", i: "🥰"}, {t: "Amorosa", i: "❤️"}, {t: "Carinyosa", i: "😊"},
-                {t: "Compassiva", i: "🤝"}, {t: "Comprensiva", i: "😌"}, {t: "Simpàtica", i: "✨"}, {t: "Tendra", i: "🧸"}
-            ],
-            "Inspiració": [
-                {t: "Impressionada", i: "😲"}, {t: "Inspirada", i: "💡"}, {t: "Meravellada", i: "🤩"}, {t: "Aturada", i: "⏸️"}
-            ],
-            "Pau": [
-                {t: "Harmonia", i: "🧘"}, {t: "Bellesa", i: "🌸"}, {t: "Comunió", i: "🤲"},
-                {t: "Equilibri", i: "⚖️"}, {t: "Espiritualitat", i: "✨"}, {t: "Igualtat", i: "🤝"},
-                {t: "Ordre", i: "📋"}, {t: "Quietud", i: "🤫"}, {t: "Serenitat", i: "🌊"},
-                {t: "Solitud", i: "🏔️"}, {t: "Tranquil·litat", i: "🍃"}, {t: "Alleujada", i: "🌬️"},
-                {t: "Serena", i: "💎"}, {t: "Calmosa", i: "⚓"}, {t: "Assossegada", i: "☁️"},
-                {t: "Propera", i: "🏘️"}, {t: "Còmoda", i: "🛋️"}, {t: "Contenta", i: "🙂"},
-                {t: "Relaxada", i: "🛀"}, {t: "Despreocupada", i: "🎈"}, {t: "Lliurada", i: "🎁"},
-                {t: "Plàcida", i: "🌅"}, {t: "Realitzada", i: "🏆"}, {t: "Satisfeta", i: "✅"}
-            ],
-            "Confiança": [
-                {t: "Capaç", i: "🦾"}, {t: "Confiada", i: "🛡️"}, {t: "Forta", i: "💪"},
-                {t: "Il·lusionada", i: "🌈"}, {t: "Orgullosa", i: "🦁"}, {t: "Receptiva", i: "📥"}, {t: "Segura", i: "🔒"}
-            ],
-            "Gratitud": [
-                {t: "Agraïda", i: "🙏"}, {t: "Conmovida", i: "🥺"}, {t: "Emocionada", i: "💓"},
-                {t: "Reconeixent", i: "🥇"}, {t: "Plena", i: "🌕"}
-            ],
-            "Esperança": [
-                {t: "Encoratjada", i: "🔥"}, {t: "Esperançada", i: "🌱"}, {t: "Expectant", i: "👀"}, {t: "Optimista", i: "☀️"}
-            ],
-            "Eufòria": [
-                {t: "Eufòrica", i: "🎊"}, {t: "Exultant", i: "🎆"}, {t: "Exuberant", i: "🌿"}
-            ],
-            "Entusiasme": [
-                {t: "Animada", i: "💃"}, {t: "Apassionada", i: "❤️‍🔥"}, {t: "Encisada", i: "🪄"},
-                {t: "Estimulada", i: "⚡"}, {t: "Excitada", i: "🌀"}, {t: "Fascinada", i: "🧿"},
-                {t: "Il·lusionada", i: "🌠"}, {t: "Juguetona", i: "🎲"}, {t: "Sorprendida", i: "🎁"}
-            ],
-            "Interès": [
-                {t: "Oberta", i: "📖"}, {t: "Atenta", i: "👂"}, {t: "Atraïda", i: "🧲"},
-                {t: "Compromesa", i: "💍"}, {t: "Curiosa", i: "🔍"}, {t: "Decidida", i: "🎯"},
-                {t: "Disposada", i: "🙋"}, {t: "Inspirada", i: "🎨"}, {t: "Interessada", i: "📌"},
-                {t: "Intrigada", i: "🕵️"}, {t: "Implicada", i: "🧩"}, {t: "Motivada", i: "🚀"}
-            ],
-            "Felicitat": [
-                {t: "Alegre", i: "😄"}, {t: "Complaguda", i: "😊"}, {t: "Feliç", i: "🥳"},
-                {t: "Il·lusionada", i: "✨"}, {t: "Plena", i: "💎"}
-            ],
-            "Descans": [
-                {t: "Descansada", i: "🛌"}, {t: "Refrescada", i: "🥤"}, {t: "Renovada", i: "♻️"},
-                {t: "Reposada", i: "💤"}, {t: "Restaurada", i: "🛠️"}
-            ]
-        };
+                const emotionsWithIcons = {
+                    "Afecte": [
+                        {t: "Afectuosa", i: "🥰"}, {t: "Amorosa", i: "❤️"}, {t: "Carinyosa", i: "😊"},
+                        {t: "Compassiva", i: "🤝"}, {t: "Comprensiva", i: "😌"}, {t: "Simpàtica", i: "✨"}, {t: "Tendra", i: "🧸"}
+                    ],
+                    "Inspiració": [
+                        {t: "Impressionada", i: "😲"}, {t: "Inspirada", i: "💡"}, {t: "Meravellada", i: "🤩"}, {t: "Aturada", i: "⏸️"}
+                    ],
+                    "Pau": [
+                        {t: "Harmonia", i: "🧘"}, {t: "Bellesa", i: "🌸"}, {t: "Comunió", i: "🤲"},
+                        {t: "Equilibri", i: "⚖️"}, {t: "Espiritualitat", i: "✨"}, {t: "Igualtat", i: "🤝"},
+                        {t: "Ordre", i: "📋"}, {t: "Quietud", i: "🤫"}, {t: "Serenitat", i: "🌊"},
+                        {t: "Solitud", i: "🏔️"}, {t: "Tranquil·litat", i: "🍃"}, {t: "Alleujada", i: "🌬️"},
+                        {t: "Serena", i: "💎"}, {t: "Calmosa", i: "⚓"}, {t: "Assossegada", i: "☁️"},
+                        {t: "Propera", i: "🏘️"}, {t: "Còmoda", i: "🛋️"}, {t: "Contenta", i: "🙂"},
+                        {t: "Relaxada", i: "🛀"}, {t: "Despreocupada", i: "🎈"}, {t: "Lliurada", i: "🎁"},
+                        {t: "Plàcida", i: "🌅"}, {t: "Realitzada", i: "🏆"}, {t: "Satisfeta", i: "✅"}
+                    ],
+                    "Confiança": [
+                        {t: "Capaç", i: "🦾"}, {t: "Confiada", i: "🛡️"}, {t: "Forta", i: "💪"},
+                        {t: "Il·lusionada", i: "🌈"}, {t: "Orgullosa", i: "🦁"}, {t: "Receptiva", i: "📥"}, {t: "Segura", i: "🔒"}
+                    ],
+                    "Gratitud": [
+                        {t: "Agraïda", i: "🙏"}, {t: "Conmovida", i: "🥺"}, {t: "Emocionada", i: "💓"},
+                        {t: "Reconeixent", i: "🥇"}, {t: "Plena", i: "🌕"}
+                    ],
+                    "Esperança": [
+                        {t: "Encoratjada", i: "🔥"}, {t: "Esperançada", i: "🌱"}, {t: "Expectant", i: "👀"}, {t: "Optimista", i: "☀️"}
+                    ],
+                    "Eufòria": [
+                        {t: "Eufòrica", i: "🎊"}, {t: "Exultant", i: "🎆"}, {t: "Exuberant", i: "🌿"}
+                    ],
+                    "Entusiasme": [
+                        {t: "Animada", i: "💃"}, {t: "Apassionada", i: "❤️‍🔥"}, {t: "Encisada", i: "🪄"},
+                        {t: "Estimulada", i: "⚡"}, {t: "Excitada", i: "🌀"}, {t: "Fascinada", i: "🧿"},
+                        {t: "Il·lusionada", i: "🌠"}, {t: "Juguetona", i: "🎲"}, {t: "Sorprendida", i: "🎁"}
+                    ],
+                    "Interès": [
+                        {t: "Oberta", i: "📖"}, {t: "Atenta", i: "👂"}, {t: "Atraïda", i: "🧲"},
+                        {t: "Compromesa", i: "💍"}, {t: "Curiosa", i: "🔍"}, {t: "Decidida", i: "🎯"},
+                        {t: "Disposada", i: "🙋"}, {t: "Inspirada", i: "🎨"}, {t: "Interessada", i: "📌"},
+                        {t: "Intrigada", i: "🕵️"}, {t: "Implicada", i: "🧩"}, {t: "Motivada", i: "🚀"}
+                    ],
+                    "Felicitat": [
+                        {t: "Alegre", i: "😄"}, {t: "Complaguda", i: "😊"}, {t: "Feliç", i: "🥳"},
+                        {t: "Il·lusionada", i: "✨"}, {t: "Plena", i: "💎"}
+                    ],
+                    "Descans": [
+                        {t: "Descansada", i: "🛌"}, {t: "Refrescada", i: "🥤"}, {t: "Renovada", i: "♻️"},
+                        {t: "Reposada", i: "💤"}, {t: "Restaurada", i: "🛠️"}
+                    ]
+                };
 
-        const emotionsUncovered = {
-            "Desconnexió": [
-                {t: "Avorrida", i: "😶"},
-                {t: "Afectada", i: "😔"},
-                {t: "Aïllada", i: "🏝️"},
-                {t: "Apàtica", i: "😐"},
-                {t: "Desconnectada", i: "🔌"},
-                {t: "Desitjosa", i: "🤲"},
-                {t: "Llunyana", i: "🌫️"},
-                {t: "Freda", i: "❄️"},
-                {t: "Indiferent", i: "😑"}
-            ],
-            "Confusió": [
-                {t: "Blocada", i: "🧱"},
-                {t: "Confosa", i: "😵"},
-                {t: "Desorientada", i: "🧭"},
-                {t: "Dividida", i: "⚡"},
-                {t: "Dubtosa", i: "❓"},
-                {t: "Escèptica", i: "🤨"},
-                {t: "Espessa", i: "🌫️"},
-                {t: "Indecisa", i: "↔️"},
-                {t: "Paralitzada", i: "🛑"},
-                {t: "Pensativa", i: "🤔"},
-                {t: "Perduda", i: "🧍"},
-                {t: "Perplexa", i: "😳"},
-                {t: "Vacil·lant", i: "🫥"}
-            ],
-            "Irritació": [
-                {t: "Consternada", i: "😠"},
-                {t: "Frustrada", i: "😤"},
-                {t: "Impacient", i: "⏳"},
-                {t: "Iracunda", i: "🔥"},
-                {t: "Irritada", i: "😡"},
-                {t: "Malhumorada", i: "🌩️"},
-                {t: "Molesta", i: "😒"}
-            ],
-            "Tristesa": [
-                {t: "Decebuda", i: "😞"},
-                {t: "Deprimida", i: "😔"},
-                {t: "Desanimada", i: "😕"},
-                {t: "Desgraciada", i: "😢"},
-                {t: "Desil·lusionada", i: "💔"},
-                {t: "Infeliç", i: "😣"},
-                {t: "Trista", i: "😢"}
-            ],
-            "Enyor": [
-                {t: "Enyorada", i: "🌙"},
-                {t: "Gelosa", i: "😒"},
-                {t: "Envejada", i: "👀"},
-                {t: "Melancòlica", i: "🎻"},
-                {t: "Nostàlgica", i: "📷"},
-                {t: "Sola", i: "🧍"}
-            ],
-            "Por": [
-                {t: "Aclaparada", i: "😰"},
-                {t: "Espantada", i: "😱"},
-                {t: "Aterroritzada", i: "👻"},
-                {t: "Aterida", i: "🥶"},
-                {t: "Desconfiada", i: "🕵️"},
-                {t: "En pànic", i: "🚨"},
-                {t: "Preocupada", i: "😟"}
-            ],
-            "Neguit": [
-                {t: "Agitada", i: "💨"},
-                {t: "Agobiada", i: "😵‍💫"},
-                {t: "Alarmada", i: "🚨"},
-                {t: "Arrepentida", i: "😣"},
-                {t: "Avergonyida", i: "😳"},
-                {t: "Desconcertada", i: "🤯"},
-                {t: "Escandalitzada", i: "😲"},
-                {t: "Incòmoda", i: "🪑"},
-                {t: "Inquieta", i: "🌀"},
-                {t: "Intranquil·la", i: "🌊"},
-                {t: "Preocupada", i: "😟"},
-                {t: "Sorprès/a", i: "😮"},
-                {t: "Temblorosa", i: "🥴"}
-            ],
-            "Cansament": [
-                {t: "Abatuda", i: "😩"},
-                {t: "Aïllada", i: "🏝️"},
-                {t: "Cansada", i: "😴"},
-                {t: "Débil", i: "🪫"},
-                {t: "Dolorida", i: "🤕"},
-                {t: "Fatigada", i: "🥱"},
-                {t: "Exhausta", i: "😵"},
-                {t: "Afligida", i: "😞"},
-                {t: "Angustiada", i: "😣"},
-                {t: "Desganada", i: "😪"},
-                {t: "Esgotada", i: "🪫"}
-            ],
-            "Vulnerabilitat": [
-                {t: "Fràgil", i: "🥺"},
-                {t: "Impotent", i: "😣"},
-                {t: "Insegura", i: "😟"},
-                {t: "Sensible", i: "💧"},
-                {t: "Tímida", i: "🙈"},
-                {t: "Vulnerable", i: "🫀"}
-            ],
-            "Tensió": [
-                {t: "Ansiosa", i: "😰"},
-                {t: "Commocionada", i: "😳"},
-                {t: "Desbordada", i: "🌊"},
-                {t: "Estressada", i: "💼"},
-                {t: "Irritable", i: "⚡"},
-                {t: "Nerviosa", i: "🫨"},
-                {t: "Sobrecaregda", i: "📦"},
-                {t: "Anegada", i: "🌊"},
-                {t: "Tensa", i: "🧵"}
-            ],
-            "Enuig": [
-                {t: "Disgustada", i: "🤢"},
-                {t: "Enfadada", i: "😡"},
-                {t: "Frustrada", i: "😤"},
-                {t: "Irritada", i: "😠"},
-                {t: "Iracunda", i: "🔥"},
-                {t: "Indignada", i: "⚖️"},
-                {t: "Molesta", i: "😒"},
-                {t: "Rencorosa", i: "🖤"}
-            ],
-            "Aversió": [
-                {t: "Fàstic", i: "🤮"},
-                {t: "Menyspreu", i: "😤"},
-                {t: "Horroritzada", i: "😱"},
-                {t: "Desdeny", i: "😒"},
-                {t: "Odi", i: "💢"},
-                {t: "Rebutjant", i: "🚫"}
-            ]
-        };
+                const emotionsUncovered = {
+                    "Desconnexió": [
+                        {t: "Avorrida", i: "😶"},
+                        {t: "Afectada", i: "😔"},
+                        {t: "Aïllada", i: "🏝️"},
+                        {t: "Apàtica", i: "😐"},
+                        {t: "Desconnectada", i: "🔌"},
+                        {t: "Desitjosa", i: "🤲"},
+                        {t: "Llunyana", i: "🌫️"},
+                        {t: "Freda", i: "❄️"},
+                        {t: "Indiferent", i: "😑"}
+                    ],
+                    "Confusió": [
+                        {t: "Blocada", i: "🧱"},
+                        {t: "Confosa", i: "😵"},
+                        {t: "Desorientada", i: "🧭"},
+                        {t: "Dividida", i: "⚡"},
+                        {t: "Dubtosa", i: "❓"},
+                        {t: "Escèptica", i: "🤨"},
+                        {t: "Espessa", i: "🌫️"},
+                        {t: "Indecisa", i: "↔️"},
+                        {t: "Paralitzada", i: "🛑"},
+                        {t: "Pensativa", i: "🤔"},
+                        {t: "Perduda", i: "🧍"},
+                        {t: "Perplexa", i: "😳"},
+                        {t: "Vacil·lant", i: "🫥"}
+                    ],
+                    "Irritació": [
+                        {t: "Consternada", i: "😠"},
+                        {t: "Frustrada", i: "😤"},
+                        {t: "Impacient", i: "⏳"},
+                        {t: "Iracunda", i: "🔥"},
+                        {t: "Irritada", i: "😡"},
+                        {t: "Malhumorada", i: "🌩️"},
+                        {t: "Molesta", i: "😒"}
+                    ],
+                    "Tristesa": [
+                        {t: "Decebuda", i: "😞"},
+                        {t: "Deprimida", i: "😔"},
+                        {t: "Desanimada", i: "😕"},
+                        {t: "Desgraciada", i: "😢"},
+                        {t: "Desil·lusionada", i: "💔"},
+                        {t: "Infeliç", i: "😣"},
+                        {t: "Trista", i: "😢"}
+                    ],
+                    "Enyor": [
+                        {t: "Enyorada", i: "🌙"},
+                        {t: "Gelosa", i: "😒"},
+                        {t: "Envejada", i: "👀"},
+                        {t: "Melancòlica", i: "🎻"},
+                        {t: "Nostàlgica", i: "📷"},
+                        {t: "Sola", i: "🧍"}
+                    ],
+                    "Por": [
+                        {t: "Aclaparada", i: "😰"},
+                        {t: "Espantada", i: "😱"},
+                        {t: "Aterroritzada", i: "👻"},
+                        {t: "Aterida", i: "🥶"},
+                        {t: "Desconfiada", i: "🕵️"},
+                        {t: "En pànic", i: "🚨"},
+                        {t: "Preocupada", i: "😟"}
+                    ],
+                    "Neguit": [
+                        {t: "Agitada", i: "💨"},
+                        {t: "Agobiada", i: "😵‍💫"},
+                        {t: "Alarmada", i: "🚨"},
+                        {t: "Arrepentida", i: "😣"},
+                        {t: "Avergonyida", i: "😳"},
+                        {t: "Desconcertada", i: "🤯"},
+                        {t: "Escandalitzada", i: "😲"},
+                        {t: "Incòmoda", i: "🪑"},
+                        {t: "Inquieta", i: "🌀"},
+                        {t: "Intranquil·la", i: "🌊"},
+                        {t: "Preocupada", i: "😟"},
+                        {t: "Sorprès/a", i: "😮"},
+                        {t: "Temblorosa", i: "🥴"}
+                    ],
+                    "Cansament": [
+                        {t: "Abatuda", i: "😩"},
+                        {t: "Aïllada", i: "🏝️"},
+                        {t: "Cansada", i: "😴"},
+                        {t: "Débil", i: "🪫"},
+                        {t: "Dolorida", i: "🤕"},
+                        {t: "Fatigada", i: "🥱"},
+                        {t: "Exhausta", i: "😵"},
+                        {t: "Afligida", i: "😞"},
+                        {t: "Angustiada", i: "😣"},
+                        {t: "Desganada", i: "😪"},
+                        {t: "Esgotada", i: "🪫"}
+                    ],
+                    "Vulnerabilitat": [
+                        {t: "Fràgil", i: "🥺"},
+                        {t: "Impotent", i: "😣"},
+                        {t: "Insegura", i: "😟"},
+                        {t: "Sensible", i: "💧"},
+                        {t: "Tímida", i: "🙈"},
+                        {t: "Vulnerable", i: "🫀"}
+                    ],
+                    "Tensió": [
+                        {t: "Ansiosa", i: "😰"},
+                        {t: "Commocionada", i: "😳"},
+                        {t: "Desbordada", i: "🌊"},
+                        {t: "Estressada", i: "💼"},
+                        {t: "Irritable", i: "⚡"},
+                        {t: "Nerviosa", i: "🫨"},
+                        {t: "Sobrecaregda", i: "📦"},
+                        {t: "Anegada", i: "🌊"},
+                        {t: "Tensa", i: "🧵"}
+                    ],
+                    "Enuig": [
+                        {t: "Disgustada", i: "🤢"},
+                        {t: "Enfadada", i: "😡"},
+                        {t: "Frustrada", i: "😤"},
+                        {t: "Irritada", i: "😠"},
+                        {t: "Iracunda", i: "🔥"},
+                        {t: "Indignada", i: "⚖️"},
+                        {t: "Molesta", i: "😒"},
+                        {t: "Rencorosa", i: "🖤"}
+                    ],
+                    "Aversió": [
+                        {t: "Fàstic", i: "🤮"},
+                        {t: "Menyspreu", i: "😤"},
+                        {t: "Horroritzada", i: "😱"},
+                        {t: "Desdeny", i: "😒"},
+                        {t: "Odi", i: "💢"},
+                        {t: "Rebutjant", i: "🚫"}
+                    ]
+                };
 
-        const catColors = {
-            "Afecte": "#D8262E",
-            "Inspiració": "#F98D29",
-            "Pau": "#6A478D",
-            "Confiança": "#009ABE",
-            "Gratitud": "#648B1A",
-            "Esperança": "#575756",
-            "Eufòria": "#D8262E",
-            "Entusiasme": "#F98D29",
-            "Interès": "#6A478D",
-            "Felicitat": "#648B1A",
-            "Descans": "#009ABE",
+                const catColors = {
+                    "Afecte": "#D8262E",
+                    "Inspiració": "#F98D29",
+                    "Pau": "#6A478D",
+                    "Confiança": "#009ABE",
+                    "Gratitud": "#648B1A",
+                    "Esperança": "#575756",
+                    "Eufòria": "#D8262E",
+                    "Entusiasme": "#F98D29",
+                    "Interès": "#6A478D",
+                    "Felicitat": "#648B1A",
+                    "Descans": "#009ABE",
 
-            "Desconnexió": "#575756",
-            "Confusió": "#6A478D",
-            "Irritació": "#F98D29",
-            "Tristesa": "#009ABE",
-            "Enyor": "#648B1A",
-            "Por": "#D8262E",
-            "Neguit": "#F98D29",
-            "Cansament": "#575756",
-            "Vulnerabilitat": "#009ABE",
-            "Tensió": "#6A478D",
-            "Enuig": "#D8262E",
-            "Aversió": "#000000"
-        };
+                    "Desconnexió": "#575756",
+                    "Confusió": "#6A478D",
+                    "Irritació": "#F98D29",
+                    "Tristesa": "#009ABE",
+                    "Enyor": "#648B1A",
+                    "Por": "#D8262E",
+                    "Neguit": "#F98D29",
+                    "Cansament": "#575756",
+                    "Vulnerabilitat": "#009ABE",
+                    "Tensió": "#6A478D",
+                    "Enuig": "#D8262E",
+                    "Aversió": "#000000"
+                };
 
-        const needsWithIcons = {
-            "Connexió": [
-                { t: "Afecte", i: "💎" }, { t: "Amor", i: "💎" }, { t: "Pertinença", i: "💎" },
-                { t: "Proximitat", i: "💎" }, { t: "Complicitat", i: "💎" }, { t: "Intimitat", i: "💎" },
-                { t: "Comprensió", i: "💎" }, { t: "Empatia", i: "💎" }
-            ],
-            "Benestar": [
-                { t: "Descans", i: "💎" }, { t: "Calma", i: "💎" }, { t: "Seguretat", i: "💎" },
-                { t: "Protecció", i: "💎" }, { t: "Salut", i: "💎" }, { t: "Espai", i: "💎" }
-            ],
-            "Autonomia": [
-                { t: "Llibertat", i: "💎" }, { t: "Elecció", i: "💎" }, { t: "Autonomia", i: "💎" },
-                { t: "Capacitat d'incidir", i: "💎" }, { t: "Claredat", i: "💎" }
-            ],
-            "Sentit": [
-                { t: "Propòsit", i: "💎" }, { t: "Aprenentatge", i: "💎" }, { t: "Creixement", i: "💎" },
-                { t: "Contribució", i: "💎" }, { t: "Coherència", i: "💎" }
-            ],
-            "Reconeixement": [
-                { t: "Respecte", i: "💎" }, { t: "Valoració", i: "💎" }, { t: "Escolta", i: "💎" },
-                { t: "Consideració", i: "💎" }, { t: "Reciprocitat", i: "💎" }
-            ],
-            "Ordre": [
-                { t: "Estructura", i: "💎" }, { t: "Ordre", i: "💎" }, { t: "Previsibilitat", i: "💎" },
-                { t: "Acord", i: "💎" }, { t: "Organització", i: "💎" }
-            ]
-        };
+                const needsWithIcons = {
+                    "Connexió": [
+                        { t: "Afecte", i: "💎" }, { t: "Amor", i: "💎" }, { t: "Pertinença", i: "💎" },
+                        { t: "Proximitat", i: "💎" }, { t: "Complicitat", i: "💎" }, { t: "Intimitat", i: "💎" },
+                        { t: "Comprensió", i: "💎" }, { t: "Empatia", i: "💎" }
+                    ],
+                    "Benestar": [
+                        { t: "Descans", i: "💎" }, { t: "Calma", i: "💎" }, { t: "Seguretat", i: "💎" },
+                        { t: "Protecció", i: "💎" }, { t: "Salut", i: "💎" }, { t: "Espai", i: "💎" }
+                    ],
+                    "Autonomia": [
+                        { t: "Llibertat", i: "💎" }, { t: "Elecció", i: "💎" }, { t: "Autonomia", i: "💎" },
+                        { t: "Capacitat d'incidir", i: "💎" }, { t: "Claredat", i: "💎" }
+                    ],
+                    "Sentit": [
+                        { t: "Propòsit", i: "💎" }, { t: "Aprenentatge", i: "💎" }, { t: "Creixement", i: "💎" },
+                        { t: "Contribució", i: "💎" }, { t: "Coherència", i: "💎" }
+                    ],
+                    "Reconeixement": [
+                        { t: "Respecte", i: "💎" }, { t: "Valoració", i: "💎" }, { t: "Escolta", i: "💎" },
+                        { t: "Consideració", i: "💎" }, { t: "Reciprocitat", i: "💎" }
+                    ],
+                    "Ordre": [
+                        { t: "Estructura", i: "💎" }, { t: "Ordre", i: "💎" }, { t: "Previsibilitat", i: "💎" },
+                        { t: "Acord", i: "💎" }, { t: "Organització", i: "💎" }
+                    ]
+                };
 
-        const organizerCategoryColors = {
-            "Connexió": "#D8262E",
-            "Benestar": "#648B1A",
-            "Autonomia": "#009ABE",
-            "Sentit": "#6A478D",
-            "Reconeixement": "#F98D29",
-            "Ordre": "#575756"
+                const organizerCategoryColors = {
+                    "Connexió": "#D8262E",
+                    "Benestar": "#648B1A",
+                    "Autonomia": "#009ABE",
+                    "Sentit": "#6A478D",
+                    "Reconeixement": "#F98D29",
+                    "Ordre": "#575756"
+                };
+
+                const templates = {
+            blank: {
+                situacions: "Només situacions",
+                emocions: "Només emocions",
+                necessitats: "Només necessitats",
+                accions: "Només accions"
+            },
+            roi: {
+                situacions: "Crea una columna de situacions.",
+                emocions: "Situa les emocions percebudes a la mateixa alçada de cada situació.",
+                necessitats: "Indica quines necessitats vols cobrir.",
+                accions: "Situa accions que et poden apropar a cobrir les necessitats; a dalt, les accions de major retorn de l'esforç."
+            },
+            empatia: {
+                situacions: "Crea una línea de temps amb les situacions.",
+                emocions: "Crea un núvol d'emocions de les persones afectades.",
+                necessitats: "Agrupa les necessitats de les persones afectades",
+                accions: "Situa accions que et poden apropar a cobrir les necessitats; a dalt, les accions més fàcils de dur a terme."
+            }
         };
 
         
         let currentItemType = null;
-let customSituations = [];
-let customActions = [];
-let situationMode = 'blocking';
+        let customSituations = [];
+        let customActions = [];
+        let currentTemplate = 'blank';
+        let situationMode = 'blocking';
 
         let emotionMode = 'covered';
         let emotionViewMode = 'grouped';
@@ -1821,69 +2089,204 @@ let situationMode = 'blocking';
         let needViewMode = 'grouped';
         let needShuffleSeed = 0;
         let needSearch = '';
- 
-function applyTemplate(type) {
-    const templates = {
-        blank: {
-            situacions: "Només situacions",
-            emocions: "Només emocions",
-            necessitats: "Només necessitats",
-            accions: "Només accions"
-        },
-        roi: {
-            situacions: "Crea una columna de situacions.",
-            emocions: "Situa les emocions percebudes a la mateixa alçada de cada situació.",
-            necessitats: "Indica quines necessitats vols cobrir.",
-            accions: "Situa accions que et poden apropar a cobrir les necessitats; a dalt, les accions de major retorn de l'esforç."
-        },
-        empatia: {
-            situacions: "Crea una línea de temps amb les situacions.",
-            emocions: "Crea un núvol d'emocions de les persones afectades.",
-            necessitats: "Agrupa les necessitats de les persones afectades",
-            accions: "Situa accions que et poden apropar a cobrir les necessitats; a dalt, les accions més fàcils de dur a terme."
-        }
-    };
 
+const ORGANIZER_STORAGE_KEY = 'un-cami-organizer-state-v1';
+
+function getOrganizerState() {
+    const boardItems = [];
+
+    [
+        'situacions-area',
+        'emocions-area-organizer',
+        'necessitats-area',
+        'accions-area'
+    ].forEach(areaId => {
+        const area = document.getElementById(areaId);
+        if (!area) return;
+
+        area.querySelectorAll('.organizer-tag.on-board').forEach(tag => {
+            boardItems.push({
+                areaId,
+                text: tag.dataset.text || '',
+                accent: tag.dataset.accent || '#cbd5e1',
+                left: tag.style.left || '10px',
+                top: tag.style.top || '10px'
+            });
+        });
+    });
+
+    return {
+        customSituations,
+        customActions,
+        currentTemplate,
+        situationHints: {
+            situacions: document.getElementById('hint-situacions')?.textContent || '',
+            emocions: document.getElementById('hint-emocions')?.textContent || '',
+            necessitats: document.getElementById('hint-necessitats')?.textContent || '',
+            accions: document.getElementById('hint-accions')?.textContent || ''
+        },
+        boardItems
+    };
+}
+
+function saveOrganizerState() {
+    try {
+        const state = getOrganizerState();
+        localStorage.setItem(ORGANIZER_STORAGE_KEY, JSON.stringify(state));
+    } catch (error) {
+        console.warn('No s’ha pogut guardar l’estat de l’organitzador:', error);
+    }
+}
+
+function loadOrganizerState() {
+    try {
+        const raw = localStorage.getItem(ORGANIZER_STORAGE_KEY);
+        if (!raw) return;
+
+        const state = JSON.parse(raw);
+
+        customSituations = Array.isArray(state.customSituations) ? state.customSituations : [];
+        customActions = Array.isArray(state.customActions) ? state.customActions : [];
+        currentTemplate = state.currentTemplate || 'blank';
+
+        renderSituacionsBank();
+        renderAccionsBank();
+
+        applyTemplate(currentTemplate, false);
+
+        if (Array.isArray(state.boardItems)) {
+            state.boardItems.forEach(item => {
+                restoreBoardTag(item);
+            });
+        }
+
+        updateOrganizerCounts();
+        updateBankIndicators();
+    } catch (error) {
+        console.warn('No s’ha pogut restaurar l’estat de l’organitzador:', error);
+    }
+}
+function restoreBoardTag(item) {
+    const area = document.getElementById(item.areaId);
+    if (!area) return;
+
+    const tag = createBoardTag(
+        item.text || '',
+        item.accent || '#cbd5e1',
+        item.left || '10px',
+        item.top || '10px'
+    );
+
+    area.appendChild(tag);
+}
+
+function createBoardTag(text, accent, left, top) {
+    const tag = document.createElement('div');
+    tag.className = 'organizer-tag on-board';
+    tag.style.left = left;
+    tag.style.top = top;
+    tag.style.setProperty('--tag-accent', accent);
+    tag.dataset.text = text;
+    tag.dataset.accent = accent;
+    tag.innerHTML = `${text} <i class="fa-solid fa-xmark remove-btn"></i>`;
+
+    const removeBtn = tag.querySelector('.remove-btn');
+    removeBtn.addEventListener('click', () => {
+        tag.remove();
+        saveOrganizerState();
+        updateOrganizerCounts();
+    });
+
+    makeMoveable(tag);
+    return tag;
+}
+
+
+function clearOrganizerState() {
+    customSituations = [];
+    customActions = [];
+
+    renderSituacionsBank();
+    renderAccionsBank();
+
+    [
+        'situacions-area',
+        'emocions-area-organizer',
+        'necessitats-area',
+        'accions-area'
+    ].forEach(areaId => {
+        const area = document.getElementById(areaId);
+        if (area) area.innerHTML = '';
+    });
+
+    applyTemplate('blank');
+    localStorage.removeItem(ORGANIZER_STORAGE_KEY);
+    updateOrganizerCounts();
+    updateBankIndicators();
+}
+ 
+function applyTemplate(type, shouldSave = true) {
     const t = templates[type];
     if (!t) return;
+
+    currentTemplate = type;
 
     document.getElementById('hint-situacions').textContent = t.situacions;
     document.getElementById('hint-emocions').textContent = t.emocions;
     document.getElementById('hint-necessitats').textContent = t.necessitats;
     document.getElementById('hint-accions').textContent = t.accions;
 
+    const btn = document.getElementById('template-button');
+    const label = document.getElementById('template-button-label');
     const menu = document.getElementById('template-menu');
+    const dropdown = btn ? btn.closest('.template-dropdown') : null;
+
+    if (btn && label) {
+        if (type === 'blank') {
+            label.textContent = 'Carregar plantilla';
+            btn.classList.remove('active');
+        } else {
+            label.textContent = getTemplateLabel(type);
+            btn.classList.add('active');
+        }
+    }
+
     if (menu) menu.classList.remove('open');
-}        
+    if (dropdown) dropdown.classList.remove('open');
 
-function setNeedSearch(value) {
-    needSearch = value.trim().toLowerCase();
-    renderNecessitatsBank();
-}
-
-function reshuffleNeeds() {
-    needShuffleSeed++;
-    renderNecessitatsBank();
-}
-
-function setNeedViewMode(mode) {
-    needViewMode = mode;
-    updateNeedToolbar();
-    renderNecessitatsBank();
-}
-
-function updateNeedToolbar() {
-    const groupedBtn = document.getElementById('btn-need-grouped');
-    const shuffledBtn = document.getElementById('btn-need-shuffled');
-    const reshuffleBtn = document.getElementById('btn-need-reshuffle');
-
-    if (groupedBtn) groupedBtn.classList.toggle('active', needViewMode === 'grouped');
-    if (shuffledBtn) shuffledBtn.classList.toggle('active', needViewMode === 'shuffled');
-
-    if (reshuffleBtn) {
-        reshuffleBtn.style.display = needViewMode === 'shuffled' ? 'inline-flex' : 'none';
+    if (shouldSave) {
+        saveOrganizerState();
     }
 }
+
+function setNeedSearch(value) {
+            needSearch = value.trim().toLowerCase();
+            renderNecessitatsBank();
+        }
+
+        function reshuffleNeeds() {
+            needShuffleSeed++;
+            renderNecessitatsBank();
+        }
+
+        function setNeedViewMode(mode) {
+            needViewMode = mode;
+            updateNeedToolbar();
+            renderNecessitatsBank();
+        }
+
+        function updateNeedToolbar() {
+            const groupedBtn = document.getElementById('btn-need-grouped');
+            const shuffledBtn = document.getElementById('btn-need-shuffled');
+            const reshuffleBtn = document.getElementById('btn-need-reshuffle');
+
+            if (groupedBtn) groupedBtn.classList.toggle('active', needViewMode === 'grouped');
+            if (shuffledBtn) shuffledBtn.classList.toggle('active', needViewMode === 'shuffled');
+
+            if (reshuffleBtn) {
+                reshuffleBtn.style.display = needViewMode === 'shuffled' ? 'inline-flex' : 'none';
+            }
+        }
 
         function setEmotionSearch(value) {
             emotionSearch = value.trim().toLowerCase();
@@ -1970,7 +2373,25 @@ function getCurrentSituationsData() {
 
     return stages;
 }
-        function showView(view) {
+
+function renderSituationPreviewText(text) {
+    const parts = text.split('·').map(p => p.trim()).filter(Boolean);
+
+    const blockingPart = parts.find(p => p.includes('🖤')) || '';
+    const facilitatingPart = parts.find(p => p.includes('❤️')) || '';
+
+    if (situationMode === 'facilitating') {
+        return facilitatingPart
+            ? `<span class="situation-line situation-line-facilitating">${facilitatingPart}</span>`
+            : '';
+    }
+
+    return blockingPart
+        ? `<span class="situation-line situation-line-blocking">${blockingPart}</span>`
+        : '';
+}
+
+function showView(view) {
             ['home', 'situacions', 'cnv', 'grow', 'servei', 'frase', 'model', 'organitzador'].forEach(v => {
                 const el = document.getElementById(`view-${v}`);
                 if (el) el.style.display = v === view ? 'block' : 'none';
@@ -2005,20 +2426,26 @@ function getCurrentSituationsData() {
             if (view === 'organitzador') renderOrganizerBanks();
         }
 
- function renderSituations() {
+function renderSituations() {
     const data = getCurrentSituationsData();
 
-    document.getElementById('diag-grid-container').innerHTML = data.map(s => `
-        <div class="diag-item" onclick="openModal(${s.n})">
-            <div class="diag-icon ic-${s.color}">
-                <i class="fa-solid ${s.ic}"></i>
+    document.getElementById('diag-grid-container').innerHTML = data.map(s => {
+        const baseStage = stages.find(stage => stage.n === s.n) || s;
+
+        return `
+            <div class="diag-item" onclick="openModal(${s.n})">
+                <div class="diag-icon ic-${s.color}">
+                    <i class="fa-solid ${s.ic}"></i>
+                </div>
+                <div>
+                    <strong>${s.n}. ${s.t}</strong>
+                    <p class="situation-preview">
+                        ${renderSituationPreviewText(baseStage.p)}
+                    </p>
+                </div>
             </div>
-            <div>
-                <strong>${s.n}. ${s.t}</strong>
-                <p>${s.p}</p>
-            </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
         function renderStageCards(containerId, list, fullWidth = false) {
             const container = document.getElementById(containerId);
@@ -2056,7 +2483,10 @@ function getCurrentSituationsData() {
                         </div>
                         <div style="flex:1;">
                             <strong>${s.n}. ${s.f}</strong>
-                            <p>${s.p}</p>
+                            <p class="hearts-block">
+                                <!--<p>${s.p}</p>-->
+                                ${s.p.split('·').map(p => `<span class="stage-line">${p.trim()}</span>`).join('')}
+                            </p>
                         </div>
                         <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
                             ${rightContent}
@@ -2102,6 +2532,7 @@ function getCurrentSituationsData() {
                 document.onmouseup = null;
                 document.ontouchmove = null;
                 document.ontouchend = null;
+                saveOrganizerState();
             }
         }
 
@@ -2199,16 +2630,22 @@ function getCurrentSituationsData() {
             const s = source.find(x => x.n === n) || stages.find(x => x.n === n);
 
             document.getElementById('modal-content').innerHTML = `
-                <h3>${s.n}. ${s.f || ''}</h3>
+                <div class="modal-header-block">
+                    <div class="modal-header-top">
+                        <span class="modal-stage">${s.n}. ${s.f || ''}</span>
+                        <span class="modal-title">${s.t}</span>
+                    </div>
 
-                <p style="margin-top:-4px; font-weight:600; color:var(--cep-black); font-size:0.95rem;">
-                    ${s.t}
-                </p>
-
-                <p style="margin-top:4px; color:#64748b; font-size:0.85rem;">
-                    ${s.p}
-                </p>
-
+                    ${(() => {
+    const parts = s.p.split('·');
+    return `
+        <div class="modal-header-desc">
+            ${parts.map(p => `<div class="modal-header-line">${p.trim()}</div>`).join('')}
+        </div>
+    `;
+})()}
+                </div>
+                
                 ${renderDetails(stages.find(x => x.n === n))}
             `;
             document.getElementById('modal-container').style.display = 'flex';
@@ -2241,14 +2678,31 @@ function getCurrentSituationsData() {
         }
 
         function toggleBankAccordion(id) {
-            document.querySelectorAll('.bank-accordion-item').forEach(item => {
-                if (item.id === id) {
-                    item.classList.toggle('open');
-                } else {
-                    item.classList.remove('open');
-                }
-            });
-        }
+    const item = document.getElementById(id);
+    if (!item) return;
+
+    // GRUPO 1: independientes
+    if (id === 'acc-situacions' || id === 'acc-accions') {
+        item.classList.toggle('open');
+        return;
+    }
+
+    // GRUPO 2: acordeón (emocions / necessitats)
+    if (id === 'acc-emocions' || id === 'acc-necessitats') {
+        const group = ['acc-emocions', 'acc-necessitats'];
+
+        group.forEach(groupId => {
+            const el = document.getElementById(groupId);
+            if (!el) return;
+
+            if (groupId === id) {
+                el.classList.toggle('open');
+            } else {
+                el.classList.remove('open');
+            }
+        });
+    }
+}
 function renderOrganizerBanks() {
     renderSituacionsBank();
     renderOrganizerEmotionsBank();
@@ -2261,16 +2715,20 @@ function renderOrganizerBanks() {
             const container = document.getElementById('situacions-bank');
             container.innerHTML = customSituations.length
                 ? customSituations.map(item => `
-                    <div class="organizer-tag"
-                         draggable="true"
-                         style="--tag-accent:#111111"
-                         ondragstart="startOrganizerDrag(event, 'situacio', '${escapeForAttr('📷 ' + item)}', '#111111')">
+                    <div class="organizer-tag organizer-draggable"
+                        draggable="true"
+                        style="--tag-accent:#111111"
+                        data-type="situacio"
+                        data-text="${escapeForAttr('📷 ' + item)}"
+                        data-accent="#111111">
                         <i class="fa-solid fa-camera"></i> ${escapeHtml(item)}
                     </div>
                 `).join('')
                 : `<div class="bank-empty">Encara no hi ha situacions.</div>`;
-        }
 
+            bindOrganizerDragEvents(container);
+            updateBankIndicators();
+        }
         function renderOrganizerEmotionsBank() {
             const bank = document.getElementById('organizer-emotions-bank');
             const activeSet = getActiveEmotionSet();
@@ -2401,16 +2859,20 @@ function renderOrganizerBanks() {
             const container = document.getElementById('accions-bank');
             container.innerHTML = customActions.length
                 ? customActions.map(item => `
-                    <div class="organizer-tag"
-                         draggable="true"
-                         style="--tag-accent:var(--flower)"
-                         ondragstart="startOrganizerDrag(event, 'accio', '${escapeForAttr('🌼 ' + item)}', '#d4a017')">
+                    <div class="organizer-tag organizer-draggable"
+                        draggable="true"
+                        style="--tag-accent:var(--flower)"
+                        data-type="accio"
+                        data-text="${escapeForAttr('🌼 ' + item)}"
+                        data-accent="#d4a017">
                         🌼 ${escapeHtml(item)}
                     </div>
                 `).join('')
                 : `<div class="bank-empty">Encara no hi ha accions.</div>`;
-        }
 
+            bindOrganizerDragEvents(container);
+            updateBankIndicators();
+        }
         function startOrganizerDrag(e, type, text, accent) {
             e.dataTransfer.setData("organizerType", type);
             e.dataTransfer.setData("organizerText", text);
@@ -2433,15 +2895,16 @@ function renderOrganizerBanks() {
             const x = Math.max(10, e.clientX - rect.left - 45);
             const y = Math.max(10, e.clientY - rect.top - 18);
 
-            const tag = document.createElement('div');
-            tag.className = 'organizer-tag on-board';
-            tag.style.left = `${x}px`;
-            tag.style.top = `${y}px`;
-            tag.style.setProperty('--tag-accent', accent);
-            tag.innerHTML = `${text} <i class="fa-solid fa-xmark remove-btn" onclick="this.parentElement.remove()"></i>`;
+            const tag = createBoardTag(
+                text,
+                accent,
+                `${x}px`,
+                `${y}px`
+            );
 
-            makeMoveable(tag);
             area.appendChild(tag);
+            saveOrganizerState();
+            updateOrganizerCounts();
         }
 
         function openItemModal(type) {
@@ -2467,10 +2930,16 @@ function renderOrganizerBanks() {
             document.getElementById('item-modal-container').style.display = 'none';
             currentItemType = null;
         }
+        function sanitizeUserText(text) {
+            return String(text)
+                .replace(/\s+/g, ' ')
+                .replace(/[\u0000-\u001F\u007F]/g, '')
+                .trim();
+        }
 
         function saveItemFromModal() {
             const textarea = document.getElementById('item-text');
-            const value = textarea.value.trim();
+            const value = sanitizeUserText(textarea.value);
             if (!value) return;
 
             if (currentItemType === 'situacio') {
@@ -2482,43 +2951,128 @@ function renderOrganizerBanks() {
                 customActions.unshift(value);
                 renderAccionsBank();
             }
-
+            saveOrganizerState();
             closeItemModal();
         }
-
         function escapeHtml(text) {
-            return text
+            return String(text)
                 .replaceAll('&', '&amp;')
                 .replaceAll('<', '&lt;')
                 .replaceAll('>', '&gt;')
                 .replaceAll('"', '&quot;')
-                .replaceAll("'", '&#039;');
+                .replaceAll("'", '&#39;');
         }
 
         function escapeForAttr(text) {
-            return text
+            return String(text)
                 .replaceAll('&', '&amp;')
-                .replaceAll("'", '&#039;')
-                .replaceAll('"', '&quot;')
                 .replaceAll('<', '&lt;')
-                .replaceAll('>', '&gt;');
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#39;');
         }
 function toggleTemplateMenu(e) {
     e.stopPropagation();
     const menu = document.getElementById('template-menu');
-    menu.classList.toggle('open');
+    const dropdown = e.currentTarget.closest('.template-dropdown');
+
+    if (menu) menu.classList.toggle('open');
+    if (dropdown) dropdown.classList.toggle('open');
+}
+function getTemplateLabel(key) {
+    const labels = {
+        blank: 'En blanc',
+        roi: "Retorn de la inversió",
+        empatia: 'Empatia'
+    };
+
+    return labels[key] || key.charAt(0).toUpperCase() + key.slice(1);
+}
+
+function renderTemplateMenu() {
+    const menu = document.getElementById('template-menu');
+    if (!menu) return;
+
+    menu.innerHTML = Object.keys(templates).map(key => `
+        <div class="template-option" onclick="applyTemplate('${key}')">
+            ${getTemplateLabel(key)}
+        </div>
+    `).join('');
+}
+function bindOrganizerDragEvents(scope = document) {
+    scope.querySelectorAll('.organizer-draggable').forEach(el => {
+        el.addEventListener('dragstart', (e) => {
+            startOrganizerDrag(
+                e,
+                el.dataset.type,
+                el.dataset.text,
+                el.dataset.accent
+            );
+        });
+    });
+}
+
+function handleClearOrganizer() {
+    const confirmed = window.confirm('Vols esborrar tot el mapa actual?');
+    if (!confirmed) return;
+
+    clearOrganizerState();
+}
+function updateOrganizerCounts() {
+    const mapping = [
+        { areaId: 'situacions-area', badgeId: 'count-situacions' },
+        { areaId: 'emocions-area-organizer', badgeId: 'count-emocions' },
+        { areaId: 'necessitats-area', badgeId: 'count-necessitats' },
+        { areaId: 'accions-area', badgeId: 'count-accions' }
+    ];
+
+    mapping.forEach(({ areaId, badgeId }) => {
+        const area = document.getElementById(areaId);
+        const badge = document.getElementById(badgeId);
+        if (!area || !badge) return;
+
+        const count = area.querySelectorAll('.organizer-tag.on-board').length;
+        badge.textContent = count;
+        badge.classList.toggle('has-items', count > 0);
+    });
+}
+
+function updateBankIndicators() {
+    const situacionsIndicator = document.getElementById('bank-situacions');
+    const accionsIndicator = document.getElementById('bank-accions');
+
+    if (situacionsIndicator) {
+        situacionsIndicator.classList.toggle('has-items', customSituations.length > 0);
+    }
+
+    if (accionsIndicator) {
+        accionsIndicator.classList.toggle('has-items', customActions.length > 0);
+    }
 }
 
 // Tanca si cliques fora
 document.addEventListener('click', () => {
     const menu = document.getElementById('template-menu');
+    const dropdown = document.querySelector('.template-dropdown');
+
     if (menu) menu.classList.remove('open');
+    if (dropdown) dropdown.classList.remove('open');
 });
-       window.onload = () => {
-    showView('home');
-    updateEmotionToolbar();
-    updateNeedToolbar();
-};
+
+window.addEventListener('beforeunload', saveOrganizerState);
+
+window.onload = () => {
+            renderTemplateMenu();
+            showView('home');
+            updateEmotionToolbar();
+            updateNeedToolbar();
+            renderOrganizerBanks();
+            loadOrganizerState();
+            updateOrganizerCounts();
+            updateBankIndicators();
+        };
+
+
     </script>
 </body>
 </html>
