@@ -1437,7 +1437,7 @@
 
             <div class="organizer-actions">
                 <button class="mini-action-btn organizer-export-btn" onclick="openExportModal()">
-                    <i class="fa-solid fa-file-pdf"></i> Descarregar acta PDF
+                    <i class="fa-solid fa-file-pdf"></i> Descarregar en PDF
                 </button>
 
                 <button class="mini-action-btn organizer-clear-btn" onclick="handleClearOrganizer()">
@@ -2172,7 +2172,9 @@
         let needSearch = '';
 
 const ORGANIZER_STORAGE_KEY = 'un-cami-organizer-state-v1';
-const POLITENICS_LOGO_URL = 'https://docs.google.com/drawings/d/e/2PACX-1vR2w78G-PFUzH9ga7BcpbBKozwoSmPuBKf31eoslcBCoKq5xdbu1SynWkjamywYS4e2fb5UJjMaxAwH/pub?w=270&h=100';
+const POLITENICS_LOGO_URL = './logo13.png';
+//const POLITENICS_LOGO_URL = 'https://docs.google.com/drawings/d/e/2PACX-1vR2w78G-PFUzH9ga7BcpbBKozwoSmPuBKf31eoslcBCoKq5xdbu1SynWkjamywYS4e2fb5UJjMaxAwH/pub';
+
 
 function getOrganizerState() {
     const boardItems = [];
@@ -3203,26 +3205,36 @@ function loadImageAsDataUrl(url) {
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0);
 
-                resolve(canvas.toDataURL('image/png'));
+                const dataUrl = canvas.toDataURL('image/png');
+                resolve(dataUrl);
             } catch (err) {
                 reject(err);
             }
         };
 
-        img.onerror = reject;
+        img.onerror = (err) => reject(err);
         img.src = url;
     });
 }
 
-function drawPdfLogo(doc, logoDataUrl, pageWidth) {
-    if (!logoDataUrl) return;
 
-    const logoW = 34;
-    const logoH = 10;
-    const x = pageWidth - 16 - logoW;
-    const y = 8;
+function drawPdfLogo(doc, logoDataUrl, x, y, targetW = 30) {
+    if (!logoDataUrl) {
+        console.warn('Logo no disponible: logoDataUrl es null');
+        return null;
+    }
 
-    doc.addImage(logoDataUrl, 'PNG', x, y, logoW, logoH);
+    try {
+        const props = doc.getImageProperties(logoDataUrl);
+        const aspectRatio = props.width / props.height;
+        const targetH = targetW / aspectRatio;
+
+        doc.addImage(logoDataUrl, 'PNG', x, y, targetW, targetH);
+        return { width: targetW, height: targetH };
+    } catch (e) {
+        console.warn('No s’ha pogut dibuixar el logo al PDF', e);
+        return null;
+    }
 }
 
 function getBoardTagTexts(areaId) {
@@ -3244,6 +3256,312 @@ function cleanExportTagText(text) {
         .replace(/\s+/g, ' ')
         .trim();
 }
+
+function drawPageHeader(doc, {
+  logoDataUrl,
+  title,
+  subtitle = '',
+  pageWidth,
+  margin = 14,
+  color = [248, 250, 252],
+  showLogo = true
+}) {
+  const headerY = 10;
+  const headerH = 22;
+  const contentW = pageWidth - margin * 2;
+
+  doc.setFillColor(...color);
+  doc.roundedRect(margin, headerY, contentW, headerH, 4, 4, 'F');
+  doc.setDrawColor(226, 232, 240);
+  doc.roundedRect(margin, headerY, contentW, headerH, 4, 4, 'S');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(15);
+  doc.setTextColor(24, 24, 27);
+  doc.text(title, margin + 4, headerY + 8);
+
+  if (subtitle) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(100, 116, 139);
+    doc.text(subtitle, margin + 4, headerY + 15);
+  }
+
+  if (showLogo && logoDataUrl) {
+    const logoW = 28;
+    const logoH = 10;
+    const logoX = pageWidth - margin - logoW - 2;
+    const logoY = headerY + 3.5;
+    doc.addImage(logoDataUrl, 'PNG', logoX, logoY, logoW, logoH);
+  }
+
+  return headerY + headerH;
+}
+
+function drawPageFooter(doc, {
+  generatedAt,
+  pageNumber,
+  pageWidth,
+  pageHeight,
+  margin = 14
+}) {
+  const y = pageHeight - 8;
+
+  doc.setDrawColor(226, 232, 240);
+  doc.line(margin, y - 4, pageWidth - margin, y - 4);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(100, 116, 139);
+  doc.text(`Generat: ${generatedAt}`, margin, y);
+
+  doc.text(`Pàgina ${pageNumber}`, pageWidth - margin, y, { align: 'right' });
+}
+
+function drawSectionCard(doc, {
+  x, y, w, h,
+  title,
+  fillColor = [255, 255, 255],
+  accentColor = [220, 38, 38]
+}) {
+  doc.setFillColor(...fillColor);
+  doc.roundedRect(x, y, w, h, 4, 4, 'F');
+  doc.setDrawColor(226, 232, 240);
+  doc.roundedRect(x, y, w, h, 4, 4, 'S');
+
+  doc.setFillColor(...accentColor);
+  doc.roundedRect(x, y, 3, h, 2, 2, 'F');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(11);
+  doc.setTextColor(24, 24, 27);
+  doc.text(title, x + 7, y + 8);
+}
+
+function drawCoverPage(doc, {
+    logoDataUrl,
+    title,
+    subtitle,
+    people,
+    notes,
+    generatedAt
+}) {
+    const w = doc.internal.pageSize.getWidth();
+    const h = doc.internal.pageSize.getHeight();
+    const m = 14;
+
+    doc.setFillColor(...THEME.softBg);
+    doc.rect(0, 0, w, h, 'F');
+
+    // Filete superior de 5 colores
+    const stripeMargin = 8;
+    const stripeY = 8;
+    const stripeH = 1.2;
+    const stripeW = (w - (stripeMargin * 2)) / 5;
+
+    doc.setFillColor(...THEME.brandRed);
+    doc.rect(stripeMargin, stripeY, stripeW, stripeH, 'F');
+
+    doc.setFillColor(...THEME.brandOrange);
+    doc.rect(stripeMargin + stripeW, stripeY, stripeW, stripeH, 'F');
+
+    doc.setFillColor(...THEME.brandViolet);
+    doc.rect(stripeMargin + (stripeW * 2), stripeY, stripeW, stripeH, 'F');
+
+    doc.setFillColor(...THEME.brandGreen);
+    doc.rect(stripeMargin + (stripeW * 3), stripeY, stripeW, stripeH, 'F');
+
+    doc.setFillColor(...THEME.brandBlue);
+    doc.rect(stripeMargin + (stripeW * 4), stripeY, stripeW, stripeH, 'F');
+
+    // BLOQUE SUPERIOR CENTRADO
+    const topBlockW = w - 40;
+    const topBlockX = (w - topBlockW) / 2;
+
+    if (logoDataUrl) {
+        const logoBoxW = 52;
+        const logoBoxH = 18;
+        const logoBoxX = (w - logoBoxW) / 2;
+        const logoBoxY = 16;
+
+        drawRoundedCard(doc, logoBoxX, logoBoxY, logoBoxW, logoBoxH, THEME.white, THEME.line, 4);
+        drawPdfLogo(doc, logoDataUrl, logoBoxX + 4, logoBoxY + 3, 44);
+    }
+
+    // título
+    setFont(doc, 'bold', 24, THEME.ink);
+    doc.text(title, w / 2, 52, { align: 'center' });
+
+    // subtítulo
+    let subtitleBottomY = 52;
+    if (subtitle) {
+        setFont(doc, 'normal', 11, THEME.muted);
+        const subtitleLines = doc.splitTextToSize(subtitle, topBlockW);
+        doc.text(subtitleLines, w / 2, 60, { align: 'center' });
+        subtitleBottomY = 60 + ((subtitleLines.length - 1) * 5);
+    }
+
+    // ficha
+    const metaY = subtitle ? subtitleBottomY + 10 : 64;
+    const metaW = w - (m * 2);
+    const metaH = 28;
+
+    drawRoundedCard(doc, m, metaY, metaW, metaH, THEME.white, THEME.line, 5);
+
+    setFont(doc, 'bold', 10, THEME.ink);
+    doc.text('Fitxa de l’informe', m + 4, metaY + 8);
+
+    setFont(doc, 'normal', 9, THEME.text);
+    doc.text(`Data de generació: ${generatedAt}`, m + 4, metaY + 15);
+    doc.text(`Persones / equips: ${people || '—'}`, m + 4, metaY + 21);
+
+    // TARJETAS VERTICALES
+    const cardGap = 8;
+    const cardX = m;
+    const cardW = w - (m * 2);
+    const cardH = 42;
+
+    let cardY = metaY + metaH + 12;
+
+    const panels = [
+        {
+            color: THEME.brandRed,
+            title: 'PARA',
+            subtitle: 'ATURAR L’IMPULS',
+            body: 'Intervenir en calent ens porta a la reacció impulsiva. Parar és regular-nos per poder actuar millor.',
+            quote: '“Ara mateix parem aquí... ho reprenem en un moment?”'
+        },
+        {
+            color: THEME.brandViolet,
+            title: 'PARLA',
+            subtitle: 'DONAR VEU REAL',
+            body: 'No és només deixar parlar, és escoltar de veritat. Passar de jutjar a entendre.',
+            quote: 'Què ha passat segons tu? Com t’ha afectat? Què necessites ara?'
+        },
+        {
+            color: THEME.brandBlue,
+            title: 'PACTA',
+            subtitle: 'RESPONSABILITAT I COMPROMÍS',
+            body: 'No busquem el càstig, busquem la reparació construïda. Responsabilitat no és culpa: és capacitat d’actuar.',
+            quote: 'Què pots fer per reparar el dany? Què necessites per ser reparat?'
+        }
+    ];
+
+    panels.forEach(panel => {
+        doc.setFillColor(...panel.color);
+        doc.roundedRect(cardX, cardY, cardW, cardH, 8, 8, 'F');
+
+        // Título
+        setFont(doc, 'bold', 18, THEME.white);
+        doc.text(panel.title, cardX + 8, cardY + 11);
+
+        // Subtítulo
+        setFont(doc, 'bold', 9.5, THEME.white);
+        doc.text(panel.subtitle, cardX + 8, cardY + 19);
+
+        // Cuerpo
+        setFont(doc, 'normal', 9.5, THEME.white);
+        const bodyLines = doc.splitTextToSize(panel.body, cardW - 92);
+        doc.text(bodyLines, cardX + 8, cardY + 28);
+
+        // Pastilla derecha
+        const quoteBoxW = 64;
+        const quoteBoxH = 18;
+        const quoteBoxX = cardX + cardW - quoteBoxW - 8;
+        const quoteBoxY = cardY + 12;
+
+        doc.setFillColor(30, 30, 32);
+        doc.roundedRect(quoteBoxX, quoteBoxY, quoteBoxW, quoteBoxH, 4, 4, 'F');
+
+        setFont(doc, 'bold', 7.5, THEME.white);
+        const quoteLines = doc.splitTextToSize(panel.quote, quoteBoxW - 8).slice(0, 3);
+        doc.text(quoteLines, quoteBoxX + 4, quoteBoxY + 5);
+
+        cardY += cardH + cardGap;
+    });
+
+    // Observaciones
+    if (notes) {
+        const notesY = cardY + 2;
+        const notesH = 18;
+
+        if (notesY + notesH < h - 18) {
+            drawRoundedCard(doc, m, notesY, w - (m * 2), notesH, THEME.white, THEME.line, 4);
+
+            setFont(doc, 'bold', 8.5, THEME.ink);
+            doc.text('Observacions', m + 4, notesY + 6);
+
+            setFont(doc, 'normal', 8.2, THEME.text);
+            const noteLines = doc.splitTextToSize(notes, w - (m * 2) - 8).slice(0, 2);
+            doc.text(noteLines, m + 4, notesY + 12);
+        }
+    }
+
+    drawPageFooter(doc, {
+        generatedAt,
+        pageNumber: 1,
+        pageWidth: w,
+        pageHeight: h,
+        margin: m
+    });
+}
+
+function drawMapPage(doc, {
+  logoDataUrl,
+  title,
+  subtitle,
+  generatedAt,
+  imgData
+}) {
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 10;
+  const contentWidth = pageWidth - margin * 2;
+
+  const headerBottom = drawPageHeader(doc, {
+    logoDataUrl,
+    title: title,
+    subtitle: subtitle || 'Mapa visual de la sessió',
+    pageWidth,
+    margin
+  });
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8.5);
+  doc.setTextColor(100, 116, 139);
+  doc.text(`Generat: ${generatedAt}`, margin + 2, headerBottom + 6);
+
+  const frameY = headerBottom + 10;
+  const frameH = pageHeight - frameY - 12;
+
+  doc.setFillColor(255, 255, 255);
+  doc.roundedRect(margin, frameY, contentWidth, frameH, 5, 5, 'F');
+  doc.setDrawColor(226, 232, 240);
+  doc.roundedRect(margin, frameY, contentWidth, frameH, 5, 5, 'S');
+
+  const imgProps = doc.getImageProperties(imgData);
+  let imgWidth = contentWidth - 4;
+  let imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+  if (imgHeight > frameH - 4) {
+    imgHeight = frameH - 4;
+    imgWidth = (imgProps.width * imgHeight) / imgProps.height;
+  }
+
+  const imgX = margin + (contentWidth - imgWidth) / 2;
+  const imgY = frameY + (frameH - imgHeight) / 2;
+
+  doc.addImage(imgData, 'PNG', imgX, imgY, imgWidth, imgHeight);
+
+  drawPageFooter(doc, {
+    generatedAt,
+    pageNumber: 2,
+    pageWidth,
+    pageHeight,
+    margin
+  });
+}
+
 async function exportOrganizerPdf() {
     const { jsPDF } = window.jspdf;
 
@@ -3270,34 +3588,85 @@ async function exportOrganizerPdf() {
     const customSituationTexts = customSituations.map(cleanExportTagText);
     const customActionTexts = customActions.map(cleanExportTagText);
 
-    function drawCard(doc, x, y, w, h, fillColor = [255, 255, 255], borderColor = [226, 232, 240]) {
+    const THEME = {
+    brandRed: [216, 38, 46],       // #D8262E
+    brandOrange: [249, 141, 41],   // #F98D29
+    brandViolet: [106, 71, 141],   // #6A478D
+    brandGreen: [100, 139, 26],    // #648B1A
+    brandBlue: [0, 154, 190],      // #009ABE
+
+    // alias por compatibilidad con código anterior
+    //brandPurple: [106, 71, 141],
+    //brandTeal: [0, 154, 190],
+    //brandAmber: [249, 141, 41],
+
+    ink: [24, 24, 27],
+    text: [87, 87, 86],
+    muted: [100, 116, 139],
+    line: [226, 232, 240],
+    softBg: [244, 247, 249],
+    white: [255, 255, 255],
+
+    situationBg: [255, 245, 245],
+    emotionBg: [248, 243, 255],
+    needBg: [240, 253, 244],
+    actionBg: [240, 249, 255]
+};
+
+    function setFont(doc, style = 'normal', size = 10, color = THEME.ink) {
+        doc.setFont('helvetica', style);
+        doc.setFontSize(size);
+        doc.setTextColor(...color);
+    }
+
+    function drawRoundedCard(doc, x, y, w, h, fillColor = THEME.white, borderColor = THEME.line, radius = 4) {
         doc.setFillColor(...fillColor);
-        doc.roundedRect(x, y, w, h, 4, 4, 'F');
+        doc.roundedRect(x, y, w, h, radius, radius, 'F');
         doc.setDrawColor(...borderColor);
-        doc.roundedRect(x, y, w, h, 4, 4, 'S');
+        doc.roundedRect(x, y, w, h, radius, radius, 'S');
     }
 
-    function drawCardTitle(doc, x, y, text) {
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(11);
-        doc.setTextColor(0, 0, 0);
-        doc.text(text, x, y);
+    function drawSectionCard(doc, {
+        x,
+        y,
+        w,
+        h,
+        title,
+        fillColor = THEME.white,
+        accentColor = THEME.brandRed
+    }) {
+        drawRoundedCard(doc, x, y, w, h, fillColor, THEME.line, 4);
+
+        doc.setFillColor(...accentColor);
+        doc.roundedRect(x, y, 3, h, 2, 2, 'F');
+
+        setFont(doc, 'bold', 11, THEME.ink);
+        doc.text(title, x + 7, y + 8);
     }
 
-    function drawCardText(doc, x, y, text, maxWidth, lineHeight = 4.8) {
+    function drawStatCard(doc, x, y, w, h, value, label, accentColor) {
+        drawRoundedCard(doc, x, y, w, h, THEME.white, THEME.line, 4);
+
+        doc.setFillColor(...accentColor);
+        doc.roundedRect(x, y, w, 3, 1.5, 1.5, 'F');
+
+        setFont(doc, 'bold', 16, THEME.ink);
+        doc.text(String(value), x + 4, y + 10);
+
+        setFont(doc, 'normal', 8.5, THEME.muted);
+        doc.text(label, x + 4, y + 16);
+    }
+
+    function drawCardText(doc, x, y, text, maxWidth, lineHeight = 4.8, style = 'normal', size = 9.5, color = THEME.text) {
         if (!text) return y;
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9.5);
-        doc.setTextColor(87, 87, 86);
+        setFont(doc, style, size, color);
         const lines = doc.splitTextToSize(text, maxWidth);
         doc.text(lines, x, y);
         return y + lines.length * lineHeight;
     }
 
-    function drawListInCard(doc, x, y, items, maxWidth, maxItems = 8) {
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9.5);
-        doc.setTextColor(87, 87, 86);
+    function drawListInCard(doc, x, y, items, maxWidth, maxItems = 8, bulletColor = THEME.ink, textColor = THEME.text) {
+        setFont(doc, 'normal', 9.3, textColor);
 
         if (!items.length) {
             doc.text('—', x, y);
@@ -3308,13 +3677,15 @@ async function exportOrganizerPdf() {
         let cursorY = y;
 
         visibleItems.forEach(item => {
-            const lines = doc.splitTextToSize(`• ${item}`, maxWidth);
+            const bullet = '• ';
+            const lines = doc.splitTextToSize(`${bullet}${item}`, maxWidth);
+            doc.setTextColor(...textColor);
             doc.text(lines, x, cursorY);
-            cursorY += lines.length * 4.6 + 1;
+            cursorY += (lines.length * 4.5) + 1.2;
         });
 
         if (items.length > maxItems) {
-            doc.setTextColor(100, 116, 139);
+            setFont(doc, 'normal', 8.5, THEME.muted);
             doc.text(`+ ${items.length - maxItems} elements més`, x, cursorY);
             cursorY += 5;
         }
@@ -3322,12 +3693,363 @@ async function exportOrganizerPdf() {
         return cursorY;
     }
 
+    function estimateTextHeight(doc, text, maxWidth, lineHeight = 4.8, fontSize = 9.5) {
+        if (!text) return 0;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(fontSize);
+        const lines = doc.splitTextToSize(text, maxWidth);
+        return lines.length * lineHeight;
+    }
+
+    function estimateListHeight(doc, items, maxWidth, maxItems = 8, lineHeight = 4.5) {
+        if (!items.length) return 14;
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.3);
+
+        const visibleItems = items.slice(0, maxItems);
+        let linesCount = 0;
+
+        visibleItems.forEach(item => {
+            const lines = doc.splitTextToSize(`• ${item}`, maxWidth);
+            linesCount += lines.length;
+        });
+
+        if (items.length > maxItems) linesCount += 1;
+
+        return 16 + (linesCount * lineHeight);
+    }
+
+    function drawPdfLogo(doc, logoDataUrl, x, y, targetW = 30) {
+    if (!logoDataUrl) {
+        console.warn('Logo no disponible: logoDataUrl es null');
+        return null;
+    }
+
+    try {
+        const props = doc.getImageProperties(logoDataUrl);
+        const aspectRatio = props.width / props.height;
+        const targetH = targetW / aspectRatio;
+
+        doc.addImage(logoDataUrl, 'PNG', x, y, targetW, targetH);
+        return { width: targetW, height: targetH };
+    } catch (e) {
+        console.warn('No s’ha pogut dibuixar el logo al PDF', e);
+        return null;
+    }
+}
+    function drawPageHeader(doc, {
+        logoDataUrl,
+        title,
+        subtitle = '',
+        pageWidth,
+        margin = 14,
+        fillColor = THEME.softBg
+    }) {
+        const headerY = 10;
+        const headerH = 24;
+        const contentW = pageWidth - (margin * 2);
+
+        // Filete superior de 5 colores Politècnics
+        const stripeY = headerY - 2.2;
+        const stripeH = 1.1;
+        const stripeW = contentW / 5;
+
+        doc.setFillColor(...THEME.brandRed);
+        doc.rect(margin, stripeY, stripeW, stripeH, 'F');
+
+        doc.setFillColor(...THEME.brandOrange);
+        doc.rect(margin + stripeW, stripeY, stripeW, stripeH, 'F');
+
+        doc.setFillColor(...THEME.brandViolet);
+        doc.rect(margin + (stripeW * 2), stripeY, stripeW, stripeH, 'F');
+
+        doc.setFillColor(...THEME.brandGreen);
+        doc.rect(margin + (stripeW * 3), stripeY, stripeW, stripeH, 'F');
+
+        doc.setFillColor(...THEME.brandBlue);
+        doc.rect(margin + (stripeW * 4), stripeY, stripeW, stripeH, 'F');
+
+        drawRoundedCard(doc, margin, headerY, contentW, headerH, fillColor, THEME.line, 4);
+
+        setFont(doc, 'bold', 15, THEME.ink);
+        doc.text(title, margin + 4, headerY + 9);
+
+        if (subtitle) {
+            setFont(doc, 'normal', 9, THEME.muted);
+            doc.text(subtitle, margin + 4, headerY + 16);
+        }
+
+        if (logoDataUrl) {
+            const logoBoxW = 42;
+            const logoBoxH = 16;
+            const logoBoxX = pageWidth - margin - logoBoxW - 2;
+            const logoBoxY = headerY + 4;
+
+            drawRoundedCard(doc, logoBoxX, logoBoxY, logoBoxW, logoBoxH, THEME.white, THEME.line, 3);
+
+            const targetLogoW = 30;
+            const props = doc.getImageProperties(logoDataUrl);
+            const targetLogoH = targetLogoW * (props.height / props.width);
+
+            const logoX = logoBoxX + ((logoBoxW - targetLogoW) / 2);
+            const logoY = logoBoxY + ((logoBoxH - targetLogoH) / 2);
+
+            drawPdfLogo(doc, logoDataUrl, logoX, logoY, targetLogoW);
+        }
+        return headerY + headerH;
+}
+    
+    
+    
+    function drawPageFooter(doc, {
+        generatedAt,
+        pageNumber,
+        pageWidth,
+        pageHeight,
+        margin = 14
+    }) {
+        const y = pageHeight - 8;
+
+        doc.setDrawColor(...THEME.line);
+        doc.line(margin, y - 4, pageWidth - margin, y - 4);
+
+        setFont(doc, 'normal', 8, THEME.muted);
+        doc.text(`Generat: ${generatedAt}`, margin, y);
+        doc.text(`Pàgina ${pageNumber}`, pageWidth - margin, y, { align: 'right' });
+    }
+
+function drawCoverPage(doc, {
+    logoDataUrl,
+    title,
+    subtitle,
+    people,
+    notes,
+    generatedAt
+}) {
+    const w = doc.internal.pageSize.getWidth();
+    const h = doc.internal.pageSize.getHeight();
+    const m = 8;
+
+    doc.setFillColor(...THEME.softBg);
+    doc.rect(0, 0, w, h, 'F');
+
+    // Filete superior de 5 colors
+    const stripeMargin = 8;
+    const stripeY = 8;
+    const stripeH = 1.2;
+    const stripeW = (w - (stripeMargin * 2)) / 5;
+
+    doc.setFillColor(...THEME.brandRed);
+    doc.rect(stripeMargin, stripeY, stripeW, stripeH, 'F');
+
+    doc.setFillColor(...THEME.brandOrange);
+    doc.rect(stripeMargin + stripeW, stripeY, stripeW, stripeH, 'F');
+
+    doc.setFillColor(...THEME.brandViolet);
+    doc.rect(stripeMargin + (stripeW * 2), stripeY, stripeW, stripeH, 'F');
+
+    doc.setFillColor(...THEME.brandGreen);
+    doc.rect(stripeMargin + (stripeW * 3), stripeY, stripeW, stripeH, 'F');
+
+    doc.setFillColor(...THEME.brandBlue);
+    doc.rect(stripeMargin + (stripeW * 4), stripeY, stripeW, stripeH, 'F');
+
+    // Logo fora del bloc agrupat
+    if (logoDataUrl) {
+        const logoBoxW = 52;
+        const logoBoxH = 18;
+        const logoBoxX = w - m - logoBoxW;
+        const logoBoxY = 16;
+
+        drawRoundedCard(doc, logoBoxX, logoBoxY, logoBoxW, logoBoxH, THEME.white, THEME.line, 4);
+        drawPdfLogo(doc, logoDataUrl, logoBoxX + 4, logoBoxY + 3, 44);
+    }
+
+    // BLOQUE SUPERIOR AGRUPADO
+    const heroX = m;
+    const heroY = 40;
+    const heroW = w - (m * 2);
+    const innerX = heroX + 6;
+    const innerW = heroW - 12;
+
+    const subtitleLines = subtitle ? doc.splitTextToSize(subtitle, innerW) : [];
+    const subtitleHeight = subtitleLines.length ? subtitleLines.length * 5 + 3 : 0;
+
+    // Observaciones dinámicas
+    const notesTitleH = notes ? 6 : 0;
+    const notesLines = notes ? doc.splitTextToSize(notes, innerW) : [];
+    const maxNotesLines = 8;
+    const visibleNotesLines = notesLines.slice(0, maxNotesLines);
+    const notesTextH = visibleNotesLines.length ? visibleNotesLines.length * 4.2 : 0;
+    const notesBlockH = notes ? 8 + notesTitleH + notesTextH + 4 : 0;
+
+    const heroTopPad = 18;
+    const titleBlockH = 9;
+    const separator1H = 8;
+    const fitxaTitleH = 8;
+    const fitxaBodyH = 14;
+    const separator2H = notes ? 7 : 0;
+    const heroBottomPad = 8;
+
+    const heroH =
+        heroTopPad +
+        titleBlockH +
+        subtitleHeight +
+        separator1H +
+        fitxaTitleH +
+        fitxaBodyH +
+        separator2H +
+        notesBlockH +
+        heroBottomPad;
+
+    drawRoundedCard(doc, heroX, heroY, heroW, heroH, THEME.white, THEME.line, 6);
+
+    let y = heroY + 18;
+
+    // Títol
+    setFont(doc, 'bold', 22, THEME.ink);
+    doc.text(title, innerX, y);
+    y += 9;
+
+    // Subtítol
+    if (subtitleLines.length) {
+        setFont(doc, 'normal', 11, THEME.muted);
+        doc.text(subtitleLines, innerX, y);
+        y += subtitleLines.length * 5 + 3;
+    }
+
+    // Separador
+    doc.setDrawColor(...THEME.line);
+    doc.line(innerX, y, heroX + heroW - 6, y);
+    y += 8;
+
+    // Fitxa
+    setFont(doc, 'bold', 10, THEME.ink);
+    doc.text('Fitxa de l’informe', innerX, y);
+    y += 8;
+
+    setFont(doc, 'normal', 9.5, THEME.text);
+    doc.text(`Data de generació: ${generatedAt}`, innerX, y);
+    y += 7;
+    doc.text(`Persones / equips: ${people || '—'}`, innerX, y);
+    y += 9;
+
+    // Observacions
+    if (notes) {
+        doc.setDrawColor(...THEME.line);
+        doc.line(innerX, y - 2, heroX + heroW - 6, y - 2);
+
+        setFont(doc, 'bold', 9, THEME.ink);
+        doc.text('Observacions', innerX, y + 3);
+
+        setFont(doc, 'normal', 8.5, THEME.text);
+        doc.text(visibleNotesLines, innerX, y + 9);
+
+        if (notesLines.length > maxNotesLines) {
+            const moreY = y + 9 + (visibleNotesLines.length * 4.2) + 1;
+            setFont(doc, 'normal', 8, THEME.muted);
+            doc.text(`+ ${notesLines.length - maxNotesLines} línies més`, innerX, moreY);
+        }
+    }
+
+    // TARJETAS VERTICALES AUTOAJUSTADAS
+    const cardX = m;
+    const cardW = w - (m * 2);
+    const cardGap = 4;
+    const cardY = heroY + heroH + 8;
+
+    // Reservamos espacio para footer
+    const footerSafeTop = h - 18;
+    const availableForCards = footerSafeTop - cardY;
+
+    // Altura automática de las 3 tarjetas
+    let cardH = (availableForCards - (cardGap * 2)) / 3;
+
+    // límites razonables
+    cardH = Math.max(32, Math.min(42, cardH));
+
+    const panels = [
+        {
+            color: THEME.brandRed,
+            title: 'PARA',
+            subtitle: 'ATURAR L’IMPULS',
+            body: 'Intervenir en calent ens porta a la reacció impulsiva. Parar és regular-nos per poder actuar millor.',
+            quote: '“Ara mateix parem aquí... ho reprenem en un moment?”'
+        },
+        {
+            color: THEME.brandViolet,
+            title: 'PARLA',
+            subtitle: 'DONAR VEU REAL',
+            body: 'No és només deixar parlar, és escoltar de veritat. Passar de jutjar a entendre.',
+            quote: 'Què ha passat segons tu? Com t’ha afectat? Què necessites ara?'
+        },
+        {
+            color: THEME.brandBlue,
+            title: 'PACTA',
+            subtitle: 'RESPONSABILITAT I COMPROMÍS',
+            body: 'No busquem el càstig, busquem la reparació construïda. Responsabilitat no és culpa: és capacitat d’actuar.',
+            quote: 'Què pots fer per reparar el dany? Què necessites per ser reparat?'
+        }
+    ];
+
+    let currentCardY = cardY;
+
+    panels.forEach(panel => {
+        doc.setFillColor(...panel.color);
+        doc.roundedRect(cardX, currentCardY, cardW, cardH, 8, 8, 'F');
+
+        setFont(doc, 'bold', 18, THEME.white);
+        doc.text(panel.title, cardX + 8, currentCardY + 10);
+
+        setFont(doc, 'bold', 9.2, THEME.white);
+        doc.text(panel.subtitle, cardX + 8, currentCardY + 18);
+
+        const quoteBoxW = 64;
+        const quoteBoxH = Math.min(18, cardH - 10);
+        const quoteBoxX = cardX + cardW - quoteBoxW - 8;
+        const quoteBoxY = currentCardY + Math.max(6, (cardH - quoteBoxH) / 2);
+
+        const bodyW = cardW - 92;
+        const bodyMaxLines = cardH < 36 ? 2 : 3;
+
+        setFont(doc, 'normal', 9, THEME.white);
+        const bodyLines = doc.splitTextToSize(panel.body, bodyW).slice(0, bodyMaxLines);
+        doc.text(bodyLines, cardX + 8, currentCardY + 26);
+
+        doc.setFillColor(30, 30, 32);
+        doc.roundedRect(quoteBoxX, quoteBoxY, quoteBoxW, quoteBoxH, 4, 4, 'F');
+
+        setFont(doc, 'bold', 7.2, THEME.white);
+        const quoteMaxLines = cardH < 36 ? 2 : 3;
+        const quoteLines = doc.splitTextToSize(panel.quote, quoteBoxW - 8).slice(0, quoteMaxLines);
+        doc.text(quoteLines, quoteBoxX + 4, quoteBoxY + 5);
+
+        currentCardY += cardH + cardGap;
+    });
+
+    drawPageFooter(doc, {
+        generatedAt,
+        pageNumber: 1,
+        pageWidth: w,
+        pageHeight: h,
+        margin: m
+    });
+}
+
+function addWrappedLabelValue(doc, x, y, label, value, maxWidth) {
+        const text = `${label}${value || '—'}`;
+        return drawCardText(doc, x, y, text, maxWidth, 4.8, 'normal', 9.3, THEME.text);
+    }
+
     try {
         let logoDataUrl = null;
         try {
+            console.log('Intentant carregar logo des de:', POLITENICS_LOGO_URL);
             logoDataUrl = await loadImageAsDataUrl(POLITENICS_LOGO_URL);
+            console.log('Logo carregat correctament');
         } catch (e) {
-            console.warn('No s’ha pogut carregar el logo del Politècnics');
+            console.warn('No s’ha pogut carregar el logo del Politècnics', e);
         }
 
         const previousBoxShadow = board.style.boxShadow;
@@ -3344,261 +4066,353 @@ async function exportOrganizerPdf() {
         const imgData = canvas.toDataURL('image/png');
 
         const pdf = new jsPDF({
-            orientation: 'landscape',
+            orientation: 'portrait',
             unit: 'mm',
             format: 'a4'
         });
 
-        /* =========================
-           PÀGINA 1: MAPA
-           ========================= */
-
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const pageHeight = pdf.internal.pageSize.getHeight();
-
-        const margin = 10;
-        const contentWidth = pageWidth - (margin * 2);
-
-        drawPdfLogo(pdf, logoDataUrl, pageWidth);
-
-        const headerY = 8;
-        const headerH = 24;
-
-        pdf.setFillColor(248, 250, 252);
-        pdf.roundedRect(margin, headerY, pageWidth - (margin * 2), headerH, 5, 5, 'F');
-
-        pdf.setDrawColor(226, 232, 240);
-        pdf.roundedRect(margin, headerY, pageWidth - (margin * 2), headerH, 5, 5, 'S');
-
-        pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(18);
-        pdf.setTextColor(0, 0, 0);
-        pdf.text(title, margin + 4, headerY + 8);
-
-
-        if (subtitle) {
-            pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(10);
-            pdf.setTextColor(87, 87, 86);
-            pdf.text(subtitle, margin + 4, headerY + 14);
-        }
-
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(8.5);
-        pdf.setTextColor(100, 116, 139);
-        pdf.text(`Generat: ${generatedAt}`, margin + 4, headerY + 20);
-
-        const imgProps = pdf.getImageProperties(imgData);
-
-        const frameY = headerY + headerH + 4;
-        const frameH = pageHeight - frameY - 10;
-
-        const maxImgWidth = contentWidth - 4;
-        const maxImgHeight = frameH - 4;
-
-        let imgWidth = maxImgWidth;
-        let imgHeight = (imgProps.height * imgWidth) / imgProps.width;
-
-        if (imgHeight > maxImgHeight) {
-            imgHeight = maxImgHeight;
-            imgWidth = (imgProps.width * imgHeight) / imgProps.height;
-        }
-
-        const frameX = margin;
-        const imgX = frameX + ((contentWidth - imgWidth) / 2);
-        const imgY = frameY + ((frameH - imgHeight) / 2);
-
-        pdf.setFillColor(255, 255, 255);
-        pdf.roundedRect(frameX, frameY, contentWidth, frameH, 5, 5, 'F');
-        pdf.setDrawColor(226, 232, 240);
-        pdf.roundedRect(frameX, frameY, contentWidth, frameH, 5, 5, 'S');
-
-        pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth, imgHeight);
+        let pageNumber = 1;
 
         /* =========================
-           PÀGINA 2: ACTA VISUAL
+           PÀGINA 1: PORTADA
            ========================= */
-
-        pdf.addPage('a4', 'portrait');
-
-
-        const p2w = pdf.internal.pageSize.getWidth();
-        const p2h = pdf.internal.pageSize.getHeight();
-        const m = 14;
-        const usableW = p2w - (m * 2);
-
-        drawPdfLogo(pdf, logoDataUrl, p2w);
-
-        let y = 14;
-
-        drawCard(pdf, m, y, usableW, 24, [248, 250, 252]);
-        pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(16);
-        pdf.setTextColor(0, 0, 0);
-        pdf.text('Acta de la sessió', m + 4, y + 8);
-
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(9);
-        pdf.setTextColor(100, 116, 139);
-        pdf.text(`Generat: ${generatedAt}`, m + 4, y + 15);
-
-        y += 30;
-
-        const statW = (usableW - 9) / 4;
-        const statData = [
-            ['Situacions', situationTexts.length],
-            ['Emocions', emotionTexts.length],
-            ['Necessitats', needTexts.length],
-            ['Accions', actionTexts.length]
-        ];
-
-        statData.forEach((item, index) => {
-            const x = m + index * (statW + 3);
-
-            drawCard(pdf, x, y, statW, 18, [255, 255, 255]);
-
-            pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(14);
-            pdf.setTextColor(0, 0, 0);
-            pdf.text(String(item[1]), x + 4, y + 8);
-
-            pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(8);
-            pdf.setTextColor(100, 116, 139);
-            pdf.text(item[0], x + 4, y + 14);
+        drawCoverPage(pdf, {
+            logoDataUrl,
+            title,
+            subtitle,
+            people,
+            notes,
+            generatedAt
         });
 
-        y += 24;
-
-        const colGap = 6;
-        const colW = (usableW - colGap) / 2;
-        const leftX = m;
-        const rightX = m + colW + colGap;
-
-        let leftY = y;
-        let rightY = y;
-
-        /* Columna izquierda */
-        drawCard(pdf, leftX, leftY, colW, 34, [255, 255, 255]);
-        drawCardTitle(pdf, leftX + 4, leftY + 8, 'Fitxa');
-        let tmpY = leftY + 15;
-        tmpY = drawCardText(pdf, leftX + 4, tmpY, `Nom: ${title}`, colW - 8);
-        if (subtitle) tmpY = drawCardText(pdf, leftX + 4, tmpY + 1, `Descripció: ${subtitle}`, colW - 8);
-        if (people) tmpY = drawCardText(pdf, leftX + 4, tmpY + 1, `Persones / equips: ${people}`, colW - 8);
-        leftY += 40;
-
-        drawCard(pdf, leftX, leftY, colW, 28, [248, 250, 252]);
-        drawCardTitle(pdf, leftX + 4, leftY + 8, 'Context');
-        drawCardText(
-            pdf,
-            leftX + 4,
-            leftY + 15,
-            currentTemplate && currentTemplate !== 'blank'
-                ? `Plantilla utilitzada: ${getTemplateLabel(currentTemplate)}`
-                : 'Plantilla utilitzada: En blanc',
-            colW - 8
-        );
-        leftY += 34;
-
-        drawCard(pdf, leftX, leftY, colW, 55, [255, 247, 247]);
-        drawCardTitle(pdf, leftX + 4, leftY + 8, 'Situacions');
-        drawListInCard(pdf, leftX + 4, leftY + 15, situationTexts, colW - 8, 7);
-
-        /* Columna derecha */
-        drawCard(pdf, rightX, rightY, colW, 42, [248, 252, 255]);
-        drawCardTitle(pdf, rightX + 4, rightY + 8, 'Observacions');
-        drawCardText(pdf, rightX + 4, rightY + 15, notes || 'Sense observacions.', colW - 8);
-        rightY += 48;
-
-        drawCard(pdf, rightX, rightY, colW, 40, [253, 250, 255]);
-        drawCardTitle(pdf, rightX + 4, rightY + 8, 'Emocions');
-        drawListInCard(pdf, rightX + 4, rightY + 15, emotionTexts, colW - 8, 5);
-        rightY += 46;
-
-        drawCard(pdf, rightX, rightY, colW, 40, [248, 252, 255]);
-        drawCardTitle(pdf, rightX + 4, rightY + 8, 'Necessitats');
-        drawListInCard(pdf, rightX + 4, rightY + 15, needTexts, colW - 8, 5);
-        rightY += 46;
-
-        drawCard(pdf, rightX, rightY, colW, 40, [255, 250, 245]);
-        drawCardTitle(pdf, rightX + 4, rightY + 8, 'Accions');
-        drawListInCard(pdf, rightX + 4, rightY + 15, actionTexts, colW - 8, 5);
-
         /* =========================
-           PÀGINA 3: DETALL EXTRA
+           PÀGINA 2: MAPA
            ========================= */
+        pdf.addPage('a4', 'landscape');
+        pageNumber += 1;
 
-        pdf.addPage('a4', 'portrait');
+        {
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const margin = 10;
+            const contentWidth = pageWidth - (margin * 2);
 
-        const p3w = pdf.internal.pageSize.getWidth();
-        const p3h = pdf.internal.pageSize.getHeight();
-        const p3m = 14;
-        const p3usableW = p3w - (p3m * 2);
+            const headerBottom = drawPageHeader(pdf, {
+                logoDataUrl,
+                title,
+                subtitle: subtitle || 'Mapa visual de la sessió',
+                pageWidth,
+                margin,
+                fillColor: THEME.softBg
+            });
 
-        drawPdfLogo(pdf, logoDataUrl, p3w);
+            setFont(pdf, 'normal', 8.5, THEME.muted);
+            pdf.text(`Vista completa del mapa exportat`, margin + 2, headerBottom + 6);
 
-        let p3y = 14;
+            const frameY = headerBottom + 10;
+            const frameH = pageHeight - frameY - 14;
 
-        drawCard(pdf, p3m, p3y, p3usableW, 20, [248, 250, 252]);
-        pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(15);
-        pdf.setTextColor(0, 0, 0);
-        pdf.text('Detall del mapa', p3m + 4, p3y + 8);
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(9);
-        pdf.setTextColor(100, 116, 139);
-        pdf.text('Elements recollits durant la sessió', p3m + 4, p3y + 15);
+            drawRoundedCard(pdf, margin, frameY, contentWidth, frameH, THEME.white, THEME.line, 5);
 
-        p3y += 26;
+            const imgProps = pdf.getImageProperties(imgData);
 
-        function drawDetailBox(titleText, items, fillColor) {
-            const boxH = 52;
-            drawCard(pdf, p3m, p3y, p3usableW, boxH, fillColor);
-            drawCardTitle(pdf, p3m + 4, p3y + 8, titleText);
-            drawListInCard(pdf, p3m + 4, p3y + 15, items, p3usableW - 8, 8);
-            p3y += boxH + 6;
+            const maxImgWidth = contentWidth - 4;
+            const maxImgHeight = frameH - 4;
+
+            let imgWidth = maxImgWidth;
+            let imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+            if (imgHeight > maxImgHeight) {
+                imgHeight = maxImgHeight;
+                imgWidth = (imgProps.width * imgHeight) / imgProps.height;
+            }
+
+            const imgX = margin + ((contentWidth - imgWidth) / 2);
+            const imgY = frameY + ((frameH - imgHeight) / 2);
+
+            pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth, imgHeight);
+
+            drawPageFooter(pdf, {
+                generatedAt,
+                pageNumber,
+                pageWidth,
+                pageHeight,
+                margin
+            });
         }
 
-        drawDetailBox('Situacions del mapa', situationTexts, [255, 247, 247]);
-        drawDetailBox('Emocions del mapa', emotionTexts, [253, 250, 255]);
-        drawDetailBox('Necessitats del mapa', needTexts, [248, 252, 255]);
-        drawDetailBox('Accions del mapa', actionTexts, [255, 250, 245]);
+        /* =========================
+           PÀGINA 3: ACTA VISUAL
+           ========================= */
+        pdf.addPage('a4', 'portrait');
+        pageNumber += 1;
 
+        {
+            const pW = pdf.internal.pageSize.getWidth();
+            const pH = pdf.internal.pageSize.getHeight();
+            const m = 14;
+            const usableW = pW - (m * 2);
+
+            const headerBottom = drawPageHeader(pdf, {
+                logoDataUrl,
+                title: 'Acta de la sessió',
+                subtitle: 'Resum estructurat del mapa i de la informació recollida',
+                pageWidth: pW,
+                margin: m
+            });
+
+            let y = headerBottom + 8;
+
+            const statW = (usableW - 9) / 4;
+            const statData = [
+                ['Situacions', situationTexts.length, THEME.brandRed],
+                ['Emocions', emotionTexts.length, THEME.brandViolet],
+                ['Necessitats', needTexts.length, THEME.brandBlue],
+                ['Accions', actionTexts.length, THEME.brandOrange]
+            ];
+
+            statData.forEach((item, index) => {
+                const x = m + index * (statW + 3);
+                drawStatCard(pdf, x, y, statW, 18, item[1], item[0], item[2]);
+            });
+
+            y += 24;
+
+            const colGap = 6;
+            const colW = (usableW - colGap) / 2;
+            const leftX = m;
+            const rightX = m + colW + colGap;
+
+            let leftY = y;
+            let rightY = y;
+
+            const fitxaTextHeight =
+                estimateTextHeight(pdf, `Nom: ${title}`, colW - 12) +
+                (subtitle ? estimateTextHeight(pdf, `Descripció: ${subtitle}`, colW - 12) + 1 : 0) +
+                (people ? estimateTextHeight(pdf, `Persones / equips: ${people}`, colW - 12) + 1 : 0);
+
+            const fitxaH = Math.max(34, 16 + fitxaTextHeight);
+            drawSectionCard(pdf, {
+                x: leftX,
+                y: leftY,
+                w: colW,
+                h: fitxaH,
+                title: 'Fitxa',
+                fillColor: THEME.white,
+                accentColor: THEME.brandRed
+            });
+
+            let tmpY = leftY + 15;
+            tmpY = addWrappedLabelValue(pdf, leftX + 7, tmpY, 'Nom: ', title, colW - 12);
+            if (subtitle) tmpY = addWrappedLabelValue(pdf, leftX + 7, tmpY + 1, 'Descripció: ', subtitle, colW - 12);
+            if (people) tmpY = addWrappedLabelValue(pdf, leftX + 7, tmpY + 1, 'Persones / equips: ', people, colW - 12);
+
+            leftY += fitxaH + 6;
+
+            const contextText =
+                currentTemplate && currentTemplate !== 'blank'
+                    ? `Plantilla utilitzada: ${getTemplateLabel(currentTemplate)}`
+                    : 'Plantilla utilitzada: En blanc';
+
+            const contextH = Math.max(24, 16 + estimateTextHeight(pdf, contextText, colW - 12));
+            drawSectionCard(pdf, {
+                x: leftX,
+                y: leftY,
+                w: colW,
+                h: contextH,
+                title: 'Context',
+                fillColor: THEME.softBg,
+                accentColor: THEME.brandViolet
+            });
+            drawCardText(pdf, leftX + 7, leftY + 15, contextText, colW - 12, 4.8, 'normal', 9.3, THEME.text);
+
+            leftY += contextH + 6;
+
+            const situationsH = Math.max(42, estimateListHeight(pdf, situationTexts, colW - 12, 7) + 10);
+            drawSectionCard(pdf, {
+                x: leftX,
+                y: leftY,
+                w: colW,
+                h: situationsH,
+                title: 'Situacions',
+                fillColor: THEME.situationBg,
+                accentColor: THEME.brandRed
+            });
+            drawListInCard(pdf, leftX + 7, leftY + 15, situationTexts, colW - 12, 7);
+
+            const notesText = notes || 'Sense observacions.';
+            const notesH = Math.max(34, 16 + estimateTextHeight(pdf, notesText, colW - 12));
+            drawSectionCard(pdf, {
+                x: rightX,
+                y: rightY,
+                w: colW,
+                h: notesH,
+                title: 'Observacions',
+                fillColor: THEME.softBg,
+                accentColor: THEME.brandBlue
+            });
+            drawCardText(pdf, rightX + 7, rightY + 15, notesText, colW - 12, 4.8, 'normal', 9.3, THEME.text);
+
+            rightY += notesH + 6;
+
+            const emotionsH = Math.max(34, estimateListHeight(pdf, emotionTexts, colW - 12, 5) + 10);
+            drawSectionCard(pdf, {
+                x: rightX,
+                y: rightY,
+                w: colW,
+                h: emotionsH,
+                title: 'Emocions',
+                fillColor: THEME.emotionBg,
+                accentColor: THEME.brandViolet
+            });
+            drawListInCard(pdf, rightX + 7, rightY + 15, emotionTexts, colW - 12, 5);
+
+            rightY += emotionsH + 6;
+
+            const needsH = Math.max(34, estimateListHeight(pdf, needTexts, colW - 12, 5) + 10);
+            drawSectionCard(pdf, {
+                x: rightX,
+                y: rightY,
+                w: colW,
+                h: needsH,
+                title: 'Necessitats',
+                fillColor: THEME.needBg,
+                accentColor: THEME.brandBlue
+            });
+            drawListInCard(pdf, rightX + 7, rightY + 15, needTexts, colW - 12, 5);
+
+            rightY += needsH + 6;
+
+            const actionsH = Math.max(34, estimateListHeight(pdf, actionTexts, colW - 12, 5) + 10);
+            drawSectionCard(pdf, {
+                x: rightX,
+                y: rightY,
+                w: colW,
+                h: actionsH,
+                title: 'Accions',
+                fillColor: THEME.actionBg,
+                accentColor: THEME.brandOrange
+            });
+            drawListInCard(pdf, rightX + 7, rightY + 15, actionTexts, colW - 12, 5);
+
+            drawPageFooter(pdf, {
+                generatedAt,
+                pageNumber,
+                pageWidth: pW,
+                pageHeight: pH,
+                margin: m
+            });
+        }
+
+        /* =========================
+           PÀGINA 4: DETALL DEL MAPA
+           ========================= */
+        pdf.addPage('a4', 'portrait');
+        pageNumber += 1;
+
+        {
+            const pW = pdf.internal.pageSize.getWidth();
+            const pH = pdf.internal.pageSize.getHeight();
+            const m = 14;
+            const usableW = pW - (m * 2);
+
+            const headerBottom = drawPageHeader(pdf, {
+                logoDataUrl,
+                title: 'Detall del mapa',
+                subtitle: 'Elements recollits durant la sessió',
+                pageWidth: pW,
+                margin: m
+            });
+
+            let y = headerBottom + 8;
+
+            function drawDetailBox(titleText, items, fillColor, accentColor, maxItems) {
+                const h = Math.max(40, estimateListHeight(pdf, items, usableW - 12, maxItems) + 12);
+                drawSectionCard(pdf, {
+                    x: m,
+                    y,
+                    w: usableW,
+                    h,
+                    title: titleText,
+                    fillColor,
+                    accentColor
+                });
+                drawListInCard(pdf, m + 7, y + 15, items, usableW - 12, maxItems);
+                y += h + 6;
+            }
+
+            drawDetailBox('Situacions del mapa', situationTexts, THEME.situationBg, THEME.brandRed, 8);
+            drawDetailBox('Emocions del mapa', emotionTexts, THEME.emotionBg, THEME.brandViolet, 8);
+            drawDetailBox('Necessitats del mapa', needTexts, THEME.needBg, THEME.brandBlue, 8);
+            drawDetailBox('Accions del mapa', actionTexts, THEME.actionBg, THEME.brandOrange, 8);
+
+            drawPageFooter(pdf, {
+                generatedAt,
+                pageNumber,
+                pageWidth: pW,
+                pageHeight: pH,
+                margin: m
+            });
+        }
+
+        /* =========================
+           PÀGINA 5: ELEMENTS PERSONALITZATS
+           ========================= */
         if (customSituationTexts.length || customActionTexts.length) {
             pdf.addPage('a4', 'portrait');
+            pageNumber += 1;
 
-            const p4w = pdf.internal.pageSize.getWidth();
-            const p4m = 14;
-            const p4usableW = p4w - (p4m * 2);
+            const pW = pdf.internal.pageSize.getWidth();
+            const pH = pdf.internal.pageSize.getHeight();
+            const m = 14;
+            const usableW = pW - (m * 2);
 
-            drawPdfLogo(pdf, logoDataUrl, p4w);
+            const headerBottom = drawPageHeader(pdf, {
+                logoDataUrl,
+                title: 'Elements creats durant la sessió',
+                subtitle: 'Banc personalitzat de la sessió',
+                pageWidth: pW,
+                margin: m
+            });
 
-            let p4y = 14;
-
-            drawCard(pdf, p4m, p4y, p4usableW, 20, [248, 250, 252]);
-            pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(15);
-            pdf.setTextColor(0, 0, 0);
-            pdf.text('Elements creats durant la sessió', p4m + 4, p4y + 8);
-            pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(9);
-            pdf.setTextColor(100, 116, 139);
-            pdf.text('Banc personalitzat de la sessió', p4m + 4, p4y + 15);
-
-            p4y += 26;
+            let y = headerBottom + 8;
 
             if (customSituationTexts.length) {
-                drawCard(pdf, p4m, p4y, p4usableW, 60, [255, 247, 247]);
-                drawCardTitle(pdf, p4m + 4, p4y + 8, 'Situacions donades d’alta al banc');
-                drawListInCard(pdf, p4m + 4, p4y + 15, customSituationTexts, p4usableW - 8, 10);
-                p4y += 66;
+                const h = Math.max(40, estimateListHeight(pdf, customSituationTexts, usableW - 12, 10) + 12);
+                drawSectionCard(pdf, {
+                    x: m,
+                    y,
+                    w: usableW,
+                    h,
+                    title: 'Situacions donades d’alta al banc',
+                    fillColor: THEME.situationBg,
+                    accentColor: THEME.brandRed
+                });
+                drawListInCard(pdf, m + 7, y + 15, customSituationTexts, usableW - 12, 10);
+                y += h + 6;
             }
 
             if (customActionTexts.length) {
-                drawCard(pdf, p4m, p4y, p4usableW, 60, [255, 250, 245]);
-                drawCardTitle(pdf, p4m + 4, p4y + 8, 'Accions donades d’alta al banc');
-                drawListInCard(pdf, p4m + 4, p4y + 15, customActionTexts, p4usableW - 8, 10);
+                const h = Math.max(40, estimateListHeight(pdf, customActionTexts, usableW - 12, 10) + 12);
+                drawSectionCard(pdf, {
+                    x: m,
+                    y,
+                    w: usableW,
+                    h,
+                    title: 'Accions donades d’alta al banc',
+                    fillColor: THEME.actionBg,
+                    accentColor: THEME.brandOrange
+                });
+                drawListInCard(pdf, m + 7, y + 15, customActionTexts, usableW - 12, 10);
             }
+
+            drawPageFooter(pdf, {
+                generatedAt,
+                pageNumber,
+                pageWidth: pW,
+                pageHeight: pH,
+                margin: m
+            });
         }
 
         const safeFileName = title
@@ -3617,7 +4431,6 @@ async function exportOrganizerPdf() {
         alert('No s’ha pogut generar el PDF.');
     }
 }
-
 
 
 
