@@ -44,7 +44,7 @@
 
         .cep-header {
             background: white;
-            padding: 10px 25px;
+            padding: 5px 25px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
@@ -1283,7 +1283,38 @@
 .accordion-item.active .accordion-content {
     display: block;
 }
+.cnv-accordion-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    font-weight:600;
+}
 
+.cnv-chevron {
+    transition: transform 0.3s ease;
+}
+
+.cnv-accordion-content {
+    margin-top:12px;
+}
+
+.cnv-accordion.closed .cnv-accordion-content {
+    display:none;
+}
+
+.cnv-accordion.closed .cnv-chevron {
+    transform: rotate(-90deg);
+}
+.accordion-item.active .fa-chevron-down {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+.logo {
+  height: 50px;   /* ajusta a tu diseño */
+  width: auto;    /* 🔑 esto mantiene la proporción */
+  display: block;
+}
 
 
     </style>
@@ -1299,8 +1330,7 @@
             <div class="stripe s-blue"></div>
         </div>
         <div class="logo-text" onclick="showView('home')">
-            <span>Centre d'Estudis</span>
-            <span style="color: var(--cep-red);">Politècnics</span>
+            <img src="./logo13.png" class="logo">
         </div>
     </header>
 
@@ -1688,7 +1718,64 @@
             <div class="card">
                 <h2>Metodologia CNV</h2>
                 <div class="section-stack">
-                    <p class="section-subintro">Etapes vinculades a la Comunicació No Violenta.</p>
+                    <p class="section-subintro">
+                    La CNV, definida per Marshall Rosenberg, ajuda a sortir de situacions de tensió o bloqueig a partir de l’observació, els sentiments, les necessitats i les peticions. En aquest model, les etapes 1–3 obren la sortida del bloqueig, l’etapa 8 ajuda a concretar una petició o decisió, i l’etapa 9 fa de pont cap al treball compartit amb GROW i cap a la corresponsabilitat del lideratge servei.
+                    </p>
+           <div class="info-card soft-blue cnv-accordion closed">
+
+                <div class="cnv-accordion-header">
+                    <span>❤️ Com es vincula la CNV amb les 13 etapes</span>
+                    <i class="fa-solid fa-chevron-down cnv-chevron"></i>
+                </div>
+
+                <div class="cnv-accordion-content">
+
+                    <p>
+                    La CNV no apareix aquí com un model aïllat, sinó com el punt de partida quan la relació està en tensió i encara no hi ha prou connexió per treballar objectius o compromisos.
+                    </p>
+
+                    <div class="meta-list">
+                        <div class="meta-row">
+                            <strong>Observació</strong>
+                            <span>Etapa 1 · Obrir</span>
+                        </div>
+                        <div class="meta-row">
+                            <strong>Sentiments</strong>
+                            <span>Etapa 2 · Connectar</span>
+                        </div>
+                        <div class="meta-row">
+                            <strong>Necessitats</strong>
+                            <span>Etapa 3 · Entendre</span>
+                        </div>
+                        <div class="meta-row">
+                            <strong>Petició</strong>
+                            <span>Etapa 8 · Decidir</span>
+                        </div>
+                    </div>
+
+                    <p style="margin-top:10px;">
+                    El procés <strong>PARA · PARLA · PACTA</strong> sosté aquest recorregut: PARA ajuda a no reaccionar automàticament, PARLA ajuda a comprendre què està passant i PACTA permet transformar aquesta comprensió en una petició, una decisió o un acord viable.
+                    </p>
+
+                    <p style="margin-top:10px;">
+                    En aquest sistema, la <strong>CNV</strong> és especialment útil quan la conversa està en un moment de bloqueig o de violència relacional; el <strong>GROW</strong> ajuda a treballar el procés i el creixement; i el <strong>lideratge servei</strong> expressa el punt on es vol arribar: una relació de corresponsabilitat, compromís i cura compartida.
+                    </p>
+
+                    <p style="margin-top:10px; font-size:0.85rem; color:var(--cep-grey);">
+    Fonts de referència:
+    <br>
+    <a href="https://www.cnvc.org/es/learn/nvc-101" target="_blank" rel="noopener noreferrer">
+        Center for Nonviolent Communication (CNVC)
+    </a>
+    <br>
+    <a href="https://escolapau.uab.cat/" target="_blank" rel="noopener noreferrer">
+        Escola de Cultura de Pau (UAB) – Resolució de conflictes i cultura de pau
+    </a>
+</p>
+
+                </div>
+            </div>
+
                     <div class="method-grid" id="cnv-grid"></div>
                 </div>
             </div>
@@ -1698,7 +1785,70 @@
             <div class="card">
                 <h2>Metodologia GROW</h2>
                 <div class="section-stack">
-                    <p class="section-subintro">Etapes  vinculades al model GROW.</p>
+                    <p class="section-subintro">
+El model GROW ajuda a treballar situacions on ja hi ha prou espai per pensar, ordenar i avançar. En aquest sistema, el GROW cobreix el procés que va de la comprensió a l’acció: enfocar l’objectiu, aterrar la realitat, activar opcions i decidir un pas concret.
+</p>
+
+<div class="info-card soft-blue cnv-accordion closed">
+
+    <div class="cnv-accordion-header">
+        <span>🌱 Com es vincula el GROW amb les 13 etapes</span>
+        <i class="fa-solid fa-chevron-down cnv-chevron"></i>
+    </div>
+
+    <div class="cnv-accordion-content">
+
+        <p>
+        El model GROW apareix quan la conversa ja no està centrada només en el bloqueig, sinó que pot començar a treballar la situació i fer-la avançar.
+        </p>
+
+        <p>
+        En aquest sistema, el GROW cobreix el procés de presa de consciència, enfocament i acció que permet passar de la comprensió a la transformació.
+        </p>
+
+        <div class="meta-list">
+            <div class="meta-row">
+                <strong>Goal (Objectiu)</strong>
+                <span>Etapa 4 · Enfocar</span>
+            </div>
+            <div class="meta-row">
+                <strong>Reality (Realitat)</strong>
+                <span>Etapes 5–6 · Aterrar i Confrontar</span>
+            </div>
+            <div class="meta-row">
+                <strong>Options (Opcions)</strong>
+                <span>Etapa 7 · Activar</span>
+            </div>
+            <div class="meta-row">
+                <strong>Will (Voluntat)</strong>
+                <span>Etapa 8 · Decidir</span>
+            </div>
+        </div>
+
+        <p style="margin-top:10px;">
+        El procés <strong>PARA · PARLA · PACTA</strong> continua sent clau: PARA permet observar la realitat amb més claredat, PARLA ajuda a ordenar i explorar opcions, i PACTA permet concretar accions i compromisos.
+        </p>
+
+        <p style="margin-top:10px;">
+        En aquest recorregut, el <strong>GROW</strong> fa de pont entre la comprensió (CNV) i la corresponsabilitat (lideratge servei): ajuda a transformar una situació entesa en una acció viable i assumida.
+        </p>
+
+        <p style="margin-top:12px; font-size:0.85rem; color:var(--cep-grey);">
+    Fonts de referència:
+    <br>
+    <a href="https://www.performanceconsultants.com/grow-model" target="_blank" rel="noopener noreferrer">
+        Whitmore, J. – Coaching for Performance (GROW model)
+    </a>
+    <br>
+    <a href="https://www.unir.net/revista/ingenieria/que-es-modelo-grow/" target="_blank" rel="noopener noreferrer">
+        Modelo GROW – UNIR
+    </a>
+    <br>
+    
+</p>
+
+    </div>
+</div>
                     <div class="method-grid" id="grow-grid"></div>
                 </div>
             </div>
@@ -1708,7 +1858,81 @@
             <div class="card">
                 <h2>Lideratge al Servei</h2>
                 <div class="section-stack">
-                    <p class="section-subintro">Etapes vinculades a la idea de lideratge al servei.</p>
+                    <p class="section-subintro">
+El lideratge servei posa el focus en la corresponsabilitat, el compromís i la cura compartida. En aquest sistema, representa el punt on la relació ha madurat prou per assumir accions, sostenir-les i fer-les créixer conjuntament.
+</p>
+
+<div class="info-card soft-blue cnv-accordion closed">
+
+    <div class="cnv-accordion-header">
+        <span>🤝 Com es vincula el lideratge servei amb les 13 etapes</span>
+        <i class="fa-solid fa-chevron-down cnv-chevron"></i>
+    </div>
+
+    <div class="cnv-accordion-content">
+
+        <p>
+        El lideratge servei, desenvolupat per Robert K. Greenleaf, planteja que liderar no és dirigir des del poder, sinó assumir responsabilitat per facilitar el creixement dels altres i del conjunt.
+        </p>
+
+        <p>
+        En aquest sistema, apareix quan la relació ha superat el bloqueig (CNV) i el procés de treball (GROW), i pot avançar cap a una corresponsabilitat real.
+        </p>
+
+        <div class="meta-list">
+            <div class="meta-row">
+                <strong>Compromís</strong>
+                <span>Etapa 8 · Decidir</span>
+            </div>
+            <div class="meta-row">
+                <strong>Viabilitat compartida</strong>
+                <span>Etapa 9 · Pont</span>
+            </div>
+            <div class="meta-row">
+                <strong>Acció autònoma</strong>
+                <span>Etapa 10 · Executar</span>
+            </div>
+            <div class="meta-row">
+                <strong>Suport i cura</strong>
+                <span>Etapa 11 · Sostenir</span>
+            </div>
+            <div class="meta-row">
+                <strong>Aprenentatge</strong>
+                <span>Etapa 12 · Desenvolupar</span>
+            </div>
+            <div class="meta-row">
+                <strong>Continuïtat</strong>
+                <span>Etapa 13 · Mantenir</span>
+            </div>
+        </div>
+
+        <p style="margin-top:10px;">
+        El procés <strong>PARA · PARLA · PACTA</strong> aquí pren una dimensió més madura: PARA permet revisar i ajustar, PARLA sosté la relació i el feedback, i PACTA consolida acords que es mantenen en el temps.
+        </p>
+
+        <p style="margin-top:10px;">
+        En aquest punt, la conversa ja no es centra només en resoldre una situació, sinó en sostenir una relació on les persones assumeixen rols, responsabilitats i compromisos de manera connectada.
+        </p>
+
+        <p style="margin-top:10px;">
+        El lideratge servei no és un estadi final tancat, sinó una manera de relacionar-se que pot aparèixer en diferents moments quan hi ha prou confiança, claredat i compromís.
+        </p>
+
+        <p style="margin-top:12px; font-size:0.85rem; color:var(--cep-grey);">
+            Fonts de referència:
+            <br>
+            <a href="https://www.greenleaf.org/what-is-servant-leadership/" target="_blank" rel="noopener noreferrer">
+                Greenleaf Center for Servant Leadership
+            </a>
+            <br>
+            <a href="https://weneedsocial.com/" target="_blank" rel="noopener noreferrer">
+                We need social - Célline Schillinger
+            </a>
+            <br>
+        </p>
+
+    </div>
+</div>
                     <div class="method-grid" id="servei-grid"></div>
                 </div>
             </div>
@@ -1727,30 +1951,101 @@
        <div id="view-af" style="display:none;">
     <div class="card">
         <h2>Anàlisi funcional</h2>
-
+        
         <p class="section-subintro">
-            Com entendre què passa en una situació, situar-la dins les 13 etapes i fer-la avançar amb el mapa de conversa.
+            L’anàlisi funcional és una manera d’entendre què passa en una situació a partir de la relació entre el context, les accions i els seus efectes. Aquest model no es trasllada aquí de manera directa ni en fem una aplicació clínica, però sí que actua com a rerefons i estructura de lectura: ajuda a observar millor, a ordenar la conversa i a decidir com avançar.
+        </p>
+<br>
+
+<div class="info-card soft-blue cnv-accordion closed">
+
+    <div class="cnv-accordion-header">
+        <span>🧠 Què aporta l’anàlisi funcional en aquest model</span>
+        <i class="fa-solid fa-chevron-down cnv-chevron"></i>
+    </div>
+
+    <div class="cnv-accordion-content">
+
+        <p>
+        L’anàlisi funcional no és una interpretació subjectiva ni un judici, sinó una manera d’observar i entendre les relacions entre el que passa, com es viu i què es fa.
         </p>
 
-        <div class="main-question-card">
-            <div class="main-question-text">
-                PARA · PARLA · PACTA: aturar, comprendre i transformar en acció.
+        <p>
+        En aquest sistema, es concreta a través de tres elements:
+        </p>
+
+        <div class="meta-list">
+            <div class="meta-row">
+                <strong>Situació</strong>
+                <span>Què està passant (fets o conductes observables)</span>
+            </div>
+            <div class="meta-row">
+                <strong>Emocions i necessitats</strong>
+                <span>Què hi ha en joc i què pot explicar el que passa</span>
+            </div>
+            <div class="meta-row">
+                <strong>Accions</strong>
+                <span>Què s’està fent o es pot fer</span>
             </div>
         </div>
+
+        <p style="margin-top:10px;">
+        El <strong>mapa de conversa</strong> permet fer visibles aquestes relacions, i les <strong>13 etapes</strong> ajuden a situar el moment de la conversa i orientar com avançar.
+        </p>
+
+        <p style="margin-top:10px;">
+        El procés <strong>PARA · PARLA · PACTA</strong> sosté aquesta mirada: PARA ajuda a observar sense reaccionar, PARLA permet comprendre què està passant i PACTA transforma aquesta comprensió en acció.
+        </p>
+
+        <p style="margin-top:10px;">
+        Això permet passar de reaccions intuïtives a intervencions més ajustades, facilitant que la conversa evolucioni cap a espais de més claredat, acció i corresponsabilitat.
+        </p>
+
+        <p style="margin-top:12px; font-size:0.85rem; color:var(--cep-grey);">
+    Fonts de referència:
+    <br>
+    <a href="https://formacion.itemadrid.net/wp-content/uploads/2021/09/Skinner-CIENCIA-Y-CONDUCTA-HUMANA.pdf" target="_blank" rel="noopener noreferrer">
+        B.F. Skinner – Ciencia y conducta humana
+    </a>
+    <br>
+    <a href="https://www.unir.net/revista/salud/analisis-funcional-conducta-psicologia/" target="_blank" rel="noopener noreferrer">
+        UNIR – El análisis funcional de la conducta en Psicología
+    <br>
+    <a href="https://drive.google.com/file/d/1hMA8WyyD_PhHrkJ9zkEN9vfv8NPs6Ypu/view/" target="_blank" rel="noopener noreferrer">
+        Centro de Psicologia Aplicada (UAM) – Guía para la Elaboración de un Análisis Funcional
+    </a>
+</p>
+
+    </div>
+</div>
+
+       
+
+     <!--   <div class="main-question-card">
+            <div class="main-question-text">
+                📷 PARA · 💬 PARLA · 🤝 PACTA
+                <p class="section-subintro">
+                    
+            Observa la situació, situa-la dins les 13 etapes i avança amb el mapa de conversa
+        </p>
+            </div>
+        </div>
+    -->
+        
 
         <div class="accordion">
 
             <!-- 1 -->
             <div class="accordion-item">
-    <div class="accordion-header">1. Com es fa servir (flux de treball)</div>
+    <div class="accordion-header"><span>1️⃣ Para, parla i pacta</span><i class="fa-solid fa-chevron-down"></i></div>
     <div class="accordion-content">
 
         <!-- 🟦 INTRO -->
         <p>
-        En qualsevol situació —tant si funciona com si es bloqueja— és útil aturar-se, parlar i arribar a acords.
+        En qualsevol situació —tant si ens està permentent avançar com si ens estem bloquejat— ens pot ser útil aturar-se per observar la situació, situar-la dins de les 13 etapes i avançar fent ús del mapa de conversa. De vegades ens pot servir per desbloquejar solucions i d'altres per reconèixer com ens estem relacionant. 
         </p>
         <p>
-        El repte no és si parlar o no, sinó <strong>com parlar en cada moment</strong>.
+        En qualsevol cas val la pena <strong> parar, parlar i pactar.</strong>
         </p>
 
         <!-- 🟨 QUADRE VISUAL -->
@@ -1867,7 +2162,7 @@
 
             <!-- 2 -->
 <div class="accordion-item">
-    <div class="accordion-header">2. Què és l’anàlisi funcional</div>
+    <div class="accordion-header"><span>2️⃣ Què és l’anàlisi funcional</span><i class="fa-solid fa-chevron-down"></i></div>
     <div class="accordion-content">
 
         <!-- 🟦 INTRO -->
@@ -2048,7 +2343,7 @@
 
             <!-- 3 -->
 <div class="accordion-item">
-    <div class="accordion-header">3. Com està construït el mapa de conversa</div>
+    <div class="accordion-header"><span>3️⃣ Com està construït el mapa de conversa</span><i class="fa-solid fa-chevron-down"></i></div>
     <div class="accordion-content">
 
         <!-- 🟦 INTRO -->
@@ -2214,7 +2509,7 @@ Això permet identificar on intervenir: si cal entendre millor la situació, aju
 
             <!-- 4 -->
 <div class="accordion-item">
-    <div class="accordion-header">4. Com ajuden les 13 etapes</div>
+    <div class="accordion-header"><span>4️⃣ Com ajuden les 13 etapes</span><i class="fa-solid fa-chevron-down"></i></div>
     <div class="accordion-content">
 
         <!-- 🟦 INTRO -->
@@ -2344,7 +2639,7 @@ Això permet identificar on intervenir: si cal entendre millor la situació, aju
 
             <!-- 5 -->
 <div class="accordion-item">
-    <div class="accordion-header">5. Com detectar on estàs i què fer</div>
+    <div class="accordion-header"><span>5️⃣ Com detectar on estàs i què fer</span><i class="fa-solid fa-chevron-down"></i></div>
     <div class="accordion-content">
 
         <!-- 🟦 INTRO -->
@@ -2393,21 +2688,31 @@ Això permet identificar on intervenir: si cal entendre millor la situació, aju
         A partir d’aquí, es pot decidir com intervenir de manera ajustada.
         </p>
 
-        <!-- 🔁 DETECCIÓ PER ETAPES -->
-        <div class="info-card soft-green" style="margin-top:14px;">
-            <div class="info-title">
-                <i class="fa-solid fa-stairs"></i>
-                <span>Detectar el moment de la conversa</span>
-            </div>
+      <!-- 🔁 DETECCIÓ DEL MOMENT RELACIONAL -->
+<div class="info-card soft-green" style="margin-top:14px;">
+    <div class="info-title">
+        <i class="fa-solid fa-stairs"></i>
+        <span>Detectar el moment de la conversa</span>
+    </div>
 
-            <ul>
-                <li><strong>Etapes 1–3</strong> → hi ha bloqueig o poca claredat → cal entendre</li>
-                <li><strong>Etapes 4–6</strong> → hi ha informació però falta focus → cal aclarir</li>
-                <li><strong>Etapes 7–10</strong> → hi ha opcions → cal concretar</li>
-                <li><strong>Etapes 11–13</strong> → hi ha acció → cal sostenir i revisar</li>
-            </ul>
-        </div>
+    <p style="margin-bottom:8px;">
+    No es tracta de recórrer totes les etapes en una sola conversa. Aquest model orienta la conversa en cada moment, entenent que l’evolució es dona a través d’una seqüència de converses que permeten avançar progressivament.
+    </p>
 
+    <ul>
+        <li>
+            <strong>CNV · Etapes 1–3</strong> → hi ha tensió, bloqueig o desconnexió → cal recuperar la relació (observar, connectar, entendre)
+        </li>
+
+        <li>
+            <strong>GROW · Etapes 4–8</strong> → hi ha espai per parlar i treballar → cal ordenar, prendre consciència i avançar cap a decisions
+        </li>
+
+        <li>
+            <strong>Servei · Etapes 9–13</strong> → hi ha compromís i acció compartida → cal sostenir, revisar i construir corresponsabilitat
+        </li>
+    </ul>
+</div>
         <!-- 🔴 EXEMPLES REALS -->
         <div class="info-card soft-violet" style="margin-top:14px;">
             <div class="info-title">
@@ -2483,7 +2788,7 @@ Això permet identificar on intervenir: si cal entendre millor la situació, aju
 </div>
             <!-- 6 -->
  <div class="accordion-item">
-    <div class="accordion-header">6. Exemple complet: de bloqueig a corresponsabilitat</div>
+    <div class="accordion-header"><span>6️⃣ Exemple complet: de bloqueig a corresponsabilitat</span><i class="fa-solid fa-chevron-down"></i></div>
     <div class="accordion-content">
 
         <!-- 🟦 INTRO -->
@@ -2897,7 +3202,7 @@ const stages = [
 
     { n: 11, f: "Sostenir", m: ["Servei"], e: "Recolzament", c: ["S", "A"], ic: "fa-life-ring", color: "red",
       t: "Falta de suport",
-      p: "🖤 Apareixen obstacles que dificulten la continuïtat · ❤️ Es poden activar recursos o suport",
+      p: "🖤 Apareixen obstacles que dificulten la continuïtat · ❤️ Es poden activar recursos o suports",
       q: "Quin suport pot ajudar en aquest punt?",
       a: "Es mobilitzen recursos per sostenir l’acció.",
       err: "Fer-ho en lloc de l’altra persona",
@@ -2905,7 +3210,7 @@ const stages = [
 
     { n: 12, f: "Desenvolupar", m: ["Servei"], e: "Creixement", c: ["E", "A"], ic: "fa-arrow-up-right-dots", color: "orange",
       t: "Repetició d’errors",
-      p: "🖤 Es repeteixen patrons sense ajust · ❤️ Es poden incorporar aprenentatges",
+      p: "🖤 Es repeteixen patrons sense fer ajustos · ❤️ Els errors s’aprofiten per revisar i aprendre",
       q: "Què ajudaria a fer-ho diferent la propera vegada?",
       a: "Es facilita la incorporació d’aprenentatges.",
       err: "No parar a reflexionar",
@@ -5513,7 +5818,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
+document.querySelectorAll('.cnv-accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+        const parent = header.closest('.cnv-accordion');
+        parent.classList.toggle('closed');
+    });
+});
 
 window.addEventListener('beforeunload', saveOrganizerState);
 
